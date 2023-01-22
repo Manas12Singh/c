@@ -1,10 +1,11 @@
 #include <stdio.h>
 
-void inverse(int r, int *matrix);
+int rows;
+void inverse(int r, int (*)[rows]);
 
 void main()
 {
-    int rows;
+    rows=3;
     printf("No. of rows of matrix: ");
     scanf("%d", &rows); // takes the no. of rows of matrix
     int matrix[rows][rows];
@@ -20,11 +21,16 @@ void main()
             printf("%d ", matrix[i][j]);
         printf("\n");
     }
-    inverse(rows, (int *)matrix);
+    inverse(rows, matrix);
 }
 
-void inverse(int r, int *matrix)
+void inverse(int r, int (*matrix)[rows])
 {
+    for (int i = 0; i < r; i++)
+    {
+        
+    }
+    
     for (int i = 0; i < r; i++) // prints the elements of matrix
     {
         for (int j = 0; j < r; j++)
