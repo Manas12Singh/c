@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1314894556 source:e:\manas\c\p1\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1662766410 source:e:\manas\c\p1\p1.c
+	<stdio.h>
+
