@@ -2,7 +2,6 @@
 
 void inverse(int r, int *matrix);
 
-
 void main()
 {
     int rows;
