@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <conio.h>
 #include <math.h>
 
 int gcf(int a, int b);
@@ -30,6 +31,7 @@ void simplify(int num, int den)
     {
         printf("%d/%d", abs(s_n), abs(s_d));
     }
+    getch();
 }
 
 int gcf(int a, int b)
