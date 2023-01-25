@@ -34,3 +34,41 @@ void transpose()
     }
 }
 
+int determinant()
+{
+    int i, j,k,r,sum=0,p;
+    printf("Enter the number of row(s): ");
+    scanf("%d",&r);
+    int matrix[r][r];
+    printf("Enter the matrix: \n");
+    for (i = 0; i < r; i++)
+    {
+        for (j = 0; j < c; j++)
+        {
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+    for (i=0;i<r;i++)
+    {
+        
+    }
+}
+
+void inverseByNormalForm()
+{
+    int i, j,r;
+    printf("Enter the number of row(s): ");
+    scanf("%d",&r);
+    int matrix[r][r],inverse_matrix[r][r];
+    printf("Enter the matrix: \n");
+    for (i = 0; i < r; i++)
+    {
+        for (j = 0; j < c; j++)
+        {
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+    for(i=0;i<r;i++)
+        inverse_matrix[i][i]=1;
+    for(i=0;i<r;)
+}
