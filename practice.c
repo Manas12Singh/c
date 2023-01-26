@@ -1,32 +1,29 @@
 #include<stdio.h>
 int main()
 {
-    int n,i,max;
+    int n,i,j,k,count=0,c=0;
     printf("Enter the number of elements: ");
     scanf("%d",&n);
     int arr[n];
-    printf("Enter the elements of the array: ");
-    for (i = 0; i < n; i++)
-    {
+    printf("Enter the elements: ");
+    for(i=0;i<n;i++)
         scanf("%d",&arr[i]);
-    }
-    printf("Peak are at: ");
-    if (arr[0]>arr[1])
+    for(i=0;i<n-1;i++)
     {
-        printf("%d ",arr[0]);
-    }
-    
-    for(i=1;i<n-1;i++)
-    {
-        if(arr[i]>arr[i+1] && arr[i]>arr[i-1])
+        for (j = i+1; j < n; j++)
         {
-            printf("%d ",arr[i]);
+            if(arr[i]==arr[j])
+            {
+                for(k=j;k<n-1;k++)
+                {
+                    arr[k]=arr[k+1];
+                }
+                c++;
+                n--;
+            }
         }
+        if(c!=0)
+            count++;
     }
-
-    if (arr[n-1]>arr[n-2])
-    {
-        printf("%d ",arr[n-1]);
-    }
-    return 0;
+    printf("%d",count);
 }
