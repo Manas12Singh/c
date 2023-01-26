@@ -1,74 +1,29 @@
 #include <stdio.h>
 
-void transpose()
+int c;
+void rank(int,int, int (*)[]);
+void j;
+
+int main()
 {
-    int i, j,r,c;
-    printf("Enter the number of row(s): ");
-    scanf("%d",&r);
-    printf("Enter the number of column(s): ");
-    scanf("%d",&c);
-    int matrix[r][c], transpose_matrix[c][r];
-    printf("Enter the matrix: \n");
-    for (i = 0; i < r; i++)
+    int r,c;
+    printf("No. of row(s) of matrix: ");
+    scanf("%d", &r); // takes the no. of rows of matrix
+    printf("No. of column(s) of matrix: ");
+    scanf("%d", &c); // takes the no. of rows of matrix
+
+    int matrix[r][c];
+    for (int i = 0; i < r; i++) // takes row wise elements of matrix like: 12 23 -23
     {
-        for (j = 0; j < c; j++)
-        {
+        printf("Enter elements of row %d:\n", i + 1);
+        for (int j = 0; j < c; j++)
             scanf("%d", &matrix[i][j]);
-        }
     }
-    for (i = 0; i < r; i++)
-    {
-        for (j = 0; j < c; j++)
-        {
-            transpose_matrix[j][i] = matrix[i][j];
-        }
-    }
-    printf("Transpose matrix is: \n");
-    for (i = 0; i < c; i++)
-    {
-        for (j = 0; j < r; j++)
-        {
-            printf("%d ", transpose_matrix[i][j]);
-        }
-        printf("\n");
-    }
+
+    return 0;
 }
 
-int determinant()
+void rank(int r,int c,int (*m)[c])
 {
-    int i, j,k,r,sum=0,p;
-    printf("Enter the number of row(s): ");
-    scanf("%d",&r);
-    int matrix[r][r];
-    printf("Enter the matrix: \n");
-    for (i = 0; i < r; i++)
-    {
-        for (j = 0; j < c; j++)
-        {
-            scanf("%d", &matrix[i][j]);
-        }
-    }
-    for (i=0;i<r;i++)
-    {
-        
-    }
-}
 
-void inverseByNormalForm()
-{
-    int i, j,r;
-    printf("Enter the number of row(s): ");
-    scanf("%d",&r);
-    int matrix[r][r],inverse_matrix[r][r];
-    printf("Enter the matrix: \n");
-    for (i = 0; i < r; i++)
-    {
-        for (j = 0; j < c; j++)
-        {
-            scanf("%d", &matrix[i][j]);
-        }
-    }
-    for(i=0;i<r;i++)
-        inverse_matrix[i][i]=1;
-    for(i=0;i<r;)
 }
