@@ -3,7 +3,6 @@
 int c;
 void trace(int,int,int(*)[c]);
 void rank(int,int,int(*)[c]);
-
 int main()
 {
     int r,c,i,j,choice;
