@@ -2,37 +2,44 @@
 #include<string.h>
 #include<stdlib.h>
 
-char * longestCommonPrefix(char** , int);
-
-int main()
-{
-    char *sto[6]={"dog","racecar","car"};
-    char **strs = sto;
-    char* s=longestCommonPrefix(strs,3);
-    printf("%s",s);
-    return 0;
+void swap(char **a, char **b) {
+    char *temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
-char* longestCommonPrefix(char** strs, int strsSize)
-{
-    int l=strlen(strs[0]);
-    int c=0;
-    for(int i=0;i<l;i++)
-    {
-        char s2=strs[0][i];
-        for(int j=1;j<strsSize;j++)
-        {
-            if(s2!=strs[j][i])
-            {
-                c++;
-                l=i;
-                break;
-            }
+char *longestCommonPrefix(char **strs, int strsSize) {
+    if (strsSize == 0) return "";
+    for (int i = 0; i < strsSize - 1; i++) {
+        for (int j = 0; j < strsSize - i - 1; j++) {
+            if (strcmp(strs[j], strs[j + 1]) > 0)
+                swap(&strs[j], &strs[j + 1]);
         }
-        if(c!=0) break;
     }
-    char *s1;
-    s1=(char*)malloc(l*sizeof(char));
-    strncpy(s1,strs[0],l);
-    return s1;
+    int l1 = strlen(strs[0]);
+    int c, i;
+    char *s = (char *)malloc(l1 + 1);
+    for (i = 0; i < l1; i++) {
+        c = 0;
+        for (int j = 0; j < strsSize; j++) {
+            if (strs[j][i] != strs[0][i])
+                break;
+            c++;
+        }
+        if (c != strsSize)
+            break;
+        else
+            s[i] = strs[0][i];
+    }
+    s[i] = '\0';
+    return s;
+}
+
+int main() {
+    char *strs[] = {"dog", "racecar", "cars"};
+    int strsSize = sizeof(strs) / sizeof(char *);
+    char *res = longestCommonPrefix(strs, strsSize);
+    printf("%s\n", res);
+    free(res);
+    return 0;
 }
