@@ -1,3 +1,6 @@
+#include<stdbool.h>
+#include<math.h>
+
 bool isPalindrome(int x){
     if(x==0)
         return true;

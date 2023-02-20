@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 int removeDuplicates(int* nums, int numsSize){
     int i,j=1;
     int a=nums[0];
