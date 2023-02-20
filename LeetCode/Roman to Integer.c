@@ -1,3 +1,6 @@
+#include<stdio.h>
+#include<string.h>
+
 int romanToInt(char * s){
     int val=0;
     for(int i=0;i<strlen(s)-1;i++)

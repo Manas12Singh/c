@@ -2,6 +2,10 @@
 #include<string.h>
 #include<stdlib.h>
 
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+
 void swap(char **a, char **b) {
     char *temp = *a;
     *a = *b;
@@ -33,13 +37,4 @@ char *longestCommonPrefix(char **strs, int strsSize) {
     }
     s[i] = '\0';
     return s;
-}
-
-int main() {
-    char *strs[] = {"dog", "racecar", "cars"};
-    int strsSize = sizeof(strs) / sizeof(char *);
-    char *res = longestCommonPrefix(strs, strsSize);
-    printf("%s\n", res);
-    free(res);
-    return 0;
 }

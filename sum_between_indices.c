@@ -1,6 +1,7 @@
 #include<stdio.h>
 
-int main()
+
+void main()
 {
     int n,i,j,r_sum,sum;
     printf("Enter the number of elements: ");
@@ -19,11 +20,10 @@ int main()
             sum+=arr[j];
             if(sum==r_sum)
             {
-                printf("Requred indices are %d and %d",i,j);
-                return 0;
+                printf("Requred indices are %d and %d.",i,j);
+                return ;
             }
         }
     }
     printf("Doesn't exist");
-    return 0;
 }
