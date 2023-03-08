@@ -15,14 +15,14 @@ int main()
                 if (s1[i + 1] == ' ' || s1[i + 1] == '\0')
                 {
                     i++;
-                    flag=2;
+                    flag = 2;
                     continue;
                 }
                 else if (s1[i + 1] == 'n')
                     if (s1[i + 2] == ' ' || s1[i + 2] == '\0')
                     {
                         i += 2;
-                        flag=2;
+                        flag = 2;
                         continue;
                     }
             }
@@ -31,16 +31,18 @@ int main()
                     if (s1[i + 3] == ' ' || s1[i + 3] == '\0')
                     {
                         i += 3;
-                        flag=2;
+                        flag = 2;
                         continue;
                     }
         }
-        if(flag==2) i++;
+        if (flag == 2)
+            i++;
         if (s1[i] == ' ')
             flag = 1;
-        else flag=0;
-        s1[j]=s1[i];
-        i++,j++;
+        else
+            flag = 0;
+        s1[j] = s1[i];
+        i++, j++;
     }
     s1[j] = '\0';
     puts("Formatted string:");

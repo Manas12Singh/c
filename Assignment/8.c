@@ -2,7 +2,7 @@
 
 int main()
 {
-    int n, j, exist,i;
+    int n, j, exist, i;
     puts("Enter the total number of names: ");
     scanf("%d", &n);
     n++;
@@ -28,8 +28,8 @@ int main()
             break;
     }
     if (exist == 1)
-        printf("%s is found at %d position.",s2,i);
+        printf("%s is found at %d position.", s2, i);
     else
-        printf("%s is not found int the list.",s2);
+        printf("%s is not found int the list.", s2);
     return 0;
 }
