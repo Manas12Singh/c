@@ -18,7 +18,7 @@ int main()
         }
         i++;
     }
-    if (flag)
+    if (flag==1)
         puts("Palindrome");
     else
         puts("Not a Palindrome");

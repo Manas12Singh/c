@@ -20,15 +20,14 @@ int main()
 
 char *subString(char s1[], int start, int number)
 {
-    static char s2[200];
     int l = 0, i = 0;
     while (s1[l] != '\0')
         l++;
     while (start + i < l && i < number)
     {
-        s2[i] = s1[start + i - 1];
+        s1[i] = s1[start + i - 1];
         i++;
     }
-    s2[i] = '\0';
-    return s2;
+    s1[i] = '\0';
+    return s1;
 }
