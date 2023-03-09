@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 char *subString(char s1[], int start, int number);
 
@@ -20,9 +21,8 @@ int main()
 
 char *subString(char s1[], int start, int number)
 {
-    int l = 0, i = 0;
-    while (s1[l] != '\0')
-        l++;
+    int l, i = 0;
+    l=strlen(s1);
     while (start + i < l && i < number)
     {
         s1[i] = s1[start + i - 1];
