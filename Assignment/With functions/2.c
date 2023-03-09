@@ -22,12 +22,8 @@ int main()
 char *subString(char s1[], int start, int number)
 {
     int l, i = 0;
-    l=strlen(s1);
-    while (start + i < l && i < number)
-    {
-        s1[i] = s1[start + i - 1];
-        i++;
-    }
-    s1[i] = '\0';
+    l = strlen(s1);
+    strncpy(s1, s1 + start - 1, number);
+    s1[number] = '\0';
     return s1;
 }
