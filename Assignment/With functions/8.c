@@ -3,7 +3,7 @@
 
 int main()
 {
-    int n, exist=0, i;
+    int n, exist = 0, i;
     puts("Enter the total number of names: ");
     scanf("%d", &n);
     n++;
@@ -15,9 +15,9 @@ int main()
     gets(s2);
     for (i = 1; i < n; i++)
     {
-        if(strcmp(s1[i],s2)==0)
+        if (strcmp(s1[i], s2) == 0)
         {
-            exist=1;
+            exist = 1;
             break;
         }
     }

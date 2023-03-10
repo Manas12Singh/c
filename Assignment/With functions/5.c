@@ -3,7 +3,7 @@
 
 int main()
 {
-    char s1[300],s2[300];
+    char s1[300], s2[300];
     int i = 0, j = 0, flag = 1;
     puts("Enter the string:");
     gets(s1);
@@ -11,30 +11,30 @@ int main()
     {
         if (flag)
         {
-            if(strncmp("a ",strlwr(s1+i),2)==0)
+            if (strncmp("a ", strlwr(s1 + i), 2) == 0)
             {
-                i+=2;
+                i += 2;
                 continue;
             }
-            else if (strncmp("a\0",strlwr(s1+i),2)==0)
+            else if (strncmp("a\0", strlwr(s1 + i), 2) == 0)
             {
                 break;
             }
-            else if(strncmp("an ",strlwr(s1+i),3)==0)
+            else if (strncmp("an ", strlwr(s1 + i), 3) == 0)
             {
-                i+=3;
+                i += 3;
                 continue;
             }
-            else if(strncmp("an\0",strlwr(s1+i),3)==0)
+            else if (strncmp("an\0", strlwr(s1 + i), 3) == 0)
             {
                 break;
             }
-            else if(strncmp("the ",strlwr(s1+i),4)==0)
+            else if (strncmp("the ", strlwr(s1 + i), 4) == 0)
             {
-                i+=4;
+                i += 4;
                 continue;
             }
-            else if(strncmp("the\0",strlwr(s1+i),4)==0)
+            else if (strncmp("the\0", strlwr(s1 + i), 4) == 0)
             {
                 break;
             }

@@ -20,9 +20,7 @@ char *removeSpace(char s1[])
     {
         s1[i] = s1[i + j];
         if (s1[i] == ' ')
-        {
             j++;
-        }
         else
             i++;
     }
