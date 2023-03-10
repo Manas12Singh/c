@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-char *rev(char s1[]);
+char *reverse(char s1[]);
 
 int main()
 {
@@ -25,14 +25,18 @@ int main()
     return 0;
 }
 
-char *rev(char s1[])
+char *reverse(char s1[])
 {
     static char s2[100];
     int i = 0, l = 0;
     while (s1[l] != '\0')
         l++;
     while (s1[i] != '\0')
-        s2[--l] = s1[i++];
+    {
+        l--;
+        s2[l] = s1[i];
+        i++;
+    }
     s2[i] = '\0';
     return s2;
 }
