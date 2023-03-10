@@ -10,7 +10,7 @@ int main()
     gets(s1);
     position = firstBlankSpace(s1);
     if (position > 0)
-        puts("First blank space occurs at %d", position);
+        printf("First blank space occurs at %d", position);
     else
         puts("Blank Space not found");
     return 0;
