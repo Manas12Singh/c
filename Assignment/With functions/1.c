@@ -5,7 +5,7 @@ char *reverse(char s1[]);
 
 int main()
 {
-    int i = 0, flag;
+    int flag;
     char s1[200];
     puts("Enter the string: ");
     gets(s1);
