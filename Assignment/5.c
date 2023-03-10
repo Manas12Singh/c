@@ -2,7 +2,7 @@
 
 int main()
 {
-    char s1[300];
+    char s1[300],s2[300];
     int i = 0, j = 0, flag = 1;
     puts("Enter the string:");
     gets(s1);
@@ -41,11 +41,11 @@ int main()
             flag = 1;
         else
             flag = 0;
-        s1[j] = s1[i];
+        s2[j] = s1[i];
         i++, j++;
     }
-    s1[j] = '\0';
+    s2[j] = '\0';
     puts("Formatted string:");
-    puts(s1);
+    puts(s2);
     return 0;
 }
