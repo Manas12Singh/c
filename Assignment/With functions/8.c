@@ -3,7 +3,7 @@
 
 int main()
 {
-    int n, j, exist=0, i;
+    int n, exist=0, i;
     puts("Enter the total number of names: ");
     scanf("%d", &n);
     n++;
@@ -13,7 +13,7 @@ int main()
         gets(s1[i]);
     puts("Search Name:");
     gets(s2);
-    for (i = 0; i < n; i++)
+    for (i = 1; i < n; i++)
     {
         if(strcmp(s1[i],s2)==0)
         {
