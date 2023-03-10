@@ -12,10 +12,10 @@ int main()
     puts("Enter the sub-string:");
     gets(T);
     n = subStrEnd(S, T);
-    if (n == 0)
-        printf("The sub-string occurs at the end of main string");
+    if (n == 1)
+        puts("The sub-string occurs at the end of main string");
     else
-        printf("The sub-string does not occurs at the end of main string");
+        puts("The sub-string does not occurs at the end of main string");
     return 0;
 }
 
@@ -23,5 +23,5 @@ int subStrEnd(char S[], char T[])
 {
     int l1 = strlen(S), l2 = strlen(T);
     int n = strcmp(S + l1 - l2, T);
-    return n;
+    return !n;
 }
