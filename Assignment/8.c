@@ -26,10 +26,12 @@ int main()
         }
         if (exist == 1 && s1[i][j] == '\0' && s2[j] == '\0')
             break;
+        else
+            exist = 0;
     }
     if (exist == 1)
         printf("%s is found at %d position.", s2, i);
     else
-        printf("%s is not found int the list.", s2);
+        printf("%s is not found in the list.", s2);
     return 0;
 }
