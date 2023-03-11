@@ -12,7 +12,7 @@ int main()
         gets(s1[i]);
     puts("Search Name:");
     gets(s2);
-    for (i = 0; i < n; i++)
+    for (i = 1; i < n; i++)
     {
         j = 0, exist = 1;
         while (s1[i][j] != '\0' && s2[j] != '\0')
