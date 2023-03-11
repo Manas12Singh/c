@@ -16,27 +16,15 @@ int main()
                 i += 2;
                 continue;
             }
-            else if (strncmp("a\0", strlwr(s1 + i), 2) == 0)
-            {
-                break;
-            }
             else if (strncmp("an ", strlwr(s1 + i), 3) == 0)
             {
                 i += 3;
                 continue;
             }
-            else if (strncmp("an\0", strlwr(s1 + i), 3) == 0)
-            {
-                break;
-            }
             else if (strncmp("the ", strlwr(s1 + i), 4) == 0)
             {
                 i += 4;
                 continue;
-            }
-            else if (strncmp("the\0", strlwr(s1 + i), 4) == 0)
-            {
-                break;
             }
         }
         if (s1[i] == ' ')
