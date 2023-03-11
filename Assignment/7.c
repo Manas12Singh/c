@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-char *StrConcate(char s1[], char s2[]);
+char *strConcate(char s1[], char s2[]);
 
 int main()
 {
@@ -9,13 +9,13 @@ int main()
     gets(s1);
     puts("Enter second String:");
     gets(s2);
-    char *s3 = StrConcate(s1, s2);
+    char *s3 = strConcate(s1, s2);
     puts("Concated string:");
     puts(s3);
     return 0;
 }
 
-char *StrConcate(char s1[], char s2[])
+char *strConcate(char s1[], char s2[])
 {
     int i = 0, j = 0;
     while (s1[i] != '\0')
