@@ -1,36 +1,10 @@
 #include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <stdbool.h>
+#include <ctype.h>
 
-bool s(char *sen, char *search)
-{
-    int k = 1, i = 0;
-    while (*sen != '\0')
-    {
-        if (k == 1 || *(sen - 1) == ' ')
-        {
-            if (*sen == search[i])
-            {
-                i++;
-                if (i == strlen(search) && (*(sen + 1) == ' ' || *(sen + 1) == '\0'))
-                    return true;
-            }
-            else
-                i = 0;
-        }
-        k = 0;
-        sen++;
-    }
-    return false;
+int main(){
+    for(int i=0;i<200;i++)
+        if(ispunct(i))
+            printf("%d:%c\n",i,i);
+    return 0;
 }
-void main()
-{
-    char sen[100], search[20];
-    gets(sen);
-    gets(search);
-    if (s(sen, search))
-        printf("Found");
-    else
-        printf("Not found");
-}
+
