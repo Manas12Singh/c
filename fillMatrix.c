@@ -39,7 +39,7 @@ int main()
     for (i = 0; i < n; i++)
     {
         for (j = 0; j < n; j++)
-            printf("%d ", m[i][j]);
+            printf("%2d   ", m[i][j]);
         printf("\n");
     }
     return 0;
