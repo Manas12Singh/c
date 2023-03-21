@@ -13,15 +13,28 @@ int main()
     i = 1, j = n - 1, k = n / 2;
     while (i <= sq)
     {
-        if(m[j][k]==0)
-            m[j][k]=i++;
-        
-        /* if (j >= n && k >= n)
+        if (flag)
+        {
+            if (m[j][k] == 0)
+                m[j][k] = i++, j++, k++;
+            else
+                k--, flag = 0;
+        }
+        else
+        {
+            if (m[j][k] == 0)
+                m[j][k] = i++, j++, k++, flag = 1;
+            else
+                j++;
+        }
+        if (j >= n && k >= n)
             j = 0, k = 0;
         else if (j >= n)
             j = 0;
         else if (k >= n)
-            k = 0; */
+            k = 0;
+        else if (k < 0)
+            k = n - 1;
     }
     for (i = 0; i < n; i++)
     {
