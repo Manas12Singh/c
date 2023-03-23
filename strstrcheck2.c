@@ -5,7 +5,7 @@ int main()
     char s1[200], s2[200];
     gets(s1);
     gets(s2);
-    int i = 0, j, m, flag = 0;
+    int i = 0, j, flag = 0;
     while (s1[i] != '\0')
     {
         j = 0;
