@@ -13,7 +13,7 @@ int main()
         {
             s1[j] = s1[k + j];
             if (s1[j] == ch)
-                k++,f++;
+                k++, f++;
             else
                 j++;
         }
