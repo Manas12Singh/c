@@ -31,10 +31,10 @@ int main()
                 student[i] = student[j];
                 student[j] = temp;
             }
-    printf("Name\tSemester No.\tPercentage\n");
+    printf("Name\t\tSemester No.\tPercentage\n");
     for (int i = 0; i < n; i++)
     {
-        printf("%s\t%-12d\t%d%\n", student[i].name, student[i].sem, student[i].marks);
+        printf("%s\t\t%d\t\t%d\n", student[i].name, student[i].sem, student[i].marks);
     }
     return 0;
 }
