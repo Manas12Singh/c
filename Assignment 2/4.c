@@ -18,17 +18,15 @@ int main()
 
 int substr(char *p1, char *p2)
 {
-    int i = 0, j;
-    while (p1[i] != '\0')
+    int j;
+    while (*p1 != '\0')
     {
         j = 0;
-        while (p1[i + j] == p2[j] && p2[j] != '\0')
+        while (*(p1 + j) == *(p2 + j) && *(p2 + j) != '\0')
             j++;
-        if (p2[j] == '\0')
-        {
+        if (*(p2 + j) == '\0')
             return 1;
-        }
-        i++;
+        p1++;
     }
     return 0;
 }
