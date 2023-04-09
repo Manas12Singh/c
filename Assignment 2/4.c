@@ -24,7 +24,7 @@ int substr(char *p1, char *p2)
         j = 0;
         while (*(p1 + j) == *(p2 + j) && *(p2 + j) != '\0')
             j++;
-        if (p2[j] == '\0')
+        if (*(p2 + j) == '\0')
             return 1;
         p1++;
     }
