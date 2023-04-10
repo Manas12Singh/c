@@ -15,7 +15,7 @@ int main()
     char *p1 = s1, *p2 = s2;
     puts("Enter a string-1:");
     gets(s1);
-    puts("Enter a string-1:");
+    puts("Enter a string-2:");
     gets(s2);
     int flag = anagram(p1, p2);
     if (flag == 1)
