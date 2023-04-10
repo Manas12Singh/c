@@ -25,9 +25,7 @@ int main()
         scanf("%d%c", &item[i].quantity);
     }
     for (int i = 0; i < n; i++)
-    {
         totalcost += item[i].price * item[i].quantity;
-    }
     printf("Total cost of the inventory(Rs.): %d\n", totalcost);
     return 0;
 }
