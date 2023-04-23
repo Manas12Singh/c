@@ -1,32 +1,20 @@
 #include <stdio.h>
-#include <string.h>
-int compare(char[], char[]);
-void main()
+
+int main()
 {
-    char wrd1[20], wrd2[20];
-    printf("Enter string 1: ");
-    gets(wrd1);
-    printf("Enter string 2: ");
-    gets(wrd2);
-    if (compare(wrd1, wrd2))
-        printf("The strings are equal.");
-    else
-        printf("The strings are not equal.");
-}
-int compare(char wrd1[], char wrd2[])
-{
-    int i = 0;
-    if (strlen(wrd1) == strlen(wrd2))
+    char ch[500], ch2[11];
+    int a[10], i = 0;
+    printf("Enter an example of the pattern (max 10 letters): ");
+    gets(ch2);
+    printf("Enter the text: ");
+    gets(ch);
+    while (ch2[i] != '\0')
     {
-        while (wrd1[i] != '\0')
-        {
-            if (wrd1[i] == wrd2[i])
-                return 1;
-            else
-                return 0;
-            i++;
-        }
+        if (ch2[i] >= 'A' && ch2[i] <= 'Z')
+            a[i] += 2;
+        else if (ch2[i] >= 'a' && ch2[i] <= 'z')
+            a[i] += 1;
     }
-    else
-        return 0;
+
+    return 0;
 }
