@@ -2,16 +2,15 @@
 
 int main()
 {
-    int n, sum = 0;
-    scanf("%d", &n);
+    long unsigned n, sum = 0;
+    scanf("%lu", &n);
     while (1)
     {
         if (n == 0)
         {
             if (sum < 10)
                 break;
-            else
-                n = sum;
+            n = sum;
             sum = 0;
         }
         sum += n % 10;
