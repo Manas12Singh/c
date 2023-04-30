@@ -10,9 +10,9 @@ struct item
 int main()
 {
     int n, totalcost = 0;
-    char ch;
     printf("Enter the No. of item(N): ");
-    scanf("%d%c", &n, &ch);
+    scanf("%d", &n);
+    getchar();
     struct item item[n];
     printf("Enter the details:\n");
     for (int i = 0; i < n; i++)
@@ -22,7 +22,8 @@ int main()
         printf("Unit Price(Rs.): ");
         scanf("%d", &item[i].price);
         printf("Quantity (in Nos): ");
-        scanf("%d%c", &item[i].quantity);
+        scanf("%d", &item[i].quantity);
+        getchar();
     }
     for (int i = 0; i < n; i++)
         totalcost += item[i].price * item[i].quantity;
