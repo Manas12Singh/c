@@ -1,24 +1,22 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int fib(int n)
+int fib(int *a,int n)
 {
-    FILE *f1;
-    int arr[n],f;
-    f1=fopen("fib.txt","w+");
-    fread(arr,sizeof(arr),1,f1);
-    if(arr[n-1]!=0)
-        return arr[n-1]; 
-    if(n<=2)
-        f=1;
-    else
-        f=fib(n-1)+fib(n-2);
-    arr[n-1]=f;
-    fwrite(arr,sizeof(arr),1,f1);
-    fclose(f1);
-    return f;
+    FILE *fp=fopen("fib.txt","r+");
+    if(fp=NULL)
+    {
+        FILE *fp=fopen("fib.txt","w");
+        for (int i=0;i<n;i++)
+        {
+            
+        }
+    }
 }
 
 int main(){
-    printf("%d",fib(5));
+    int n;
+    scanf("%d",&n);
+    printf("%d",fib())
     return 0;
 }
