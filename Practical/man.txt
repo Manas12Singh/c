@@ -1,0 +1,4 @@
+My name is Manas Singh
+This is a file i needed for testing
+Don't copy it as a whole
+Btw strcpy is a good function
