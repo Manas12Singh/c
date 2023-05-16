@@ -1,36 +1,26 @@
 #include <stdio.h>
-#include <ctype.h>
-
-int main()
+typedef struct
 {
-    FILE *fp = fopen("man.txt", "a");
-    long unsigned i = 0, n;
-    n = ftell(fp);
-    fclose(fp);
-    long unsigned vow = 0, cons = 0;
-    fp = fopen("man.txt", "r");
-    char ch[n];
-    fscanf(fp, "%[^\n]s", ch);
-    while (ch[i] != '\0')
+    char Name[20];
+    int rollNumber;
+    struct
     {
-        if (isalpha(ch[i]))
-        {
-            switch (tolower(ch[i]))
-            {
-            case 'a':
-            case 'e':
-            case 'i':
-            case 'o':
-            case 'u':
-                vow++;
-                break;
-            default:
-                cons++;
-            }
-        }
-        i++;
-    }
-    printf("Vow: %lu\nCons: %lu\n", vow, cons);
-    fclose(fp);
-    return 0;
+        int day, month, year;
+    } dateOfBirth, dateOfAdmission;
+} Student;
+void main()
+{
+    Student stud;
+    printf("Enter Name: ");
+    gets(stud.Name);
+    printf("Enter Roll No.: ");
+    scanf("%d", &stud.rollNumber);
+    printf("Enter Date of Birth (DD/MM/YYYY): ");
+    scanf("%d/%d/%d", &stud.dateOfBirth.day, &stud.dateOfBirth.month, &stud.dateOfBirth.year);
+    printf("Enter Date of admission (DD/MM/YYYY): ");
+    scanf("%d/%d/%d", &stud.dateOfAdmission.day, &stud.dateOfAdmission.month, &stud.dateOfAdmission.year);
+    printf("\nName: %s\n", stud.Name);
+    printf("Roll No.: %d\n", stud.rollNumber);
+    printf("Date of Birth: %d/%d/%d\n", stud.dateOfBirth.day, stud.dateOfBirth.month, stud.dateOfBirth.year);
+    printf("Date of Admission: %d/%d/%d\n", stud.dateOfAdmission.day, stud.dateOfAdmission.month, stud.dateOfAdmission.year);
 }

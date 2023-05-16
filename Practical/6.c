@@ -1,13 +1,9 @@
 #include <stdio.h>
-
 typedef struct
 {
-    char Name[20];
-    char EmpCode[5];
-    char DOB[20];
+    char Name[20], EmpCode[5], DOB[20];
     int Salary;
 } Employee;
-
 void display(Employee emp)
 {
     puts("\n\t\tABC Corporation\n");
@@ -16,8 +12,7 @@ void display(Employee emp)
     printf("DOB\t\t:%s\n", emp.DOB);
     printf("Net Salary\t:Rs. %d/-", emp.Salary);
 }
-
-int main()
+void main()
 {
     Employee emp;
     printf("Enter the Name: ");
@@ -29,5 +24,4 @@ int main()
     printf("Enter Net Salary(in Rs.): ");
     scanf("%d", &emp.Salary);
     display(emp);
-    return 0;
 }
