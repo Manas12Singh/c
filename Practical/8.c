@@ -10,9 +10,7 @@ int main()
     long unsigned vow = 0, cons = 0;
     fp = fopen("ThreeParas.txt", "r");
     char ch[n];
-    //fscanf(fp, "%s", ch);
-    puts(fp->_ptr);
-    //puts(ch);
+    fscanf(fp, "%[^EOF]s", ch);
     while (ch[i] != '\0')
     {
         if (isalpha(ch[i]))
