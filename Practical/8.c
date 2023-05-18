@@ -1,16 +1,22 @@
 #include <stdio.h>
 #include <ctype.h>
 
+long unsigned size(const char *ch)
+{
+    FILE *fp = fopen(ch, "a");
+    long unsigned n = ftell(fp);
+    fclose(fp);
+    return n;
+}
+
 int main()
 {
-    FILE *fp = fopen("ThreeParas.txt", "a");
-    long unsigned i = 0, n;
-    n = ftell(fp);
-    fclose(fp);
+    long unsigned i = 0, n = size("ThreeParas.txt");
+    FILE *fp = fopen("ThreeParas.txt", "r");
     long unsigned vow = 0, cons = 0;
-    fp = fopen("ThreeParas.txt", "r");
     char ch[n];
-    fscanf(fp, "%[^EOF]s", ch);
+    
+    fscanf(fp, "%[^EOF]", ch);
     while (ch[i] != '\0')
     {
         if (isalpha(ch[i]))
