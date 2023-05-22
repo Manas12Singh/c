@@ -1,4 +1,6 @@
-My name is Manas Singh
-This is a file i needed for testing
-Don't copy it as a whole
-Btw strcpy is a good function
+In the realm of transportation, electric vehicles (EVs) have gained significant traction in recent years. With zero tailpipe emissions, EVs offer a greener alternative to traditional internal combustion engine vehicles.
+
+The field of biotechnology continues to push boundaries in various domains, from healthcare to agriculture. Genetic engineering techniques like CRISPR-Cas9 have revolutionized gene editing, enabling precise modifications in DNA sequences.
+
+Augmented reality (AR) has emerged as a powerful tool for enhancing user experiences in diverse industries. By overlaying digital information in the real world, AR enables immersive and interactive interactions.
+

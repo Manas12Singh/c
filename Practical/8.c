@@ -1,27 +1,24 @@
 #include <stdio.h>
 #include <ctype.h>
-
-long unsigned size(const char *ch)
-{
-    FILE *fp = fopen(ch, "a");
-    long unsigned n = ftell(fp);
-    fclose(fp);
-    return n;
-}
-
 int main()
 {
-    long unsigned i = 0, n = size("ThreeParas.txt");
-    FILE *fp = fopen("ThreeParas.txt", "r");
-    long unsigned vow = 0, cons = 0;
-    char ch[n];
-    
-    fscanf(fp, "%[^EOF]", ch);
-    while (ch[i] != '\0')
+    FILE *fp = fopen("ThreeParas.txt", "w+");
+    char c[1000];
+    puts("Enter 3 paras:");
+    for (int i = 0; i < 3; i++)
     {
-        if (isalpha(ch[i]))
-        {
-            switch (tolower(ch[i]))
+        fgets(c, 1000, stdin);
+        fprintf(fp, "%s", c);
+    }
+    rewind(fp);
+    long unsigned vow = 0, cons = 0, i = 0;
+    char ch;
+    puts("\nContent of file ThreeParas.txt:\n");
+    while ((ch = fgetc(fp)) != EOF)
+    {
+        putchar(ch);
+        if (isalpha(ch))
+            switch (tolower(ch))
             {
             case 'a':
             case 'e':
@@ -33,10 +30,9 @@ int main()
             default:
                 cons++;
             }
-        }
         i++;
     }
-    printf("Vow: %lu\nCons: %lu\n", vow, cons);
+    printf("Vowels: %lu\nConsonants: %lu\n", vow, cons);
     fclose(fp);
     return 0;
 }
