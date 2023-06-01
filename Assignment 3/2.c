@@ -7,19 +7,16 @@ FILE *merge_files(FILE *even, FILE *odd)
     long n;
     while (!feof(even) || !feof(odd))
     {
-        if (flag == 1)
+        if (!feof(odd))
         {
             fscanf(odd, "%ld ", &n);
-            if (!feof(even))
-                flag = 0;
+            fprintf(merge, "%ld ", n);
         }
-        else
+        if (!feof(even))
         {
             fscanf(even, "%ld ", &n);
-            if (!feof(odd))
-                flag = 1;
+            fprintf(merge, "%ld ", n);
         }
-        fprintf(merge, "%ld ", n);
     }
     rewind(merge);
     return merge;
