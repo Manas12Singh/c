@@ -1,14 +1,20 @@
 #include <stdio.h>
 
-int fib(int n)
+typedef struct man
 {
-    if(n<=2)
-        return 1;
-    else
-        return fib(n-1)+fib(n-2);
+    char ch;
+    int n;
+} men;
+
+void def(men *m)
+{
+    men *m1 = {'a', 23};
+    m = m1;
 }
 
-int main(){
-    printf("%d",fib(5));
-    return 0;
+void main()
+{
+    men m1, m2;
+    def(&m1);
+    printf("%c %d", m1.ch, m1.n);
 }
