@@ -1,0 +1,5 @@
+E101 Anuj Saini Production 120000
+E102 Bhushan Singh Quality Control 110000
+E103 Chetan Nayak Accounts 80000
+E104 Devendra Sharma Inventory 100000
+E105 Jajendra K. Dispatch 50000

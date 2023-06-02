@@ -1,0 +1,1 @@
+2 + 2 = 4 but 2 * 2 is also 4.Maths is quite interesting
