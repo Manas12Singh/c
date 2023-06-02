@@ -3,24 +3,21 @@
 
 void main()
 {
-    char ecode[5], code[5];
-    int flag = 0, sal;
+    char ecode[5], data[100];
+    char *sal = NULL;
     FILE *fp = fopen("Database.txt", "r");
     scanf("%s", ecode);
     while (!feof(fp))
     {
-        fscanf(fp, "%s", code);
-        if (strcmp(ecode, code) == 0)
+        fgets(data, 100, fp);
+        if (strncmp(ecode, data, 4) == 0)
         {
-            flag = 1;
+            sal = strrchr(data, ' ') + 1;
             break;
         }
     }
-    if (flag == 1)
-    {
-        fscanf(fp, " %d", &sal);
-        printf("%s %d", ecode, sal);
-    }
+    if (sal != NULL)
+        printf("Salary: %s", sal);
     else
-        printf("Not found");
+        printf("Not Found");
 }
