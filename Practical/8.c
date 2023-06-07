@@ -11,11 +11,12 @@ int main()
         fprintf(fp, "%s", c);
     }
     rewind(fp);
-    long unsigned vow = 0, cons = 0, i = 0;
+    long unsigned vow = 0, cons = 0;
     char ch;
     puts("\nContent of file ThreeParas.txt:\n");
-    while ((ch = fgetc(fp)) != EOF)
+    while (!feof(fp))
     {
+        ch = fgetc(fp);
         putchar(ch);
         if (isalpha(ch))
             switch (tolower(ch))
@@ -30,7 +31,6 @@ int main()
             default:
                 cons++;
             }
-        i++;
     }
     printf("Vowels: %lu\nConsonants: %lu\n", vow, cons);
     fclose(fp);

@@ -10,8 +10,9 @@ void main()
     fputs(ch, fp1);
     rewind(fp1);
     fp2 = fopen("Modified.txt", "w+");
-    while ((c = fgetc(fp1)) != EOF)
+    while (!feof(fp1))
     {
+        c = fgetc(fp1);
         if (c == ' ')
             continue;
         fputc(c, fp2);
