@@ -1,5 +1,4 @@
 fp = open("ThreeParas.txt")
-i = 0
-while fp.readline() != "":
-    i += 1
-print(i)
+# l=len(fp.readlines())
+c = len(fp.readlines())
+print(c)
