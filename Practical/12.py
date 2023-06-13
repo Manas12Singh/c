@@ -5,5 +5,6 @@ for i in range(n):
     e = input()
     l.append(e)
 l = tuple(l)
+print("Cities are:")
 for i in l:
     print(i)
