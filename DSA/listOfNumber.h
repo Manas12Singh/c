@@ -35,6 +35,17 @@ void addToEnd(struct Node *start)
 
 void addToIndex(struct Node *start)
 {
+    struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
+    unsigned i = 1;
+    int j;
+    printf("Enter the index: ");
+    scanf("%u", &j);
+    printf("Enter the value: ");
+    scanf("%d", &(temp->data));
+    while(i<j || start==NULL)
+    {
+
+    }
 }
 
 void printList(struct Node *start)
