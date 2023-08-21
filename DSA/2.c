@@ -7,7 +7,7 @@ int main()
     {
         int opt;
         system("cls");
-        puts("Options: \n1. Create a new list. \n2. Add element to end of the list. \n3. Add element at an index. \n4. Add element a the starting of the list. \n5. Delete element from the end of the list. \n6. Delete element from the starting of the list. \n7. Delete element from an index. \n8. Search an element in the linked list. \n9. Print the values of the list. \n10. Exit");
+        puts("Options: \n1. Create a new list. \n2. Insert at the Beginning. \n3. Insert at the End. \n4. Insert at a Specific Index. \n5. Delete from the Beginning. \n6. Delete from the End. \n7. Delete from a Specific Index. \n8. Search. \n9. Get the Length. \n10. Print the Linked List. \n11. Exit.");
         printf("Enter your choice (1 to 10): ");
         scanf("%d%*c", &opt);
         switch (opt)
@@ -16,7 +16,7 @@ int main()
             start = newList();
             break;
         case 2:
-            addToEnd(start);
+            start = insertToStart(start);
             break;
         case 3:
             // addToIndex(start);
