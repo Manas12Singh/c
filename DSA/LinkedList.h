@@ -27,25 +27,130 @@ void createList(struct Node **head)
     for (int i = 0; i < n; i++)
     {
         struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
-        scanf("%d",&(temp->data));
-        temp->next=NULL;
-        if (*head==NULL)
-            *head=trav=temp;
+        scanf("%d", &(temp->data));
+        temp->next = NULL;
+        if (*head == NULL)
+            *head = trav = temp;
         else
         {
-            trav->next=temp;
-            trav=trav->next;
+            trav->next = temp;
+            trav = trav->next;
         }
     }
 }
 
 void printList(struct Node *head)
 {
-    if (head==NULL)
+    if (head == NULL)
         printf("List is empty.\n");
-    while(head!=NULL)
+    while (head != NULL)
     {
-        printf("%d ",head->data);
-        head=head->next;
+        printf("%d ", head->data);
+        head = head->next;
     }
+    printf("\n");
+}
+
+void insertInBegin(struct Node **head, int value)
+{
+    struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
+    if (!temp)
+    {
+        printf("Memory full!\n");
+        return;
+    }
+    temp->data = value;
+    temp->next = *head;
+    *head = temp;
+}
+
+void insertAtEnd(struct Node **head, int value)
+{
+    struct Node *trav = *head, *temp = (struct Node *)malloc(sizeof(struct Node));
+    if (!temp)
+    {
+        printf("Memory full!\n");
+        return;
+    }
+    temp->data = value;
+    temp->next = NULL;
+    if (!*head)
+    {
+        *head = temp;
+        return;
+    }
+    while (trav->next != NULL)
+        trav = trav->next;
+    trav->next = temp;
+}
+
+void insertAfterk(struct Node **head, int value, int k)
+{
+    struct Node *trav = *head, *temp = (struct Node *)malloc(sizeof(struct Node));
+    if (!temp)
+    {
+        printf("Memory full!\n");
+        return;
+    }
+    temp->data = value;
+    temp->next = NULL;
+    if (!*head)
+    {
+        *head = temp;
+        return;
+    }
+    while (trav->next != NULL)
+    {
+        if (trav->data == k)
+            break;
+        trav = trav->next;
+    }
+    temp->next = trav->next;
+    trav->next = temp;
+}
+
+void insertBeforek(struct Node **head, int value, int k)
+{
+    struct Node *trav = *head, *temp = (struct Node *)malloc(sizeof(struct Node));
+    if (!temp)
+    {
+        printf("Memory full!\n");
+        return;
+    }
+    temp->data = value;
+    temp->next = NULL;
+    if (!*head || (*head)->data == k)
+    {
+        temp->next = *head;
+        *head = temp;
+        return;
+    }
+    int i = 0;
+    while (trav->next != NULL)
+    {
+        if (trav->next->data == k)
+        {
+            i = 1;
+            break;
+        }
+        trav = trav->next;
+    }
+    if (i == 1)
+    {
+        temp->next = trav->next;
+        trav->next = temp;
+    }
+    else
+    {
+        temp->next = *head;
+        *head = temp;
+    }
+}
+
+void freeList(struct Node **head)
+{
+    if ((*head)->next != NULL)
+        freeList(&((*head)->next));
+    free(*head);
+    *head = NULL;
 }
