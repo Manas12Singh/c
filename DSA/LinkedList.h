@@ -99,10 +99,8 @@ void insertAfterk(struct Node **head, int value, int k)
         *head = temp;
         return;
     }
-    while (trav->next != NULL)
+    while (trav->next != NULL && trav->data != k)
     {
-        if (trav->data == k)
-            break;
         trav = trav->next;
     }
     temp->next = trav->next;
