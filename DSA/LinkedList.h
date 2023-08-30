@@ -125,26 +125,18 @@ void insertBeforek(struct Node **head, int value, int k)
         *head = temp;
         return;
     }
-    int i = 0;
     while (trav->next != NULL)
     {
         if (trav->next->data == k)
         {
-            i = 1;
-            break;
+            temp->next = trav->next;
+            trav->next = temp;
+            return;
         }
         trav = trav->next;
     }
-    if (i == 1)
-    {
-        temp->next = trav->next;
-        trav->next = temp;
-    }
-    else
-    {
-        temp->next = *head;
-        *head = temp;
-    }
+    temp->next = *head;
+    *head = temp;
 }
 
 void freeList(struct Node **head)
