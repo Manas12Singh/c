@@ -139,9 +139,103 @@ void insertBeforek(struct Node **head, int value, int k)
     *head = temp;
 }
 
+void deleteBegin(struct Node **head)
+{
+    if (!*head)
+    {
+        printf("List already empty!\n");
+        return;
+    }
+    struct Node *temp = *head;
+    *head = (*head)->next;
+    free(temp);
+}
+
+void deleteEnd(struct Node **head)
+{
+    if (!*head)
+    {
+        printf("List already empty!\n");
+        return;
+    }
+    struct Node *temp = *head, *trav = *head;
+    if ((*head)->next == NULL)
+    {
+        *head = (*head)->next;
+        free(temp);
+        return;
+    }
+    while (trav->next->next != NULL)
+        trav = trav->next;
+    temp = trav->next;
+    trav->next = NULL;
+    free(temp);
+}
+
+void deletek(struct Node **head, int k)
+{
+    if (!*head)
+    {
+        printf("List already empty!\n");
+        return;
+    }
+    struct Node *temp, *trav = *head;
+    if ((*head)->next == NULL && (*head)->data != k)
+    {
+        printf("%d does not exits in list.\n", k);
+        return;
+    }
+    if ((*head)->data == k)
+    {
+        temp = *head;
+        *head = (*head)->next;
+        free(temp);
+        return;
+    }
+    while (trav->next->next != NULL && trav->next->data != k)
+        trav = trav->next;
+    if (trav->next->data == k)
+    {
+        temp = trav->next;
+        trav->next = trav->next->next;
+        free(temp);
+        return;
+    }
+    else
+        printf("%d does not exits in list.\n", k);
+}
+
+void deleteAllk(struct Node **head, int k)
+{
+    if (!*head)
+    {
+        printf("List already empty!\n");
+        return;
+    }
+    struct Node *temp;
+    while (*head != NULL && (*head)->data == k)
+    {
+        temp = *head;
+        *head = (*head)->next;
+        free(temp);
+    }
+    struct Node *trav = *head;
+    while (trav != NULL && trav->next != NULL)
+    {
+        if (trav->next->data == k)
+        {
+            temp = trav->next;
+            trav->next = trav->next->next;
+            free(temp);
+        }
+        else
+            trav = trav->next;
+    }
+}
+
 void freeList(struct Node **head)
 {
-    if ((*head)->next != NULL)
+    if (!*head && (*head)->next != NULL)
         freeList(&((*head)->next));
     free(*head);
     *head = NULL;
