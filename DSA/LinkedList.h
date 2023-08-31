@@ -100,9 +100,7 @@ void insertAfterk(struct Node **head, int value, int k)
         return;
     }
     while (trav->next != NULL && trav->data != k)
-    {
         trav = trav->next;
-    }
     temp->next = trav->next;
     trav->next = temp;
 }
@@ -190,7 +188,7 @@ void deletek(struct Node **head, int k)
         free(temp);
         return;
     }
-    while (trav->next->next != NULL && trav->next->data != k)
+    while (trav->next != NULL && trav->next->data != k)
         trav = trav->next;
     if (trav->next->data == k)
     {
