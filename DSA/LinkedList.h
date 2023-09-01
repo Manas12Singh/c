@@ -287,7 +287,6 @@ void deletek(struct Node **head, int k)
 
         // Free the memory of the deleted node
         free(temp);
-        return;
     }
     else
     {
