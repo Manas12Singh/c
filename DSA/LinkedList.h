@@ -272,6 +272,7 @@ void deletek(struct Node **head, int k)
 
         // Free the memory of the deleted node
         free(temp);
+        return;
     }
 
     // Traverse the linked list until the next node contains the value k or the end of the list is reached
