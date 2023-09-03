@@ -43,7 +43,7 @@ void createList(struct Node **head)
         temp->next = NULL;
 
         // Add the node to the list
-        if (*head == NULL)
+        if (!*head)
             *head = trav = temp;
         else
         {

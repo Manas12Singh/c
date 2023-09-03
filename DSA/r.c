@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "LinkedList.h"
+#include "doublyLinkedList.h"
 int main()
 {
     struct Node *head = NULL;
@@ -17,10 +17,10 @@ int main()
     // printList(head);
     // deleteEnd(&head);
     // printList(head);
-    deletek(&head, 5);
+    // deletek(&head, 5);
     // printList(head);
     // deleteAllk(&head, 5);
     printList(head);
     freeList(&head);
-    // printList(head);
+    printList(head);
 }
