@@ -74,7 +74,7 @@ void printList(struct Node *head)
     printf("\n");
 }
 
-void insertInBegin(struct Node **head, int value)
+void insertAtBegin(struct Node **head, int value)
 {
     // Allocate memory for a new node
     struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
