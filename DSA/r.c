@@ -11,7 +11,7 @@ int main()
     // printList(head);
     // insertAfterk(&head, 5, 3);
     // printList(head);
-     insertBeforek(&head, 5, 3);
+    // insertBeforek(&head, 5, 3);
     // printList(head);
     // deleteBegin(&head);
     // printList(head);
@@ -19,7 +19,7 @@ int main()
     // printList(head);
     // deletek(&head, 5);
     // printList(head);
-    // deleteAllk(&head, 5);
+     deleteAllk(&head, 5);
     printList(head);
     freeList(&head);
     // printList(head);
