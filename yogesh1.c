@@ -9,6 +9,7 @@ void push(char st[], int *top, int n, char ch)
         st[++(*top)] = ch;
     }
 }
+
 char pop(char st[], int *top)
 {
     if ((*top) == -1)
@@ -24,36 +25,35 @@ char pop(char st[], int *top)
 
 char *removeOuterParentheses(char *s)
 {
-    int i = 0, top = -1, flag = 1;
+    int i = 0, top = -1, flag = 0;
     char stack[strlen(s)];
+
     for (i = 0; i < strlen(s); i++)
     {
         if (s[i] == '(')
         {
-            if (flag == 0)
+            if (flag != 0)
             {
                 push(stack, &top, strlen(s), '(');
-                flag++;
             }
-            else
-                flag = 0;
+            flag++;
         }
         else if (s[i] == ')')
         {
-            if (flag == 1)
+            flag--;
+            if (flag != 0)
             {
                 push(stack, &top, strlen(s), ')');
-                flag--;
             }
-            else
-                flag = 1;
         }
     }
+
     i = top;
     s[++i] = '\0';
     while (i >= 0)
     {
         s[--i] = pop(stack, &top);
     }
+
     return s;
 }

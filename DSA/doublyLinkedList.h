@@ -187,6 +187,8 @@ void insertAfterk(struct Node **head, int val, int k)
     // Insert the new node after the node with the value k
     temp->prev = trav;
     temp->next = trav->next;
+    if (trav->next)
+        trav->next->prev = temp;
     trav->next = temp;
 }
 
@@ -368,12 +370,12 @@ void deleteAllk(struct Node **head, int k)
             if (trav == *head)
                 *head = trav->next;
 
-            // Free the memory allocated for the current node
+            temp = trav;
+            trav = trav->next;
             free(temp);
         }
-
-        // Move to the next node
-        trav = trav->next;
+        else
+            trav = trav->next;
     }
 }
 
