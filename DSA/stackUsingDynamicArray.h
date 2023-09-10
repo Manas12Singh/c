@@ -7,21 +7,21 @@ struct stack
     int capacity, size, top;
 };
 
-void intialize(struct stack **s1, int cap)
+void intialize(struct stack **s1)
 {
     *s1 = (struct stack *)malloc(sizeof(struct stack));
-    (*s1)->capacity = cap;
+    (*s1)->capacity = 2;
     (*s1)->size = 0;
     (*s1)->top = -1;
-    (*s1)->arr = (int *)malloc(sizeof(int) * cap);
+    (*s1)->arr = (int *)malloc(sizeof(int) * 2);
 }
 
 void push(struct stack *s1, int val)
 {
     if (s1->size == s1->capacity)
     {
-        printf("Stack already full!\n");
-        return;
+        s1->arr = (int *)realloc(s1->arr, sizeof(int) * (2 * s1->capacity));
+        s1->capacity *= 2;
     }
     s1->top++;
     s1->arr[s1->top] = val;
@@ -38,6 +38,11 @@ void pop(struct stack *s1)
     printf("%d\n", s1->arr[s1->top]);
     s1->top--;
     s1->size--;
+    if (s1->size % 2 == 0)
+    {
+        s1->capacity /= 2;
+        s1->arr = (int *)realloc(s1->arr, sizeof(int) * s1->capacity);
+    }
 }
 
 void top(struct stack *s1)
