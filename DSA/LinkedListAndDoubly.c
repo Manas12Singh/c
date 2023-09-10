@@ -1,5 +1,7 @@
-#include "doublyLinkedList.h"
+#include "LinkedList.h"
+// #include "doublyLinkedList.h"
 #include <conio.h>
+
 int main()
 {
     struct Node *head = NULL;
