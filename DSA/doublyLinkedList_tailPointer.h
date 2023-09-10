@@ -55,7 +55,7 @@ void printList(struct Node *head, struct Node *tail)
         printf("%d ", head->data);
         head = head->next;
     }
-    printf("\n");
+    printf("\nReverse: ");
     while (tail)
     {
         printf("%d ", tail->data);
@@ -198,7 +198,7 @@ void deletek(struct Node **head, struct Node **tail, int k)
     struct Node *trav = *head;
     while (trav && trav->data != k)
         trav = trav->next;
-    if (!trav)
+    if (trav)
     {
         if (trav->prev)
             trav->prev->next = trav->next;

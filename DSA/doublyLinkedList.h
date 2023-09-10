@@ -68,7 +68,10 @@ void printList(struct Node *head)
 {
     // Check if the list is empty
     if (!head)
+    {
         printf("List is empty.\n");
+        return;
+    }
 
     // Loop through the linked list
     while (head->next)
@@ -81,7 +84,7 @@ void printList(struct Node *head)
     }
     printf("%d ", head->data);
     // Print a new line after printing all the nodes
-    printf("\n");
+    printf("\nReverse: ");
     while (head)
     {
         printf("%d ", head->data);
