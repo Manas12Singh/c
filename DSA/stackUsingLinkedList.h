@@ -81,7 +81,9 @@ void freeList(struct Node **head)
     *head = NULL;
 }
 
-void empty(struct stack *s1)
+void freeStack(struct stack **s1)
 {
-    freeList(&(s1->head));
+    freeList(&((*s1)->head));
+    free(*s1);
+    *s1 = NULL;
 }

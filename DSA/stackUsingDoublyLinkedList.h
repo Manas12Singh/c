@@ -31,7 +31,7 @@ void push(struct stack *s1, int val)
     temp->prev = NULL;
     temp->data = val;
     temp->next = s1->head;
-    if (!(s1->head))
+    if (s1->head)
         s1->head->prev = temp;
     s1->head = temp;
     s1->size++;
@@ -72,8 +72,8 @@ void pop(struct stack *s1)
     printf("%d\n", s1->head->data);
     struct Node *temp = s1->head;
     s1->head = temp->next;
-    if(!(s1->head))
-        s1->head->prev=NULL;
+    if (!(s1->head))
+        s1->head->prev = NULL;
     free(temp);
     s1->size--;
 }
@@ -86,7 +86,9 @@ void freeList(struct Node **head)
     *head = NULL;
 }
 
-void empty(struct stack *s1)
+void freeStack(struct stack **s1)
 {
-    freeList(&(s1->head));
+    freeList(&((*s1)->head));
+    free(*s1);
+    *s1 = NULL;
 }
