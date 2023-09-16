@@ -212,32 +212,6 @@ void deletek(struct Node **head, struct Node **tail, int k)
     }
 }
 
-void deleteAllk(struct Node **head, struct Node **tail, int k)
-{
-    if (!*head)
-        return;
-    struct Node *temp, *trav = *head;
-    while (trav)
-    {
-        if (trav->data == k)
-        {
-            if (trav->prev)
-                trav->prev->next = trav->next;
-            else
-                *head = trav->next;
-            if (trav->next)
-                trav->next->prev = trav->prev;
-            else
-                *tail = trav->prev;
-            temp = trav;
-            trav = trav->next;
-            free(temp);
-        }
-        else
-            trav = trav->next;
-    }
-}
-
 void freeList(struct Node **head, struct Node **tail)
 {
     if ((*head) == (*tail))
