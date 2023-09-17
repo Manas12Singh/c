@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 struct Node
 {
@@ -11,22 +12,22 @@ void createList(struct Node **head, struct Node **tail)
 {
     if (*head)
     {
-        printf("The list already exists!\n");
+        printf_s("The list already exists!\n");
         return;
     }
     int n;
-    printf("Enter the number of nodes: ");
-    scanf("%d", &n);
+    printf_s("Enter the number of intialising nodes: ");
+    scanf_s("%d", &n);
     if (n < 1)
     {
-        printf("Invalid number.\n");
+        printf_s("Invalid number of node.\n");
         return;
     }
     struct Node *trav = NULL;
     for (int i = 0; i < n; i++)
     {
         struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
-        scanf("%d", &(temp->data));
+        scanf_s("%d", &(temp->data));
         temp->next = NULL;
         if (!*head)
         {
@@ -47,21 +48,21 @@ void printList(struct Node *head, struct Node *tail)
 {
     if (!head)
     {
-        printf("List is empty.\n");
+        printf_s("List is empty.\n");
         return;
     }
     while (head)
     {
-        printf("%d ", head->data);
+        printf_s("%d ", head->data);
         head = head->next;
     }
-    printf("\nReverse: ");
+    printf_s("\nReverse: ");
     while (tail)
     {
-        printf("%d ", tail->data);
+        printf_s("%d ", tail->data);
         tail = tail->prev;
     }
-    printf("\n");
+    printf_s("\n");
 }
 
 void insertAtBegin(struct Node **head, struct Node **tail, int val)
@@ -69,7 +70,7 @@ void insertAtBegin(struct Node **head, struct Node **tail, int val)
     struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
     if (!temp)
     {
-        printf("Memory full!\n");
+        printf_s("Memory full!\n");
         return;
     }
     temp->data = val;
@@ -78,7 +79,7 @@ void insertAtBegin(struct Node **head, struct Node **tail, int val)
     if (*head)
         (*head)->prev = temp;
     else
-        (*tail) = temp;
+        *tail = temp;
     *head = temp;
 }
 
@@ -87,21 +88,16 @@ void insertAtEnd(struct Node **head, struct Node **tail, int val)
     struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
     if (!temp)
     {
-        printf("Memory full!\n");
+        printf_s("Memory full!\n");
         return;
     }
     temp->data = val;
     temp->next = NULL;
-    if (!*head)
-    {
-        temp->prev = NULL;
-        *head = temp;
-    }
-    else
-    {
-        temp->prev = *tail;
+    temp->prev = *tail;
+    if (*head)
         (*tail)->next = temp;
-    }
+    else
+        *head = temp;
     *tail = temp;
 }
 
@@ -110,7 +106,7 @@ void insertAfterk(struct Node **head, struct Node **tail, int val, int k)
     struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
     if (!temp)
     {
-        printf("Memory full!\n");
+        printf_s("Memory full!\n");
         return;
     }
     temp->data = val;
@@ -137,7 +133,7 @@ void insertBeforek(struct Node **head, struct Node **tail, int val, int k)
     struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
     if (!temp)
     {
-        printf("Memory full!\n");
+        printf_s("Memory full!\n");
         return;
     }
     temp->data = val;
@@ -163,7 +159,7 @@ void deleteBegin(struct Node **head, struct Node **tail)
 {
     if (!*head)
     {
-        printf("List is empty.\n");
+        printf_s("List is empty.\n");
         return;
     }
     struct Node *temp = *head;
@@ -179,7 +175,7 @@ void deleteEnd(struct Node **head, struct Node **tail)
 {
     if (!*head)
     {
-        printf("List is empty.\n");
+        printf_s("List is empty.\n");
         return;
     }
     struct Node *temp = *tail;
@@ -210,6 +206,17 @@ void deletek(struct Node **head, struct Node **tail, int k)
             *tail = trav->prev;
         free(trav);
     }
+}
+
+bool search(struct Node *head, struct Node *tail, int k)
+{
+    while (head)
+    {
+        if (head->data == k)
+            return true;
+        head = head->next;
+    }
+    return false;
 }
 
 void freeList(struct Node **head, struct Node **tail)

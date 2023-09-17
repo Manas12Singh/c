@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 struct Node
 {
@@ -11,15 +12,15 @@ void createList(struct Node **head)
 {
     if (*head)
     {
-        printf("The list already exists!\n");
+        printf_s("The list already exists!\n");
         return;
     }
     int n;
-    printf("Enter the number of initialising nodes: ");
+    printf_s("Enter the number of initialising nodes: ");
     scanf_s("%d", &n);
     if (n < 1)
     {
-        printf("Invalid number of nodes.\n");
+        printf_s("Invalid number of node.\n");
         return;
     }
     struct Node *trav = NULL;
@@ -43,21 +44,22 @@ void printList(struct Node *head)
 {
     if (!head)
     {
-        printf("List is empty.\n");
+        printf_s("List is empty.\n");
         return;
     }
-    do
+    while (head->next)
     {
-        printf("%d ", head->data);
+        printf_s("%d ", head->data);
         head = head->next;
-    } while (head->next);
-    printf("\nReverse: ");
+    }
+    printf("%d ", head->data);
+    printf_s("\nReverse: ");
     while (head)
     {
-        printf("%d ", head->data);
+        printf_s("%d ", head->data);
         head = head->prev;
     }
-    printf("\n");
+    printf_s("\n");
 }
 
 void insertAtBegin(struct Node **head, int val)
@@ -65,7 +67,7 @@ void insertAtBegin(struct Node **head, int val)
     struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
     if (!temp)
     {
-        printf("Memory full!\n");
+        printf_s("Memory full!\n");
         return;
     }
     temp->data = val;
@@ -81,7 +83,7 @@ void insertAtEnd(struct Node **head, int val)
     struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
     if (!temp)
     {
-        printf("Memory full!\n");
+        printf_s("Memory full!\n");
         return;
     }
     temp->data = val;
@@ -104,7 +106,7 @@ void insertAfterk(struct Node **head, int val, int k)
     struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
     if (!temp)
     {
-        printf("Memory full!\n");
+        printf_s("Memory full!\n");
         return;
     }
     temp->data = val;
@@ -129,7 +131,7 @@ void insertBeforek(struct Node **head, int val, int k)
     struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
     if (!temp)
     {
-        printf("Memory full!\n");
+        printf_s("Memory full!\n");
         return;
     }
     temp->data = val;
@@ -162,7 +164,7 @@ void deleteBegin(struct Node **head)
 {
     if (!*head)
     {
-        printf("List already empty!\n");
+        printf_s("List already empty!\n");
         return;
     }
     struct Node *temp = *head;
@@ -176,11 +178,11 @@ void deleteEnd(struct Node **head)
 {
     if (!*head)
     {
-        printf("List already empty!\n");
+        printf_s("List already empty!\n");
         return;
     }
     struct Node *temp;
-    if (!((*head)->next))
+    if ((*head)->next == NULL)
     {
         temp = *head;
         *head = NULL;
@@ -220,6 +222,17 @@ void deletek(struct Node **head, int k)
             trav->next->prev = trav->prev;
         free(temp);
     }
+}
+
+bool search(struct Node *head, int k)
+{
+    while (head)
+    {
+        if (head->data == k)
+            return true;
+        head = head->next;
+    }
+    return false;
 }
 
 void freeList(struct Node **head)
