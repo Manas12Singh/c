@@ -38,7 +38,7 @@ void pop(struct stack *s1)
     printf("%d\n", s1->arr[s1->top]);
     s1->top--;
     s1->size--;
-    if (s1->size % 2 == 0)
+    if (s1->size = s1->capacity / 2)
     {
         s1->capacity /= 2;
         s1->arr = (int *)realloc(s1->arr, sizeof(int) * s1->capacity);
