@@ -7,67 +7,69 @@ struct Node
     struct Node *prev, *next;
 };
 
-void createList(struct Node **head)
+void createList(struct Node **head, struct Node **tail)
 {
     if (*head)
     {
-        printf("The list already exists!\n");
+        printf_s("The list already exists!\n");
         return;
     }
     int n;
-    printf("Enter the number of initialising nodes: ");
-    scanf("%d", &n);
+    printf_s("Enter the number of intialising nodes: ");
+    scanf_s("%d", &n);
     if (n < 1)
     {
-        printf("Invalid number of node.\n");
+        printf_s("Invalid number of node.\n");
         return;
     }
-    printf("Enter the elements:\n");
     struct Node *trav = NULL;
     for (int i = 0; i < n; i++)
     {
         struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
-        scanf("%d", &(temp->data));
+        scanf_s("%d", &(temp->data));
         temp->next = NULL;
-        temp->prev = trav;
         if (!*head)
+        {
             *head = trav = temp;
+            temp->prev = NULL;
+        }
         else
         {
             trav->next = temp;
+            temp->prev = trav;
             trav = trav->next;
         }
     }
+    *tail = trav;
 }
 
-void printList(struct Node *head)
+void printList(struct Node *head, struct Node *tail)
 {
     if (!head)
     {
-        printf("List is empty.\n");
+        printf_s("List is empty.\n");
         return;
     }
-    while (head->next)
-    {
-        printf("%d ", head->data);
-        head = head->next;
-    }
-    printf("%d ", head->data);
-    printf("\nReverse: ");
     while (head)
     {
-        printf("%d ", head->data);
-        head = head->prev;
+        printf_s("%d ", head->data);
+        head = head->next;
     }
-    printf("\n");
+    printf_s("\nReverse: ");
+    while (tail)
+    {
+        printf_s("%d ", tail->data);
+        tail = tail->prev;
+    }
+    printf_s("\n");
 }
 
-void insertAtBegin(struct Node **head, int val)
+void insertAtBegin(struct Node **head, struct Node **tail, int val)
 {
     struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
     if (!temp)
     {
-        printf("Memory full!\n");
+        printf_s("Memory full!\n");
         return;
     }
     temp->data = val;
@@ -75,44 +77,41 @@ void insertAtBegin(struct Node **head, int val)
     temp->next = *head;
     if (*head)
         (*head)->prev = temp;
+    else
+        *tail = temp;
     *head = temp;
 }
 
-void insertAtEnd(struct Node **head, int val)
+void insertAtEnd(struct Node **head, struct Node **tail, int val)
 {
     struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
     if (!temp)
     {
-        printf("Memory full!\n");
+        printf_s("Memory full!\n");
         return;
     }
     temp->data = val;
     temp->next = NULL;
-    if (!*head)
-    {
-        temp->prev = NULL;
+    temp->prev = *tail;
+    if (*head)
+        (*tail)->next = temp;
+    else
         *head = temp;
-        return;
-    }
-    struct Node *trav = *head;
-    while (trav->next)
-        trav = trav->next;
-    trav->next = temp;
-    temp->prev = trav;
+    *tail = temp;
 }
 
-void insertAfterk(struct Node **head, int val, int k)
+void insertAfterk(struct Node **head, struct Node **tail, int val, int k)
 {
     struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
     if (!temp)
     {
-        printf("Memory full!\n");
+        printf_s("Memory full!\n");
         return;
     }
     temp->data = val;
     if (!*head)
     {
-        *head = temp;
+        *head = *tail = temp;
         temp->next = temp->prev = NULL;
         return;
     }
@@ -123,121 +122,109 @@ void insertAfterk(struct Node **head, int val, int k)
     temp->next = trav->next;
     if (trav->next)
         trav->next->prev = temp;
+    else
+        *tail = temp;
     trav->next = temp;
 }
 
-void insertBeforek(struct Node **head, int val, int k)
+void insertBeforek(struct Node **head, struct Node **tail, int val, int k)
 {
     struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
     if (!temp)
     {
-        printf("Memory full!\n");
+        printf_s("Memory full!\n");
         return;
     }
     temp->data = val;
     if (!*head)
     {
+        *head = *tail = temp;
         temp->next = temp->prev = NULL;
-        *head = temp;
         return;
     }
-    struct Node *trav = *head;
-    while (trav && trav->data != k)
-        trav = trav->next;
-    if (trav)
-    {
-        temp->next = trav;
-        temp->prev = trav->prev;
-        if (trav->prev)
-            trav->prev->next = temp;
-        else
-            *head = temp;
-        trav->prev = temp;
-    }
+    struct Node *trav = *tail;
+    while (trav->prev && trav->data != k)
+        trav = trav->prev;
+    temp->next = trav;
+    temp->prev = trav->prev;
+    if (trav->prev)
+        trav->prev->next = temp;
     else
-    {
-        temp->next = *head;
-        temp->prev = NULL;
-        (*head)->prev = temp;
         *head = temp;
-    }
+    trav->prev = temp;
 }
 
-void deleteBegin(struct Node **head)
+void deleteBegin(struct Node **head, struct Node **tail)
 {
     if (!*head)
     {
-        printf("List already empty!\n");
+        printf_s("List is empty.\n");
         return;
     }
     struct Node *temp = *head;
     *head = (*head)->next;
     if (*head)
         (*head)->prev = NULL;
+    else
+        *tail = NULL;
     free(temp);
 }
 
-void deleteEnd(struct Node **head)
+void deleteEnd(struct Node **head, struct Node **tail)
 {
     if (!*head)
     {
-        printf("List already empty!\n");
+        printf_s("List is empty.\n");
         return;
     }
-    struct Node *temp;
-    if ((*head)->next == NULL)
-    {
-        temp = *head;
+    struct Node *temp = *tail;
+    *tail = (*tail)->prev;
+    if (*tail)
+        (*tail)->next = NULL;
+    else
         *head = NULL;
-        free(temp);
-        return;
-    }
-    struct Node *trav = *head;
-    while (trav->next)
-        trav = trav->next;
-    temp = trav;
-    trav->prev->next = NULL;
     free(temp);
 }
 
-void deletek(struct Node **head, int k)
+void deletek(struct Node **head, struct Node **tail, int k)
 {
     if (!*head)
         return;
-    struct Node *temp;
-    if ((*head)->data == k)
-    {
-        temp = *head;
-        *head = (*head)->next;
-        if (*head)
-            (*head)->prev = NULL;
-        free(temp);
-        return;
-    }
     struct Node *trav = *head;
     while (trav && trav->data != k)
         trav = trav->next;
     if (trav)
     {
-        temp = trav;
-        trav->prev->next = trav->next;
+        if (trav->prev)
+            trav->prev->next = trav->next;
+        else
+            *head = trav->next;
         if (trav->next)
             trav->next->prev = trav->prev;
-        free(temp);
+        else
+            *tail = trav->prev;
+        free(trav);
     }
 }
 
-void freeList(struct Node **head)
+void freeList(struct Node **head, struct Node **tail)
 {
-    if ((*head)->next != NULL)
-        freeList(&((*head)->next));
+    if ((*head) == (*tail))
+    {
+        free(*head);
+        *head = *tail = NULL;
+        return;
+    }
+    else
+        freeList(&(*head)->next, &(*tail)->prev);
     free(*head);
-    *head = NULL;
+    free(*tail);
+    *tail = *head = NULL;
 }
 
 int main()
 {
-    struct Node *head = NULL;
+    struct Node *head = NULL, *tail = NULL;
     while (1)
     {
         int opt, n, k;
@@ -247,49 +234,49 @@ int main()
         switch (opt)
         {
         case 1:
-            createList(&head);
+            createList(&head, &tail);
             break;
         case 2:
             printf("Enter the value: ");
             scanf("%d", &n);
-            insertAtBegin(&head, n);
+            insertAtBegin(&head, &tail, n);
             break;
         case 3:
             printf("Enter the value: ");
             scanf("%d", &n);
-            insertAtEnd(&head, n);
+            insertAtEnd(&head, &tail, n);
             break;
         case 4:
             printf("Enter the value: ");
             scanf("%d", &n);
             printf("Enter k: ");
             scanf("%d", &k);
-            insertAfterk(&head, n, k);
+            insertAfterk(&head, &tail, n, k);
             break;
         case 5:
             printf("Enter the value: ");
             scanf("%d", &n);
             printf("Enter k: ");
             scanf("%d", &k);
-            insertBeforek(&head, n, k);
+            insertBeforek(&head, &tail, n, k);
             break;
         case 6:
-            deleteBegin(&head);
+            deleteBegin(&head, &tail);
             break;
         case 7:
-            deleteEnd(&head);
+            deleteEnd(&head, &tail);
             break;
         case 8:
             printf("Enter k: ");
             scanf("%d", &k);
-            deletek(&head, k);
+            deletek(&head, &tail, k);
             break;
         case 9:
             printf("Linked List: ");
-            printList(head);
+            printList(head, tail);
             break;
         case 10:
-            freeList(&head);
+            freeList(&head, &tail);
             return 0;
         default:
             printf("Wrong Choice!\n");

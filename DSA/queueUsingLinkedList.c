@@ -1,4 +1,4 @@
-#include "queue.h"
+
 
 int main()
 {
@@ -6,15 +6,13 @@ int main()
     while (1)
     {
         int opt, k, n;
-        puts("Options: \n1. Create a new queue. \n2. Enque. \n3. Deque. \n4. Front. \n5. Print. \n6. Exit.");
-        printf("Enter your choice (1 to 11): ");
+        printf("Options: \n1. Create a new queue. \n2. Enque. \n3. Deque. \n4. Front. \n5. Print. \n6. Exit.\n");
+        printf("Enter your choice (1 to 6): ");
         scanf("%d", &opt);
         switch (opt)
         {
         case 1:
-            printf("Enter the max size of queue: ");
-            scanf("%d", &n);
-            intialize(&q1, n);
+            intialize(&q1);
             break;
         case 2:
             printf("Enter the value: ");
@@ -34,8 +32,7 @@ int main()
             freeQueue(&q1);
             return 0;
         default:
-            puts("Wrong Choice!");
-            break;
+            printf("Wrong Choice!\n");
         }
     }
     return 0;

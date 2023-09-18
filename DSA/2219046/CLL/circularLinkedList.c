@@ -289,8 +289,7 @@ int main()
             freeList(&head);
             return 0;
         default:
-            puts("Wrong Choice!");
-            break;
+            printf("Wrong Choice!\n");
         }
     }
     return 0;

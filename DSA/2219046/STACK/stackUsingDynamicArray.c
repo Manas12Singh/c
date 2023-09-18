@@ -38,7 +38,7 @@ void pop(struct stack *s1)
     printf("%d\n", s1->arr[s1->top]);
     s1->top--;
     s1->size--;
-    if (s1->size = s1->capacity / 2)
+    if (s1->size == s1->capacity >> 2)
     {
         s1->capacity /= 2;
         s1->arr = (int *)realloc(s1->arr, sizeof(int) * s1->capacity);
@@ -73,4 +73,42 @@ void freeStack(struct stack **s1)
     free((*s1)->arr);
     free(*s1);
     *s1 = NULL;
+}
+
+int main()
+{
+    struct stack *s1 = NULL;
+    while (1)
+    {
+        int opt, k;
+        printf("Options: \n1. Create a new stack. \n2. Push. \n3. Pop. \n4. Top. \n5. Print. \n6. Exit.\n");
+        printf("Enter your choice (1 to 11): ");
+        scanf("%d", &opt);
+        switch (opt)
+        {
+        case 1:
+            intialize(&s1);
+            break;
+        case 2:
+            printf("Enter the value: ");
+            scanf("%d", &k);
+            push(s1, k);
+            break;
+        case 3:
+            pop(s1);
+            break;
+        case 4:
+            top(s1);
+            break;
+        case 5:
+            print(s1);
+            break;
+        case 6:
+            freeStack(&s1);
+            return 0;
+        default:
+            puts("Wrong Choice!");
+        }
+    }
+    return 0;
 }
