@@ -1,7 +1,5 @@
-// #include "stackUsingDynamicArray.h"
-// #include "stackUsingLinkedList.h"
 #include "stackUsingDoublyLinkedList.h"
-#include <conio.h>
+
 int main()
 {
     struct stack *s1 = NULL;
@@ -11,7 +9,7 @@ int main()
         system("cls");
         puts("Options: \n1. Create a new stack. \n2. Push. \n3. Pop. \n4. Top. \n5. Print. \n6. Exit.");
         printf("Enter your choice (1 to 11): ");
-        scanf("%d%*c", &opt);
+        scanf("%d", &opt);
         switch (opt)
         {
         case 1:
@@ -19,7 +17,7 @@ int main()
             break;
         case 2:
             printf("Enter the value: ");
-            scanf("%d%*c", &k);
+            scanf("%d", &k);
             push(s1, k);
             break;
         case 3:
@@ -38,8 +36,6 @@ int main()
             puts("Wrong Choice!");
             break;
         }
-        puts("Press any key to continue... ");
-        getch();
     }
     return 0;
 }

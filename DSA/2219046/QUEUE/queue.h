@@ -66,6 +66,7 @@ void print(struct queue *q1)
         printf("%d ", q1->arr[n]);
         n = (n + 1) % (q1->capacity);
     }
+    printf("%d\n", q1->arr[n]);
     printf("\n");
 }
 
