@@ -219,10 +219,14 @@ void deletek(struct Node **head, int k)
 
 void freeList(struct Node **head)
 {
-    while ((*head)->next != NULL)
+    if (*head == NULL)
+        return;
+    struct Node *temp, *trav = *head;
+    do
     {
-        freeList(&((*head)->next));
-    }
-    free(*head);
+        temp = trav;
+        trav = trav->next;
+        free(temp);
+    } while (trav != *head);
     *head = NULL;
 }
