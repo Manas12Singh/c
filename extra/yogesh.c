@@ -1,59 +1,93 @@
-void push(char st[], int *top, int n, char ch)
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+struct ListNode
 {
-    if ((*top) > n - 1)
-    {
-        return;
-    }
-    else
-    {
-        st[++(*top)] = ch;
-    }
-}
-char pop(char st[], int *top)
-{
-    if ((*top) == -1)
-    {
-        return 0;
-    }
-    else
-    {
-        char t = st[(*top)--];
-        return t;
-    }
-}
+    int val;
+    struct ListNode *next;
+};
 
-char *removeOuterParentheses(char *s)
+void insert(struct ListNode **top, int a)
 {
-    int i = 0, top = -1, flag = 1;
-    char stack[strlen(s)];
-    for (i = 0; i < strlen(s); i++)
+    struct ListNode *temp = (struct ListNode *)malloc(sizeof(struct ListNode));
+    temp->val = a;
+    if (*top == NULL)
     {
-        if (s[i] == '(')
+        *top = temp;
+        temp->next = NULL;
+    }
+    else
+    {
+        temp->next = *top;
+        *top = temp;
+    }
+}
+void delete1(struct ListNode **top)
+{
+    struct ListNode *temp = *top;
+    if (temp->next == NULL)
+    {
+        (*top) = NULL;
+        free(temp);
+    }
+    else
+    {
+        *top = temp->next;
+        free(temp);
+    }
+}
+bool isPalindrome(struct ListNode *head)
+{
+    if (head == NULL || head->next == NULL)
+        return 1;
+    struct ListNode *top = NULL;
+    int count = 1;
+    struct ListNode *temp = head;
+    while (temp->next)
+    {
+        count++;
+        temp = temp->next;
+    }
+    temp = head;
+    for (int i = 1; i <= count; i++)
+    {
+        if (count % 2 != 0)
         {
-            if (flag == 0)
+            if ((count / 2) + 1 == i)
             {
-                push(stack, &top, strlen(s), '(');
-                flag++;
+                temp = temp->next;
+                if (temp == NULL)
+                    break;
             }
             else
-                flag = 0;
-        }
-        else if (s[i] == ')')
-        {
-            if (flag == 1)
             {
-                push(stack, &top, strlen(s), ')');
-                flag--;
+                if (top != NULL && (top->val == temp->val))
+                {
+                    delete1(&top);
+                }
+                else
+                {
+                    insert(&top, temp->val);
+                }
+            }
+        }
+        else
+        {
+            if (top != NULL && top->val == temp->val)
+            {
+                delete1(&top);
             }
             else
-                flag = 1;
+            {
+                insert(&top, temp->val);
+            }
         }
+        temp = temp->next;
+        if (temp == NULL)
+            break;
     }
-    i = top;
-    s[++i] = '\0';
-    while (i >= 0)
-    {
-        s[--i] = pop(stack, &top);
-    }
-    return s;
+    if (top == NULL)
+        return 1;
+    else
+        return 0;
 }
