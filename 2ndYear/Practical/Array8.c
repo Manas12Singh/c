@@ -40,7 +40,7 @@ void pop(struct Stack *s1)
         printf("Stack already empty!\n");
         return;
     }
-    printf("%d\n", s1->arr[s1->top]);
+    printf("Popped value: %d\n", s1->arr[s1->top]);
     s1->top--;
     s1->size--;
 }
@@ -122,6 +122,7 @@ int main()
         }
         else
             printf("Wrong Choice!");
+        printf("\n");
     }
     return 0;
 }

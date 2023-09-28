@@ -16,7 +16,7 @@ void intialize(struct Queue **q1, int cap)
     (*q1)->arr = (int *)malloc(sizeof(int) * cap);
 }
 
-void enque(struct Queue *q1, int val)
+void enqueue(struct Queue *q1, int val)
 {
     if (q1->rear + 1 == q1->capacity)
     {
@@ -28,7 +28,7 @@ void enque(struct Queue *q1, int val)
     q1->size++;
 }
 
-void deque(struct Queue *q1)
+void dequeue(struct Queue *q1)
 {
     if (q1->rear == -1)
     {
@@ -36,6 +36,7 @@ void deque(struct Queue *q1)
         return;
     }
     int n = 0;
+    printf("Dequeued value: %d\n", q1->arr[0]);
     while (n < q1->rear)
     {
         q1->arr[n] = q1->arr[n + 1];
@@ -111,10 +112,10 @@ int main()
             case 2:
                 printf("Enter the value: ");
                 scanf("%d", &k);
-                enque(q1, k);
+                enqueue(q1, k);
                 break;
             case 3:
-                deque(q1);
+                dequeue(q1);
                 break;
             case 4:
                 front(q1);
@@ -129,6 +130,7 @@ int main()
         }
         else
             printf("Wrong Choice!\n");
+        printf("\n");
     }
     return 0;
 }
