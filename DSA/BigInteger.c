@@ -42,7 +42,7 @@ void printNode(struct Node *node)
     printf("%d", node->digit);
 }
 
-BigInteger *add(BigInteger *b1, BigInteger *b2)
+/* BigInteger *add(BigInteger *b1, BigInteger *b2)
 {
     
-}
+} */
