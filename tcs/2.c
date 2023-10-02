@@ -2,7 +2,8 @@
 
 int main()
 {
-    char s[101], c[100];
-    
+    int a = -100;
+    int b = 3;
+    printf("%d", a % b);
     return 0;
 }
