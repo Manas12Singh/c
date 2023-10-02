@@ -1,5 +1,6 @@
 #include "BigInteger.h"
 
+// converting to Big Integer
 BigInteger *toBigInteger(char *s)
 {
     BigInteger *temp = (BigInteger *)malloc(sizeof(BigInteger));
@@ -22,6 +23,7 @@ BigInteger *toBigInteger(char *s)
     return temp;
 }
 
+// Printing Big Integer
 void printNode(struct Node *node)
 {
     if (node == NULL)
@@ -44,6 +46,38 @@ void printBigInteger(BigInteger *b)
     printf("\n");
 }
 
+// to free the Big Integer
+void freeNode(struct Node **node)
+{
+    if ((*node) == NULL)
+        return;
+    freeNode(&((*node)->next));
+    free(*node);
+    *node = NULL;
+}
+
+void deleteBigInteger(BigInteger **b)
+{
+    freeNode(&((*b)->head));
+    free(*b);
+    *b = NULL;
+}
+
+// reomving extra zeroes
+void removeZeroes(struct Node **head)
+{
+    if (*head == NULL)
+        return;
+    if ((*head)->next != NULL)
+        removeZeroes(&((*head)->next));
+    if ((*head)->digit == 0 && (*head)->next == NULL)
+    {
+        free(*head);
+        *head = NULL;
+    }
+}
+
+// basic addition subtraction (without conditions)
 BigInteger *add(BigInteger *b1, BigInteger *b2)
 {
     BigInteger *sum = (BigInteger *)malloc(sizeof(BigInteger));
@@ -80,19 +114,6 @@ BigInteger *add(BigInteger *b1, BigInteger *b2)
     return sum;
 }
 
-void removeZeroes(struct Node **head)
-{
-    if (*head == NULL)
-        return;
-    if ((*head)->next != NULL)
-        removeZeroes(&((*head)->next));
-    if ((*head)->digit == 0 && (*head)->next == NULL)
-    {
-        free(*head);
-        *head = NULL;
-    }
-}
-
 BigInteger *sub(BigInteger *b1, BigInteger *b2)
 {
     BigInteger *diff = (BigInteger *)malloc(sizeof(BigInteger));
@@ -104,13 +125,9 @@ BigInteger *sub(BigInteger *b1, BigInteger *b2)
     while (t1 || t2)
     {
         struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
-        temp->digit = borrow;
+        temp->digit = borrow + t1->digit;
         temp->next = NULL;
-        if (t1)
-        {
-            temp->digit += t1->digit;
-            t1 = t1->next;
-        }
+        t1 = t1->next;
         if (t2)
         {
             temp->digit -= t2->digit;
@@ -134,6 +151,7 @@ BigInteger *sub(BigInteger *b1, BigInteger *b2)
     return diff;
 }
 
+// different comparison for faster checks and different checks
 int lencompare(struct Node *b1, struct Node *b2)
 {
     int len1 = 0, len2 = 0;
@@ -174,6 +192,7 @@ int compareBigInteger(BigInteger *b1, BigInteger *b2)
     return compare(b1->head, b2->head);
 }
 
+// main addition and subtraction function (with conditions)
 BigInteger *addBigInteger(BigInteger *b1, BigInteger *b2)
 {
     if (b1->sign == b2->sign)
@@ -204,4 +223,116 @@ BigInteger *subtractBigInteger(BigInteger *b1, BigInteger *b2)
     else
         diff = sub(b2, b1), diff->sign = -(b2->sign);
     return diff;
+}
+
+BigInteger *multiplyBigIntger(BigInteger *b1, BigInteger *b2)
+{
+    if (lencompare(b1->head, b2->head) == -1)
+    {
+        BigInteger *temp = b1;
+        b1 = b2;
+        b2 = temp;
+    }
+    BigInteger *product = (BigInteger *)malloc(sizeof(BigInteger));
+    product->sign = (b1->sign == b2->sign) ? 1 : -1;
+    product->head = NULL;
+    struct Node *t2 = b2->head;
+    struct Node *head = NULL, *t = NULL;
+    int n = 0;
+    while (t2)
+    {
+        struct Node *t1 = b1->head, *trav = product->head;
+        int carry = 0;
+        int i = n;
+        while (trav || t1 || carry)
+        {
+            struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
+            temp->digit = carry;
+            temp->next = NULL;
+            if (trav)
+            {
+                temp->digit += trav->digit;
+                trav = trav->next;
+            }
+            if (i-- <= 0 && t1)
+            {
+                temp->digit += t1->digit * t2->digit;
+                t1 = t1->next;
+            }
+            carry = temp->digit / 10;
+            temp->digit %= 10;
+            if (head)
+            {
+                t->next = temp;
+                t = t->next;
+            }
+            else
+                head = t = temp;
+        }
+        freeNode(&(product->head));
+        product->head = head;
+        head = t = NULL;
+        t2 = t2->next;
+        n++;
+    }
+    return product;
+}
+
+struct Node *divide(struct Node *n1, struct Node *n2, BigInteger *q)
+{
+    if (n1==NULL || lencompare(n1, n2) < 0 || compare(n1, n2) == -1)
+        return n1;
+    n1->next = divide(n1->next, n2, q);
+    struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
+    temp->digit = 0;
+    temp->next = q->head;
+    q->head = temp;
+    while (compare(n1, n2) >= 0)
+    {
+        struct Node *t1 = n1, *t2 = n2;
+        int borrow = 0;
+        while (t2 || borrow)
+        {
+            t1->digit -= borrow;
+            if (t2)
+            {
+                t1->digit -= t2->digit;
+                t2 = t2->next;
+            }
+            if (t1->digit < 0)
+                borrow = -1, t1->digit += 10;
+            else
+                borrow = 0;
+            t1 = t1->next;
+        }
+        q->head->digit++;
+    }
+    removeZeroes(&n1);
+    return n1;
+}
+
+BigInteger *divideBigIntger(BigInteger *b1, BigInteger *b2)
+{
+    BigInteger *quotient = (BigInteger *)malloc(sizeof(BigInteger));
+    quotient->sign = (b1->sign == b2->sign) ? 1 : -1;
+    quotient->head = (struct Node *)malloc(sizeof(struct Node));
+    quotient->head->digit = 0;
+    quotient->head->next = NULL;
+    struct Node *dividend = NULL, *t1, *t2 = b1->head;
+    while (t2)
+    {
+        struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
+        temp->digit = t2->digit;
+        temp->next = NULL;
+        if (dividend)
+        {
+            t1->next = temp;
+            t1 = t1->next;
+        }
+        else
+            dividend = t1 = temp;
+        t2 = t2->next;
+    }
+    divide(dividend, b2->head, quotient);
+    return quotient;
 }

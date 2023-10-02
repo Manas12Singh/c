@@ -25,12 +25,12 @@ typedef struct
     struct Node *head;
 } BigInteger;
 
-BigInteger *toBigInteger(char *);
-void printBigInteger(BigInteger *);
-int compareBigInteger(BigInteger *, BigInteger *);
-BigInteger *addBigInteger(BigInteger *, BigInteger *);
-BigInteger *subtractBigInteger(BigInteger *, BigInteger *);
-BigInteger *multiplyBigIntger(BigInteger *, BigInteger *);
-BigInteger *divideBigIntger(BigInteger *, BigInteger *);
-void deleteBigInteger(BigInteger **);
+BigInteger *toBigInteger(char *string);
+void printBigInteger(BigInteger *bigInt);
+int compareBigInteger(BigInteger *bigInt1, BigInteger *bigInt2);
+BigInteger *addBigInteger(BigInteger *bigInt1, BigInteger *bigInt2);
+BigInteger *subtractBigInteger(BigInteger *bigInt1, BigInteger *bigInt2);
+BigInteger *multiplyBigIntger(BigInteger *bigInt1, BigInteger *bigInt2);
+BigInteger *divideBigIntger(BigInteger *bigInt1, BigInteger *bigInt2);
+void deleteBigInteger(BigInteger **bigInt);
 #endif

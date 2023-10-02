@@ -9,13 +9,8 @@ int main()
     BigInteger *b2 = toBigInteger(s2);
     printBigInteger(b1);
     printBigInteger(b2);
-    BigInteger *sum = addBigInteger(b1, b2);
-    printBigInteger(sum);
-    printf("%d\n", compareBigInteger(b1, b2));
-    BigInteger *diff = subtractBigInteger(b1, b2);
-    printBigInteger(diff);
-    // deleteBigInteger(&b1);
-    // deleteBigInteger(&b2);
-    // deleteBigInteger(&sum);
-    // deleteBigInteger(&diff);
+    BigInteger *divide = divideBigIntger(b1, b2);
+    printBigInteger(divide);
+    printBigInteger(b1);
+    printBigInteger(b2);
 }
