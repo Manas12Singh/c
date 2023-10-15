@@ -3,11 +3,14 @@
 
 BigInteger *factorial(BigInteger *n)
 {
-    if (compareBigInteger(n, toBigInteger("1")) == 0 || compareBigInteger(n, toBigInteger("1")) == 0)
-        return toBigInteger("1");
-    return multiplyBigIntger(n, factorial(subtractBigInteger(n, toBigInteger("1"))));
+    if (compareBigInteger(n, toBigInteger("1")) <= 0)
+        return n;
+    return multiplyBigIntger(n,factorial(subtractBigInteger(n,toBigInteger("1"))));
 }
 
 int main()
 {
+    char s1[100], s2[100];
+    scanf("%s", s1);
+    printBigInteger(factorial(toBigInteger(s1)));
 }
