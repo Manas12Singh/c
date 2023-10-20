@@ -296,7 +296,7 @@ struct Node *divide(struct Node *n1, struct Node *n2, BigInteger *q)
         temp->next = q->head;
         q->head = temp;
     }
-    if (lencompare(n1, n2) == -1 || (lencompare(n1, n2) == 0 && compare(n1, n2) == 0))
+    if (lencompare(n1, n2) == -1 || (lencompare(n1, n2) == 0 && compare(n1, n2) == -1))
         return n1;
     while (lencompare(n1, n2) == 1 || (lencompare(n1, n2) == 0 && compare(n1, n2) >= 0))
     {
@@ -350,6 +350,14 @@ BigInteger *divideBigIntger(BigInteger *b1, BigInteger *b2)
     }
     divide(dividend, b2->head, quotient);
     removeZeroes(&(quotient->head));
+    if (quotient->head == NULL)
+    {
+        quotient->sign = 1;
+        struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
+        temp->digit = 0;
+        temp->next = NULL;
+        quotient->head = temp;
+    }
     return quotient;
 }
 
@@ -376,6 +384,13 @@ BigInteger *modulusBigInteger(BigInteger *b1, BigInteger *b2)
         t2 = t2->next;
     }
     mod->head = divide(dividend, b2->head, NULL);
-    removeZeroes(&(mod->head));
+    if (mod->head == NULL)
+    {
+        mod->sign = 1;
+        struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
+        temp->digit = 0;
+        temp->next = NULL;
+        mod->head = temp;
+    }
     return mod;
 }
