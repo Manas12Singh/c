@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Node
+struct Digit
 {
     int data;
-    struct Node *next;
+    struct Digit *next;
 };
 
-void createList(struct Node **head)
+void createList(struct Digit **head)
 {
     if (*head)
     {
@@ -23,10 +23,10 @@ void createList(struct Node **head)
         return;
     }
     printf("Enter the values: ");
-    struct Node *trav = NULL;
+    struct Digit *trav = NULL;
     for (int i = 0; i < n; i++)
     {
-        struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
+        struct Digit *temp = (struct Digit *)malloc(sizeof(struct Digit));
         scanf("%d", &(temp->data));
         temp->next = NULL;
         if (!*head)
@@ -40,14 +40,14 @@ void createList(struct Node **head)
     trav->next = *head;
 }
 
-void printList(struct Node *head)
+void printList(struct Digit *head)
 {
     if (!head)
     {
         printf("The list is empty!\n");
         return;
     }
-    struct Node *trav = head;
+    struct Digit *trav = head;
     do
     {
         printf("%d ", trav->data);
@@ -56,9 +56,9 @@ void printList(struct Node *head)
     printf("\n");
 }
 
-void insertAtBegin(struct Node **head, int val)
+void insertAtBegin(struct Digit **head, int val)
 {
-    struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
+    struct Digit *temp = (struct Digit *)malloc(sizeof(struct Digit));
     if (!temp)
     {
         printf("Memory full!\n");
@@ -68,7 +68,7 @@ void insertAtBegin(struct Node **head, int val)
     temp->next = *head;
     if (*head)
     {
-        struct Node *trav = *head;
+        struct Digit *trav = *head;
         while (trav->next != *head)
             trav = trav->next;
         trav->next = temp;
@@ -76,9 +76,9 @@ void insertAtBegin(struct Node **head, int val)
     *head = temp;
 }
 
-void insertAtEnd(struct Node **head, int val)
+void insertAtEnd(struct Digit **head, int val)
 {
-    struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
+    struct Digit *temp = (struct Digit *)malloc(sizeof(struct Digit));
     if (!temp)
     {
         printf("Memory full!\n");
@@ -88,7 +88,7 @@ void insertAtEnd(struct Node **head, int val)
     temp->next = *head;
     if (*head)
     {
-        struct Node *trav = *head;
+        struct Digit *trav = *head;
         while (trav->next != *head)
             trav = trav->next;
         trav->next = temp;
@@ -97,9 +97,9 @@ void insertAtEnd(struct Node **head, int val)
         *head = temp;
 }
 
-void insertAfterk(struct Node **head, int val, int k)
+void insertAfterk(struct Digit **head, int val, int k)
 {
-    struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
+    struct Digit *temp = (struct Digit *)malloc(sizeof(struct Digit));
     if (!temp)
     {
         printf("Memory full!\n");
@@ -112,16 +112,16 @@ void insertAfterk(struct Node **head, int val, int k)
         *head = temp;
         return;
     }
-    struct Node *trav = *head;
+    struct Digit *trav = *head;
     while (trav->next != *head && trav->data != k)
         trav = trav->next;
     temp->next = trav->next;
     trav->next = temp;
 }
 
-void insertBeforek(struct Node **head, int val, int k)
+void insertBeforek(struct Digit **head, int val, int k)
 {
-    struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
+    struct Digit *temp = (struct Digit *)malloc(sizeof(struct Digit));
     if (!temp)
     {
         printf("Memory full!\n");
@@ -134,7 +134,7 @@ void insertBeforek(struct Node **head, int val, int k)
         *head = temp;
         return;
     }
-    struct Node *trav = *head;
+    struct Digit *trav = *head;
     while (trav->next != *head)
     {
         if (trav->next->data == k)
@@ -147,14 +147,14 @@ void insertBeforek(struct Node **head, int val, int k)
         *head = temp;
 }
 
-void deleteBegin(struct Node **head)
+void deleteBegin(struct Digit **head)
 {
     if (!*head)
     {
         printf("List already empty!\n");
         return;
     }
-    struct Node *temp = *head, *trav = *head;
+    struct Digit *temp = *head, *trav = *head;
     if ((*head)->next != (*head))
     {
         while (trav->next != *head)
@@ -166,14 +166,14 @@ void deleteBegin(struct Node **head)
     free(temp);
 }
 
-void deleteEnd(struct Node **head)
+void deleteEnd(struct Digit **head)
 {
     if (!*head)
     {
         printf("List already empty!\n");
         return;
     }
-    struct Node *temp, *trav = *head;
+    struct Digit *temp, *trav = *head;
     if ((*head)->next == *head)
     {
         temp = *head;
@@ -188,14 +188,14 @@ void deleteEnd(struct Node **head)
     free(temp);
 }
 
-void deletek(struct Node **head, int k)
+void deletek(struct Digit **head, int k)
 {
     if (!*head)
     {
         printf("List already empty!\n");
         return;
     }
-    struct Node *temp, *trav = *head;
+    struct Digit *temp, *trav = *head;
     if ((*head)->data == k)
     {
         temp = *head;
@@ -218,11 +218,11 @@ void deletek(struct Node **head, int k)
     free(temp);
 }
 
-void freeList(struct Node **head)
+void freeList(struct Digit **head)
 {
     if (*head == NULL)
         return;
-    struct Node *temp, *trav = *head;
+    struct Digit *temp, *trav = *head;
     do
     {
         temp = trav;
@@ -234,7 +234,7 @@ void freeList(struct Node **head)
 
 int main()
 {
-    struct Node *head = NULL;
+    struct Digit *head = NULL;
     while (1)
     {
         int opt, n, k;

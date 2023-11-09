@@ -1,16 +1,19 @@
 #include <stdio.h>
 #include "BigInteger.h"
 
-BigInteger *factorial(BigInteger *n)
-{
-    if (compareBigInteger(n, toBigInteger("1")) <= 0)
-        return n;
-    return multiplyBigIntger(n,factorial(subtractBigInteger(n,toBigInteger("1"))));
-}
-
 int main()
 {
-    char s1[100], s2[100];
+    char s1[1000],s2[1000];
     scanf("%s", s1);
-    printBigInteger(factorial(toBigInteger(s1)));
+	scanf("%s", s2);
+	BigInteger *b1=toBigInteger(s1);
+	BigInteger *b2=toBigInteger(s2);
+    printBigInteger(b1);
+	printBigInteger(b2);
+	BigInteger *b3= divideBigInteger(b1,b2);
+	BigInteger *b4= modulusBigInteger(b1,b2);
+	printBigInteger(b4);
+	printBigInteger(b3);
+	deleteBigInteger(&b4);
+	deleteBigInteger(&b3);
 }

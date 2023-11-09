@@ -1,35 +1,80 @@
 #include "BigInteger.h"
 
+Digit *saveDigit(char c,Digit* nextDigit)
+{
+	Digit *node=(Digit*) malloc(sizeof(Digit));
+	if(node==NULL)
+		return NULL;
+	node->digit=c-'0';
+	node->next=nextDigit;
+	return node;
+}
+
+void freeDigit(Digit **node)
+{
+	if (*node == NULL)
+		return;
+	freeDigit(&((*node)->next));
+	free(*node);
+	*node = NULL;
+}
+
+void deleteBigInteger(BigInteger **b)
+{
+	if (*b == NULL)
+		return;
+	freeDigit(&((*b)->lastDigit));
+	free(*b);
+	*b = NULL;
+}
+
 BigInteger *toBigInteger(char *s)
 {
-    if (strlen(s) == 0)
-        return NULL;
     BigInteger *temp = (BigInteger *)malloc(sizeof(BigInteger));
-    temp->head = NULL;
+	if(temp==NULL)
+		return temp;
+    temp->lastDigit = NULL;
     int i = 0;
-    if (s[i] == '-')
-        temp->sign = -1, i++;
-    else if (s[i] == '+')
-        temp->sign = 1, i++;
-    else
-        temp->sign = 1;
-    while (s[i] != '\0')
+	while (s[i] != '\0' & s[i] != '+' & s[i] != '-' & !(s[i] >= '0' & s[i] <= '9'))
+		i++;
+	if (s[i] == '-') {
+		temp->sign = -1, i++;
+	} else {
+		temp->sign=1;
+		if(s[i]=='+')
+			i++;
+	}
+	while(s[i]=='0')
+		i++;
+    while (s[i]>='0' & s[i]<='9')
     {
-        struct Node *node = (struct Node *)malloc(sizeof(struct Node));
-        node->digit = s[i] - '0';
-        node->next = temp->head;
-        temp->head = node;
+        Digit *newLast= saveDigit(s[i],temp->lastDigit);
+		if(newLast==NULL)
+		{
+			deleteBigInteger(&temp);
+			return NULL;
+		}
+		temp->lastDigit=newLast;
         i++;
     }
+    if(temp->lastDigit==NULL) {
+		temp->sign = 1;
+		temp->lastDigit= saveDigit('0',NULL);
+		if(temp->lastDigit==NULL)
+		{
+			free(temp);
+			temp=NULL;
+		}
+	}
     return temp;
 }
 
-void printNode(struct Node *node)
+void printDigit(Digit *digit)
 {
-    if (node == NULL)
+    if (digit == NULL)
         return;
-    printNode(node->next);
-    printf("%d", node->digit);
+    printDigit(digit->next);
+    printf("%d", digit->digit);
 }
 
 void printBigInteger(BigInteger *b)
@@ -41,304 +86,294 @@ void printBigInteger(BigInteger *b)
     }
     if (b->sign == -1)
         printf("%c", '-');
-    printNode(b->head);
+    printDigit(b->lastDigit);
     printf("\n");
 }
 
-void freeNode(struct Node **node)
+void removeZeroes(Digit **digit)
 {
-    if (*node == NULL)
+    if (*digit == NULL)
         return;
-    freeNode(&((*node)->next));
-    free(*node);
-    *node = NULL;
-}
-
-void deleteBigInteger(BigInteger **b)
-{
-    if (*b == NULL)
-        return;
-    freeNode(&((*b)->head));
-    free(*b);
-    *b = NULL;
-}
-
-void removeZeroes(struct Node **head)
-{
-    if (*head == NULL)
-        return;
-    if ((*head)->next != NULL)
-        removeZeroes(&((*head)->next));
-    if ((*head)->digit == 0 && (*head)->next == NULL)
+    if ((*digit)->next != NULL)
+        removeZeroes(&((*digit)->next));
+    if ((*digit)->digit == 0 & (*digit)->next == NULL)
     {
-        free(*head);
-        *head = NULL;
+        free(*digit);
+        *digit = NULL;
     }
 }
 
-BigInteger *add(BigInteger *b1, BigInteger *b2)
+Digit *addDigit(Digit *d1,Digit *d2,short carry)
 {
-    if (b1 == NULL || b2 == NULL)
-        return NULL;
-    BigInteger *sum = (BigInteger *)malloc(sizeof(BigInteger));
-    sum->head = NULL;
-    sum->sign = b1->sign;
-    struct Node *trav = NULL;
-    struct Node *t1 = b1->head, *t2 = b2->head;
-    int carry = 0;
-    while (t1 || t2 || carry)
-    {
-        struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
-        temp->digit = carry;
-        temp->next = NULL;
-        if (t1)
-        {
-            temp->digit += t1->digit;
-            t1 = t1->next;
-        }
-        if (t2)
-        {
-            temp->digit += t2->digit;
-            t2 = t2->next;
-        }
-        carry = temp->digit / 10;
-        temp->digit %= 10;
-        if (!(sum->head))
-            sum->head = trav = temp;
-        else
-        {
-            trav->next = temp;
-            trav = trav->next;
-        }
-    }
-    return sum;
+	if(d1==NULL && d2==NULL && carry==0)
+		return NULL;
+	short num=carry;
+	if(d1)
+	{
+		num+=d1->digit;
+		d1=d1->next;
+	}
+	if(d2)
+	{
+		num+=d2->digit;
+		d2=d2->next;
+	}
+	carry=num/10;
+	num%=10;
+	Digit *sum= saveDigit('0'+num,addDigit(d1,d2,carry));
+	if(sum==NULL)
+		return NULL;
+	if( (d1||d2||carry) & (sum->next==NULL))
+	{
+		free(sum);
+		sum=NULL;
+	}
+	return sum;
 }
 
-BigInteger *sub(BigInteger *b1, BigInteger *b2)
+Digit *subDigit(Digit *d1, Digit *d2,short borrow)
 {
-    if (b1 == NULL || b2 == NULL)
-        return NULL;
-    BigInteger *diff = (BigInteger *)malloc(sizeof(BigInteger));
-    diff->head = NULL;
-    diff->sign = b1->sign;
-    struct Node *trav = NULL;
-    struct Node *t1 = b1->head, *t2 = b2->head;
-    int borrow = 0;
-    while (t1 || t2)
-    {
-        struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
-        temp->digit = borrow + t1->digit;
-        temp->next = NULL;
-        t1 = t1->next;
-        if (t2)
-        {
-            temp->digit -= t2->digit;
-            t2 = t2->next;
-        }
-        if (temp->digit < 0)
-            borrow = -1, temp->digit += 10;
-        else
-            borrow = 0;
-        if (!(diff->head))
-            diff->head = trav = temp;
-        else
-        {
-            trav->next = temp;
-            trav = trav->next;
-        }
-    }
-    removeZeroes(&(diff->head->next));
-    if (diff->head->digit == 0 && diff->head->next == NULL)
-        diff->sign = 1;
-    return diff;
+	if(d1==NULL)
+		return NULL;
+	short num=d1->digit-borrow;
+	if(d2)
+	{
+		num-=d2->digit;
+		d2=d2->next;
+	}
+	borrow=(num<0)?1:0;
+	num+=10;
+	num%=10;
+	Digit *diff= saveDigit('0'+num,subDigit(d1->next,d2,borrow));
+	if(diff==NULL)
+		return NULL;
+	if(diff->digit==0 & diff->next==NULL)
+	{
+		free(diff);
+		diff=NULL;
+	}
+	return diff;
 }
 
-int lencompare(struct Node *b1, struct Node *b2)
+int unsignedCompare(Digit *d1, Digit *d2)
 {
-    int len1 = 0, len2 = 0;
-    while (b1)
-        len1++, b1 = b1->next;
-    while (b2)
-        len2++, b2 = b2->next;
-    if (len1 > len2)
-        return 1;
-    else if (len2 > len1)
-        return -1;
-    else
-        return 0;
-}
-
-int compare(struct Node *b1, struct Node *b2)
-{
-    if (b1 == NULL)
-        return 0;
-    int c = compare(b1->next, b2->next);
-    if (c == 0)
-    {
-        if (b1->digit > b2->digit)
-            c = 1;
-        else if (b1->digit < b2->digit)
-            c = -1;
-    }
-    return c;
+	if (d1 == NULL && d2==NULL)
+		return 0;
+	else if(d1==NULL)
+		return -1;
+	else if(d2==NULL)
+		return 1;
+	int c = unsignedCompare(d1->next, d2->next);
+	if (c == 0)
+	{
+		if (d1->digit > d2->digit)
+			return 1;
+		else if (d1->digit < d2->digit)
+			return -1;
+	}
+	return c;
 }
 
 int compareBigInteger(BigInteger *b1, BigInteger *b2)
 {
-    if (b1->sign != b2->sign)
-        return b1->sign;
-    int comp = lencompare(b1->head, b2->head);
-    if (comp != 0)
-        return comp;
-    return compare(b1->head, b2->head);
+	if(b1==NULL | b2==NULL)
+		return 0;
+	if (b1->sign != b2->sign)
+		return b1->sign;
+	return b1->sign * unsignedCompare(b1->lastDigit, b2->lastDigit);
 }
 
 BigInteger *addBigInteger(BigInteger *b1, BigInteger *b2)
 {
-    if (b1 == NULL || b2 == NULL)
-        return NULL;
-    if (b1->sign == b2->sign)
-        return add(b1, b2);
-    int l = lencompare(b1->head, b2->head);
-    if (l == 1)
-        return sub(b1, b2);
-    else if (l == -1)
-        return sub(b2, b1);
-    else if (compare(b1->head, b2->head) >= 0)
-        return sub(b1, b2);
-    else
-        return sub(b2, b1);
+	BigInteger *sum=(BigInteger *) malloc(sizeof(BigInteger));
+	if(sum==NULL)
+		return NULL;
+	if(b1==NULL && b2==NULL)
+	{
+		sum->sign=1;
+		sum->lastDigit= saveDigit('0',NULL);
+	}
+	else if(b1==NULL)
+	{
+		sum->sign=b2->sign;
+		sum->lastDigit= addDigit(b2->lastDigit,NULL,0);
+	}
+	else if(b2==NULL)
+	{
+		sum->sign=b1->sign;
+		sum->lastDigit= addDigit(b1->lastDigit,NULL,0);
+	}
+	else if(b1->sign==b2->sign)
+	{
+		sum->sign=b1->sign;
+		sum->lastDigit= addDigit(b1->lastDigit,b2->lastDigit,0);
+	}
+	else if(unsignedCompare(b1->lastDigit,b2->lastDigit)==1)
+	{
+		sum->sign=b1->sign;
+		sum->lastDigit= subDigit(b1->lastDigit,b2->lastDigit,0);
+	}
+	else
+	{
+		sum->sign=b2->sign;
+		sum->lastDigit= subDigit(b2->lastDigit,b1->lastDigit,0);
+	}
+	if(sum->lastDigit==NULL)
+	{
+		sum->lastDigit= saveDigit('0',NULL);
+		sum->sign=1;
+	}
+	return sum;
 }
 
 BigInteger *subtractBigInteger(BigInteger *b1, BigInteger *b2)
 {
-    if (b1 == NULL || b2 == NULL)
-        return NULL;
-    if (b1->sign != b2->sign)
-        return add(b1, b2);
-    int l = lencompare(b1->head, b2->head);
-    BigInteger *diff;
-    if (l == 1)
-        diff = sub(b1, b2);
-    else if (l == -1)
-        diff = sub(b2, b1), diff->sign = -(b2->sign);
-    else if (compare(b1->head, b2->head) >= 0)
-        diff = sub(b1, b2);
-    else
-        diff = sub(b2, b1), diff->sign = -(b2->sign);
-    return diff;
+	BigInteger *diff=(BigInteger *) malloc(sizeof(BigInteger));
+	if(diff==NULL)
+		return NULL;
+	if(b1==NULL && b2==NULL)
+	{
+		diff->sign=1;
+		diff->lastDigit= saveDigit('0',NULL);
+	}
+	else if(b1==NULL)
+	{
+		diff->sign=b2->sign*-1;
+		diff->lastDigit= addDigit(b2->lastDigit,NULL,0);
+	}
+	else if(b2==NULL)
+	{
+		diff->sign=b1->sign;
+		diff->lastDigit= addDigit(b1->lastDigit,NULL,0);
+	}
+	else if(b1->sign!=b2->sign)
+	{
+		diff->sign=b1->sign;
+		diff->lastDigit=addDigit(b1->lastDigit,b2->lastDigit,0);
+	}
+	else if(unsignedCompare(b1->lastDigit,b2->lastDigit)==1)
+	{
+		diff->sign=b1->sign;
+		diff->lastDigit=subDigit(b1->lastDigit,b2->lastDigit,0);
+	}
+	else
+	{
+		diff->sign=b1->sign*-1;
+		diff->lastDigit= subDigit(b2->lastDigit,b1->lastDigit,0);
+	}
+	if(diff->lastDigit==NULL)
+	{
+		diff->lastDigit= saveDigit('0',NULL);
+		diff->sign=1;
+	}
+	return diff;
 }
 
-BigInteger *multiplyBigIntger(BigInteger *b1, BigInteger *b2)
+BigInteger *multiplyBigInteger(BigInteger *b1, BigInteger *b2)
 {
-    if (b1 == NULL || b2 == NULL)
-        return NULL;
-    if (lencompare(b1->head, b2->head) == -1)
+	BigInteger *product = (BigInteger *)malloc(sizeof(BigInteger));
+	if(product==NULL)
+		return NULL;
+    if (b1 == NULL | b2 == NULL | (b1->lastDigit->digit==0 & b1->lastDigit->next==NULL) | (b2->lastDigit->digit==0 & b2->lastDigit->next==NULL))
+    {
+		product->sign=1;
+		product->lastDigit= saveDigit('0',NULL);
+	    return product;
+	}
+    if (unsignedCompare(b1->lastDigit, b2->lastDigit) == -1)
     {
         BigInteger *temp = b1;
         b1 = b2;
         b2 = temp;
     }
-    BigInteger *product = (BigInteger *)malloc(sizeof(BigInteger));
     product->sign = (b1->sign == b2->sign) ? 1 : -1;
-    product->head = NULL;
-    struct Node *t2 = b2->head;
-    struct Node *head = NULL, *t = NULL;
-    int n = 0;
+    product->lastDigit = saveDigit('0',NULL);
+    Digit *t2 = b2->lastDigit,*trav = product->lastDigit;
     while (t2)
     {
-        struct Node *t1 = b1->head, *trav = product->head;
+        Digit *t1 = b1->lastDigit, *trav2 = trav;
         int carry = 0;
-        int i = n;
-        while (trav || t1 || carry)
+        while (t1 || carry)
         {
-            struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
-            temp->digit = carry;
-            temp->next = NULL;
-            if (trav)
+			trav2->digit+=carry;
+            if (t1)
             {
-                temp->digit += trav->digit;
-                trav = trav->next;
-            }
-            if (i-- <= 0 && t1)
-            {
-                temp->digit += t1->digit * t2->digit;
+                trav2->digit += t1->digit * t2->digit;
                 t1 = t1->next;
             }
-            carry = temp->digit / 10;
-            temp->digit %= 10;
-            if (head)
-            {
-                t->next = temp;
-                t = t->next;
-            }
-            else
-                head = t = temp;
+            carry = trav2->digit / 10;
+            trav2->digit %= 10;
+            if((trav2->next==NULL) & (t1 || carry))
+				trav2->next= saveDigit('0',NULL);
+			trav2=trav2->next;
         }
-        freeNode(&(product->head));
-        product->head = head;
-        head = t = NULL;
         t2 = t2->next;
-        n++;
+		trav=trav->next;
     }
     return product;
 }
 
-struct Node *divide(struct Node *n1, struct Node *n2, BigInteger *q)
+Digit *specialSubDigit(Digit *d1, Digit *d2,short borrow)
+{
+	if((d1==NULL) | (d2==NULL & borrow==0))
+		return d1;
+	d1->digit-=borrow;
+	if(d2)
+	{
+		d1->digit-=d2->digit;
+		d2=d2->next;
+	}
+	borrow=(d1->digit<0)?1:0;
+	d1->digit+=10;
+	d1->digit%=10;
+	d1->next=specialSubDigit(d1->next,d2,borrow);
+	if(d1->digit==0 & d1->next==NULL)
+	{
+		free(d1);
+		d1=NULL;
+	}
+	return d1;
+}
+
+Digit *divide(Digit *n1, Digit *n2, BigInteger *q)
 {
     if (n1 == NULL)
         return NULL;
     n1->next = divide(n1->next, n2, q);
     if (q)
+        q->lastDigit = saveDigit('0',q->lastDigit);
+    while (unsignedCompare(n1,n2)>=0)
     {
-        struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
-        temp->digit = 0;
-        temp->next = q->head;
-        q->head = temp;
-    }
-    if (lencompare(n1, n2) == -1 || (lencompare(n1, n2) == 0 && compare(n1, n2) == -1))
-        return n1;
-    while (lencompare(n1, n2) == 1 || (lencompare(n1, n2) == 0 && compare(n1, n2) >= 0))
-    {
-        struct Node *t1 = n1, *t2 = n2;
-        int borrow = 0;
-        while (t2 || borrow)
-        {
-            t1->digit -= borrow;
-            if (t2)
-            {
-                t1->digit -= t2->digit;
-                t2 = t2->next;
-            }
-            if (t1->digit < 0)
-            {
-                borrow = 1;
-                t1->digit += 10;
-            }
-            else
-                borrow = 0;
-            t1 = t1->next;
-        }
-        removeZeroes(&n1);
+        n1= specialSubDigit(n1,n2,0);
         if (q)
-            q->head->digit++;
+            q->lastDigit->digit++;
     }
+	if(q && q->lastDigit->digit==0 & q->lastDigit->next==NULL)
+	{
+		free(q->lastDigit);
+		q->lastDigit=NULL;
+	}
     return n1;
 }
 
-BigInteger *divideBigIntger(BigInteger *b1, BigInteger *b2)
+BigInteger *divideBigInteger(BigInteger *b1, BigInteger *b2)
 {
-    if (b1 == NULL || b2 == NULL)
-        return NULL;
-    BigInteger *quotient = (BigInteger *)malloc(sizeof(BigInteger));
-    quotient->sign = (b1->sign == b2->sign) ? 1 : -1;
-    quotient->head = NULL;
-    struct Node *dividend = NULL, *t1, *t2 = b1->head;
+	if(b1==NULL | b2==NULL)
+		return NULL;
+	BigInteger *quotient = (BigInteger *)malloc(sizeof(BigInteger));
+	if(quotient==NULL)
+		return NULL;
+	if(b2->lastDigit->digit==0 & b2->lastDigit->next==NULL)
+	{
+		printf("Cannot divide by 0(Zero).\n");
+		return NULL;
+	}
+    quotient->sign = b1->sign*b2->sign;
+    quotient->lastDigit = NULL;
+    Digit *dividend = NULL, *t1, *t2 = b1->lastDigit;
     while (t2)
     {
-        struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
-        temp->digit = t2->digit;
-        temp->next = NULL;
+        Digit *temp= saveDigit('0'+t2->digit,NULL);
         if (dividend)
         {
             t1->next = temp;
@@ -348,49 +383,52 @@ BigInteger *divideBigIntger(BigInteger *b1, BigInteger *b2)
             dividend = t1 = temp;
         t2 = t2->next;
     }
-    divide(dividend, b2->head, quotient);
-    removeZeroes(&(quotient->head));
-    if (quotient->head == NULL)
-    {
-        quotient->sign = 1;
-        struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
-        temp->digit = 0;
-        temp->next = NULL;
-        quotient->head = temp;
-    }
+    dividend=divide(dividend, b2->lastDigit, quotient);
+	if (quotient->lastDigit == NULL)
+	{
+		if(dividend==NULL)
+			quotient->sign = 1;
+		quotient->lastDigit= saveDigit('0',NULL);
+	}
+	if((b1->sign==-1) & (dividend!=NULL))
+		quotient->lastDigit=specialSubDigit(quotient->lastDigit,NULL,-1),freeDigit(&dividend);;
     return quotient;
 }
 
 BigInteger *modulusBigInteger(BigInteger *b1, BigInteger *b2)
 {
-    if (b1 == NULL || b2 == NULL)
-        return NULL;
-    BigInteger *mod = (BigInteger *)malloc(sizeof(BigInteger));
-    mod->sign = b1->sign;
-    mod->head = NULL;
-    struct Node *dividend = NULL, *t1, *t2 = b1->head;
-    while (t2)
-    {
-        struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
-        temp->digit = t2->digit;
-        temp->next = NULL;
-        if (dividend)
-        {
-            t1->next = temp;
-            t1 = t1->next;
-        }
-        else
-            dividend = t1 = temp;
-        t2 = t2->next;
-    }
-    mod->head = divide(dividend, b2->head, NULL);
-    if (mod->head == NULL)
-    {
-        mod->sign = 1;
-        struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
-        temp->digit = 0;
-        temp->next = NULL;
-        mod->head = temp;
-    }
+	if (b1 == NULL | b2 == NULL)
+		return NULL;
+	BigInteger *mod = (BigInteger *)malloc(sizeof(BigInteger));
+	if(mod==NULL)
+		return NULL;
+    mod->sign = 1;
+	if(b2->lastDigit->digit==0 & b2->lastDigit->next==NULL)
+	{
+		printf("Cannot divide by 0(Zero).\n");
+		return NULL;
+	}
+	Digit *dividend = NULL, *t1, *t2 = b1->lastDigit;
+	while (t2)
+	{
+		Digit *temp= saveDigit('0'+t2->digit,NULL);
+		if (dividend)
+		{
+			t1->next = temp;
+			t1 = t1->next;
+		}
+		else
+			dividend = t1 = temp;
+		t2 = t2->next;
+	}
+    mod->lastDigit = divide(dividend, b2->lastDigit, NULL);
+	if(mod->lastDigit!=NULL & b1->sign==-1)
+	{
+		Digit *temp= subDigit(b2->lastDigit,mod->lastDigit,0);
+		freeDigit(&(mod->lastDigit));
+		mod->lastDigit=temp;
+	}
+    if (mod->lastDigit == NULL)
+        mod->lastDigit= saveDigit('0',NULL);
     return mod;
 }

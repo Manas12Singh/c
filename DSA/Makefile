@@ -1,4 +1,4 @@
-#target: dependecy
+#target: dependency
 #	command
 
 a.exe: BigInteger.o main.o
