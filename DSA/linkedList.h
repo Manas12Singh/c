@@ -32,10 +32,7 @@ void createList(struct Node **head)
         if (!*head)
             *head = trav = temp;
         else
-        {
-            trav->next = temp;
-            trav = trav->next;
-        }
+            trav->next = temp, trav = trav->next;
     }
 }
 

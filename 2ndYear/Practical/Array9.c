@@ -1,22 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Queue
+typedef struct
 {
     int *arr;
     int capacity, size, rear;
-};
+} Queue;
 
-void intialize(struct Queue **q1, int cap)
+void intialize(Queue **q1, int cap)
 {
-    *q1 = (struct Queue *)malloc(sizeof(struct Queue));
+    *q1 = (Queue *)malloc(sizeof(Queue));
     (*q1)->capacity = cap;
     (*q1)->size = 0;
     (*q1)->rear = -1;
     (*q1)->arr = (int *)malloc(sizeof(int) * cap);
 }
 
-void enqueue(struct Queue *q1, int val)
+void enqueue(Queue *q1, int val)
 {
     if (q1->rear + 1 == q1->capacity)
     {
@@ -28,7 +28,7 @@ void enqueue(struct Queue *q1, int val)
     q1->size++;
 }
 
-void dequeue(struct Queue *q1)
+void dequeue(Queue *q1)
 {
     if (q1->rear == -1)
     {
@@ -46,7 +46,7 @@ void dequeue(struct Queue *q1)
     q1->size--;
 }
 
-void front(struct Queue *q1)
+void front(Queue *q1)
 {
     if (q1->size == 0)
     {
@@ -56,7 +56,7 @@ void front(struct Queue *q1)
     printf("%d\n", q1->arr[0]);
 }
 
-void print(struct Queue *q1)
+void print(Queue *q1)
 {
     if (q1->size == 0)
     {
@@ -73,7 +73,7 @@ void print(struct Queue *q1)
     printf("\n");
 }
 
-void freeQueue(struct Queue **q1)
+void freeQueue(Queue **q1)
 {
     free((*q1)->arr);
     free(*q1);
@@ -82,7 +82,7 @@ void freeQueue(struct Queue **q1)
 
 int main()
 {
-    struct Queue *q1 = NULL;
+    Queue *q1 = NULL;
     while (1)
     {
         int opt, k, n;

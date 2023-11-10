@@ -1,27 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Stack
+typedef struct
 {
     int *arr;
     int capacity, size, top;
-};
+} Stack;
 
-void intialize(struct Stack **s1, int cap)
+void intialize(Stack **s1, int cap)
 {
     if (*s1)
     {
         printf("Stack already exist.\n");
         return;
     }
-    *s1 = (struct Stack *)malloc(sizeof(struct Stack));
+    *s1 = (Stack *)malloc(sizeof(Stack));
     (*s1)->capacity = cap;
     (*s1)->size = 0;
     (*s1)->top = -1;
     (*s1)->arr = (int *)malloc(sizeof(int) * cap);
 }
 
-void push(struct Stack *s1, int val)
+void push(Stack *s1, int val)
 {
     if (s1->size == s1->capacity)
     {
@@ -33,7 +33,7 @@ void push(struct Stack *s1, int val)
     s1->size++;
 }
 
-void pop(struct Stack *s1)
+void pop(Stack *s1)
 {
     if (s1->size == 0)
     {
@@ -45,7 +45,7 @@ void pop(struct Stack *s1)
     s1->size--;
 }
 
-void top(struct Stack *s1)
+void top(Stack *s1)
 {
     if (s1->size == 0)
     {
@@ -55,7 +55,7 @@ void top(struct Stack *s1)
     printf("%d\n", s1->arr[s1->top]);
 }
 
-void print(struct Stack *s1)
+void print(Stack *s1)
 {
     if (s1->size == 0)
     {
@@ -69,7 +69,7 @@ void print(struct Stack *s1)
     printf("\n");
 }
 
-void freeStack(struct Stack **s1)
+void freeStack(Stack **s1)
 {
     free((*s1)->arr);
     free(*s1);
@@ -78,7 +78,7 @@ void freeStack(struct Stack **s1)
 
 int main()
 {
-    struct Stack *s1 = NULL;
+    Stack *s1 = NULL;
     while (1)
     {
         int opt, k;
