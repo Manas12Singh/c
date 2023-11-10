@@ -20,7 +20,7 @@ void createList(struct Node **head)
     if (n < 1)
     {
         printf("Invalid number of node.\n");
-        return NULL;
+        return;
     }
     struct Node *trav = NULL;
     printf("Enter the elements:\n");

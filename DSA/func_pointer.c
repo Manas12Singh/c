@@ -1,7 +1,9 @@
 #include <stdio.h>
+#include <pthread.h>
 
 struct Run
 {
+    int a;
     int (*fun)(int, int);
 };
 
