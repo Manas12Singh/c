@@ -74,6 +74,15 @@ void print(Node *left, Node *right) {
 	printf("\nRight Node: %d\n", right->data);
 }
 
+void freeList(Node **head)
+{
+	if(*head==NULL)
+		return;
+	freeList(&((*head)->next));
+	free(*head);
+	*head=NULL;
+}
+
 int main() {
 	Node *left = NULL, *right = NULL;
 	int n, k;
@@ -89,5 +98,7 @@ int main() {
 	scanf("%d", &k);
 	searchDelete(&left, &right, k);
 	print(left, right);
+	freeList(&left);
+	right=NULL;
 	return 0;
 }

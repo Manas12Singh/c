@@ -51,6 +51,15 @@ void print(Node *head)
     printf("\n");
 }
 
+void freeList(Node **head)
+{
+	if(*head==NULL)
+		return;
+	freeList(&((*head)->next));
+	free(*head);
+	*head=NULL;
+}
+
 int main() {
 	char s[100];
 	Node *head = NULL;
@@ -60,5 +69,6 @@ int main() {
 	while (s[i] != '\0')
 		head=insert(head, s[i++]);
 	print(head);
+	freeList(&head);
 	return 0;
 }

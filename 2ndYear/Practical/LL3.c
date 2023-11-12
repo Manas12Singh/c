@@ -35,6 +35,15 @@ Node *search(Node *head,int val)
 	return search(head->next,val);
 }
 
+void freeList(Node **head)
+{
+	if(*head==NULL)
+		return;
+	freeList(&((*head)->next));
+	free(*head);
+	*head=NULL;
+}
+
 int main()
 {
 	int n,k;
@@ -54,5 +63,6 @@ int main()
 		printf("Value not found.\n");
 	else
 		printf("Value found.\n");
+	freeList(&head);
 	return 0;
 }
