@@ -1,5 +1,4 @@
 #include <stdio.h>
-
 int notContains(int arr[], int n, int k)
 {
     for (int i = 0; i < n; i++)
@@ -7,7 +6,6 @@ int notContains(int arr[], int n, int k)
             return 0;
     return 1;
 }
-
 int main()
 {
     int m, n;

@@ -1,14 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct node {
+typedef struct node
+{
 	int data;
 	struct node *next;
 } Node;
-
-Node *createNode(int val) {
-	Node *temp = (Node *) malloc(sizeof(Node));
-	if (temp == NULL) {
+Node *createNode(int val)
+{
+	Node *temp = (Node *)malloc(sizeof(Node));
+	if (temp == NULL)
+	{
 		printf("Memory full!\n");
 		return NULL;
 	}
@@ -16,80 +17,80 @@ Node *createNode(int val) {
 	temp->next = NULL;
 	return temp;
 }
-
-void insert(Node **left, Node **right, int val) {
+void insert(Node **left, Node **right, int val)
+{
 	Node *temp = createNode(val);
 	if (temp == NULL)
 		return;
 	if (*left == NULL)
 		*left = *right = temp;
-	else {
-		(*right)->next = temp;
+	else
+		(*right)->next = temp,
 		(*right) = (*right)->next;
-	}
 }
-
-void searchDelete(Node **left, Node **right, int val) {
-	if (*left == NULL) {
+void searchDelete(Node **left, Node **right, int val)
+{
+	if (*left == NULL)
+	{
 		printf("Unsuccessful Search\n");
 		return;
 	}
-	if ((*left)->data == val) {
+	if ((*left)->data == val)
+	{
 		Node *temp = *left;
-		*left = (*left)->next;
 		if (*right == *left)
 			*right = NULL;
+		*left = (*left)->next;
 		free(temp);
 		return;
 	}
 	Node *trav = *left, *temp = NULL;
-	while (trav->next != NULL) {
-		if (trav->next->data == val) {
-			temp = trav->next;
-			break;
-		}
+	while (trav->next != NULL && trav->next->data != val)
 		trav = trav->next;
-	}
-	if (temp == NULL) {
+	if (trav->next == NULL)
+	{
 		printf("Unsuccessful Search\n");
 		return;
 	}
+	temp = trav->next;
 	trav->next = trav->next->next;
 	if (temp == *right)
 		*right = trav;
 	free(temp);
 }
-
-void print(Node *left, Node *right) {
-	if (left == NULL) {
+void print(Node *left, Node *right)
+{
+	if (left == NULL)
+	{
 		printf("Empty list.\n");
 		return;
 	}
 	printf("Left Node: %d\n", left->data);
 	printf("List elements: ");
-	while (left != NULL) {
+	while (left != NULL)
+	{
 		printf("%d ", left->data);
 		left = left->next;
 	}
 	printf("\nRight Node: %d\n", right->data);
 }
-
 void freeList(Node **head)
 {
-	if(*head==NULL)
+	if (*head == NULL)
 		return;
 	freeList(&((*head)->next));
 	free(*head);
-	*head=NULL;
+	*head = NULL;
 }
-
-int main() {
+int main()
+{
 	Node *left = NULL, *right = NULL;
 	int n, k;
 	printf("Enter the number of nodes: ");
 	scanf("%d", &n);
 	printf("Enter the values: ");
-	for (int i = 0; i < n; i++) {
+	for (int i = 0; i < n; i++)
+	{
 		scanf("%d", &k);
 		insert(&left, &right, k);
 	}
@@ -99,6 +100,6 @@ int main() {
 	searchDelete(&left, &right, k);
 	print(left, right);
 	freeList(&left);
-	right=NULL;
+	right = NULL;
 	return 0;
 }

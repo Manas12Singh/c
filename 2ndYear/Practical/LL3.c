@@ -1,12 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 typedef struct node
 {
 	int data;
 	struct node *next;
 } Node;
-
 Node *createNode(int val)
 {
 	Node *temp = (Node *)malloc(sizeof(Node));
@@ -19,47 +17,43 @@ Node *createNode(int val)
 	temp->next = NULL;
 	return temp;
 }
-
-Node *insert(Node *head,int val)
+Node *insert(Node *head, int val)
 {
-	if(head==NULL)
+	if (head == NULL)
 		return createNode(val);
-	head->next= insert(head->next,val);
+	head->next = insert(head->next, val);
 	return head;
 }
-
-Node *search(Node *head,int val)
+Node *search(Node *head, int val)
 {
-	if(head==NULL || head->data==val)
+	if (head == NULL || head->data == val)
 		return head;
-	return search(head->next,val);
+	return search(head->next, val);
 }
-
 void freeList(Node **head)
 {
-	if(*head==NULL)
+	if (*head == NULL)
 		return;
 	freeList(&((*head)->next));
 	free(*head);
-	*head=NULL;
+	*head = NULL;
 }
-
 int main()
 {
-	int n,k;
-	Node *head=NULL;
+	int n, k;
+	Node *head = NULL;
 	printf("Enter the number of nodes: ");
-	scanf("%d",&n);
+	scanf("%d", &n);
 	printf("Enter the values: ");
 	for (int i = 0; i < n; i++)
 	{
-		scanf("%d",&k);
-		head=insert(head,k);
+		scanf("%d", &k);
+		head = insert(head, k);
 	}
 	printf("Enter the value to search: ");
-	scanf("%d",&k);
-	Node *node= search(head,k);
-	if(node==NULL)
+	scanf("%d", &k);
+	Node *node = search(head, k);
+	if (node == NULL)
 		printf("Value not found.\n");
 	else
 		printf("Value found.\n");

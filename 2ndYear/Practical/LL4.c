@@ -4,72 +4,72 @@
 typedef struct node
 {
 	int data;
-	struct node *next,*prev;
+	struct node *next, *prev;
 } Node;
 
-Node *createNode(Node *prev,Node *next,int val)
+Node *createNode(Node *prev, Node *next, int val)
 {
-	Node *temp= (Node*) malloc(sizeof(Node));
-	if(temp==NULL)
+	Node *temp = (Node *)malloc(sizeof(Node));
+	if (temp == NULL)
 	{
 		printf("Memory full.\n");
 		return NULL;
 	}
-	temp->data=val;
-	temp->prev=prev;
-	temp->next=next;
+	temp->data = val;
+	temp->prev = prev;
+	temp->next = next;
 	return temp;
 }
 
-Node *insert(Node *head,int val)
+Node *insert(Node *head, int val)
 {
-	if(head==NULL)
+	if (head == NULL)
 	{
-		Node* temp= createNode(NULL,NULL,val);
+		Node *temp = createNode(NULL, NULL, val);
 		return temp;
 	}
-	else if(head->next==NULL)
+	else if (head->next == NULL)
 	{
-		Node* temp= createNode(head,NULL,val);
-		head->next=temp;
-		return head;
+		Node *temp = createNode(head, NULL, val);
+		head->next = temp;
 	}
-	head->next= insert(head->next,val);
+	else
+		head->next = insert(head->next, val);
 	return head;
 }
 
-Node *delete(Node* head,int val)
+Node *delete(Node *head, int val)
 {
-	if(head==NULL)
+	if (head == NULL)
 		return NULL;
-	if(head->data==val)
+	if (head->data == val)
 	{
-		if(head->next!=NULL)
-			head->next->prev=head->prev;
-		Node *temp=head;
-		head=head->next;
+		if (head->next != NULL)
+			head->next->prev = head->prev;
+		Node *temp = head;
+		head = head->next;
 		free(temp);
 	}
 	else
-		head->next= delete(head->next,val);
+		head->next = delete (head->next, val);
 	return head;
 }
 
 void display(Node *head)
 {
-	if(head==NULL)
+	if (head == NULL)
 	{
 		printf("Empty list.\n");
 		return;
 	}
-	while (head->next!=NULL)
+	while (head->next != NULL)
 	{
 		printf("%d ", head->data);
 		head = head->next;
 	}
 	printf("%d ", head->data);
 	printf("\nReverse: ");
-	while (head!=NULL)
+	while (head != NULL)
 	{
 		printf("%d ", head->data);
 		head = head->prev;
@@ -79,11 +79,11 @@ void display(Node *head)
 
 void freeList(Node **head)
 {
-	if(*head==NULL)
+	if (*head == NULL)
 		return;
 	freeList(&((*head)->next));
 	free(*head);
-	*head=NULL;
+	*head = NULL;
 }
 
 int main()
@@ -97,24 +97,24 @@ int main()
 		scanf("%d", &opt);
 		switch (opt)
 		{
-			case 1:
-				printf("Enter the value: ");
-				scanf("%d",&n);
-				head=insert(head,n);
-				break;
-			case 2:
-				printf("Enter value to delete: ");
-				scanf("%d",&n);
-				head= delete(head,n);
-				break;
-			case 3:
-				display(head);
-				break;
-			case 4:
-				freeList(&head);
-				return 0;
-			default:
-				printf("Wrong Choice!\n");
+		case 1:
+			printf("Enter the value: ");
+			scanf("%d", &n);
+			head = insert(head, n);
+			break;
+		case 2:
+			printf("Enter value to delete: ");
+			scanf("%d", &n);
+			head = delete (head, n);
+			break;
+		case 3:
+			display(head);
+			break;
+		case 4:
+			freeList(&head);
+			return 0;
+		default:
+			printf("Wrong Choice!\n");
 		}
 	}
 }
