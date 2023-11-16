@@ -11,10 +11,13 @@ int linearSearch(int *arr, int n, int k)
 int main()
 {
     int n, k;
+    printf("Enter the number of elements: ");
     scanf("%d", &n);
     int arr[n];
+    printf("Enter the elements: ");
     for (int i = 0; i < n; i++)
         scanf("%d", &arr[i]);
+    printf("Enter the value to be searched: ");
     scanf("%d", &k);
     int i = linearSearch(arr, n, k);
     if (i == -1)
