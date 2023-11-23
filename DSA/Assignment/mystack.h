@@ -1,13 +1,7 @@
-#ifndef STDIO_H
-#include <stdio.h>
-#endif
-
-#ifndef STDLIB_H
-#include <stdlib.h>
-#endif
-
 #ifndef STACK_H
 #define STACK_H
+#include <stdio.h>
+#include <stdlib.h>
 
 struct Node
 {
@@ -28,4 +22,4 @@ void pop(Stack *);
 void destroyStack(Stack **);
 short isEmpty(Stack *);
 
-#endif // STACK_H
+#endif

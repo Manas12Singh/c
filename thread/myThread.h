@@ -4,5 +4,14 @@
 
 #ifndef C_MYTHREAD_H
 #define C_MYTHREAD_H
+#include "include.h"
 
-#endif //C_MYTHREAD_H
+#define MAXTHREADS 1000
+
+enum bool
+{
+    f,
+    t
+};
+
+#endif // C_MYTHREAD_H

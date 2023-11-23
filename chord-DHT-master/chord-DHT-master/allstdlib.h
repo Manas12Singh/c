@@ -1,10 +1,5 @@
-//
-// Created by Deepanshu Dhami on 20-11-2023.
-//
-
-#ifndef C_INCLUDE_H
-#define C_INCLUDE_H
-
+#ifndef _ALL_STD_H_
+#define _ALL_STD_H
 #include<stdio.h>
 #include<stdlib.h>
 #include<signal.h>
@@ -14,5 +9,8 @@
 #include<ctype.h>
 #include<time.h>
 #include<unistd.h>
+#define REP(i,a,b) \
+	for(int i = a; i <= b; i++)
 
-#endif //C_INCLUDE_H
+#endif
+
