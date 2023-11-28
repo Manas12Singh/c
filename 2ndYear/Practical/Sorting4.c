@@ -1,5 +1,4 @@
 #include <stdio.h>
-
 void merge(int *arr, int left, int mid, int right)
 {
     int llen = mid - left + 1, rlen = right - mid;
@@ -23,7 +22,6 @@ void merge(int *arr, int left, int mid, int right)
     while (k < rlen)
         arr[left++] = rarr[k++];
 }
-
 void mergeSort(int *arr, int left, int right)
 {
     if (left < right)
@@ -34,7 +32,6 @@ void mergeSort(int *arr, int left, int right)
         merge(arr, left, mid, right);
     }
 }
-
 int main()
 {
     int n;
@@ -44,7 +41,7 @@ int main()
     printf("Enter the elements: ");
     for (int i = 0; i < n; i++)
         scanf("%d", &arr[i]);
-    mergeSort(arr, 0, n);
+    mergeSort(arr, 0, n - 1);
     printf("Sorted array: ");
     for (int i = 0; i < n; i++)
         printf("%d ", arr[i]);

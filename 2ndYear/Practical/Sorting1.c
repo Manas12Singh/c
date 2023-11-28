@@ -1,12 +1,10 @@
 #include <stdio.h>
-
 void swap(int *a, int *b)
 {
     int temp = *a;
     *a = *b;
     *b = temp;
 }
-
 void bubbleSort(int *arr, int n)
 {
     int s;
@@ -14,13 +12,12 @@ void bubbleSort(int *arr, int n)
     {
         s = 0;
         for (int j = 0; j < n - i; j++)
-            if (arr[j] >= arr[j + 1])
+            if (arr[j] > arr[j + 1])
                 swap(&arr[j], &arr[j + 1]), s = 1;
         if (s == 0)
             break;
     }
 }
-
 int main()
 {
     int n;
