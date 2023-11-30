@@ -51,20 +51,13 @@ short searchNode(TreeNode *root, int key)
         return (root->right, key);
 }
 
-void exchange(TreeNode *t1, TreeNode *t2)
-{
-    int temp = t1->val;
-    t1->val = t2->val;
-    t2->val = temp;
-}
-
 TreeNode *deleteNode(TreeNode *root, int val)
 {
     if (root == NULL)
         return NULL;
-    if (root->val > val)
+    if (root->data > val)
         root->left = deleteNode(root->left, val);
-    else if (root->val < val)
+    else if (root->data < val)
         root->right = deleteNode(root->right, val);
     else
     {
@@ -87,20 +80,93 @@ TreeNode *deleteNode(TreeNode *root, int val)
         }
         else
         {
-            TreeNode *trav = root->right;
-            if (trav->left == NULL)
+            TreeNode *trav = root->left, *t = root;
+            while (trav->right != NULL)
             {
-                exchange(root, trav);
-                root->right = deleteNode(root->right, val);
+                t = trav;
+                trav = trav->right;
             }
+            if (t == root)
+                t->left = trav->left;
             else
-            {
-                while (trav->left != NULL && trav->left->left != NULL)
-                    trav = trav->left;
-                exchange(trav->left, root);
-                trav->left = deleteNode(trav->left, val);
-            }
+                t->right = trav->left;
+            root->data = trav->data;
+            free(trav);
         }
     }
     return root;
+}
+
+int countLeaves(TreeNode *root)
+{
+    if (root == NULL)
+        return 0;
+    if (root->left == NULL && root->right == NULL)
+        return 1;
+    return countLeaves(root->left) + countLeaves(root->right);
+}
+
+int max(int a, int b)
+{
+    return (a > b) ? a : b;
+}
+
+int findHeight(TreeNode *root)
+{
+    if (root == NULL)
+        return 0;
+    return 1 + max(findHeight(root->left), findHeight(root->right));
+}
+
+int kthLargestElement(TreeNode *root, int k)
+{
+    static int c = 0;
+    if (root == NULL)
+        return -1;
+    int res = kthLargestElement(root->right, k);
+    if (res != -1)
+        return res;
+    c++;
+    if (c == k)
+        return root->data;
+    return kthLargestElement(root->left, k);
+}
+
+int main()
+{
+    int n, *data, key;
+    int opt;
+    do
+    {
+        printf("1. Create Tree\n2. Search key\n3. Delete Node\n4. Count Leaves\n5. Find Height\n6. Kth Largest Element\n7. Exit\nEnter your choice: ");
+    } while (opt!=7);
+    
+    printf("Enter the number of nodes: ");
+    scanf("%d", &n);
+    data = (int *)malloc(n * sizeof(int));
+    printf("Enter the data: ");
+    for (int i = 0; i < n; i++)
+        scanf("%d", &data[i]);
+    TreeNode *root = createTree(data, n);
+    printf("Enter the key to search: ");
+    scanf("%d", &key);
+    if (searchNode(root, key))
+        printf("Key Found!\n");
+    else
+        printf("Key Not Found!\n");
+    printf("Enter the key to delete: ");
+    scanf("%d", &key);
+    root = deleteNode(root, key);
+    printf("Enter the key to search: ");
+    scanf("%d", &key);
+    if (searchNode(root, key))
+        printf("Key Found!\n");
+    else
+        printf("Key Not Found!\n");
+    printf("Number of leaves: %d\n", countLeaves(root));
+    printf("Height of the tree: %d\n", findHeight(root));
+    printf("Enter the value of k: ");
+    scanf("%d", &key);
+    printf("Kth Largest Element: %d\n", kthLargestElement(root, key));
+    return 0;
 }

@@ -50,37 +50,37 @@ ListNode *createList()
     return head;
 }
 
-void convert(ListNode *head, ListNode **positive, ListNode **negative)
+void convert(ListNode **head, ListNode **positive, ListNode **negative)
 {
-    ListNode *head1 = NULL, *head2 = NULL;
-    ListNode *trav1, *trav2;
-    while (head != NULL)
+    ListNode *trav1 = NULL, *trav2 = NULL;
+    while ((*head) != NULL)
     {
-        if (head->data < 0)
+        if ((*head)->data < 0)
         {
-            if (head2 == NULL)
-                head2 = trav2 = head;
+            if (*negative == NULL)
+                *negative = trav2 = *head;
             else
             {
-                trav2->next = head;
+                trav2->next = *head;
                 trav2 = trav2->next;
             }
         }
         else
         {
-            if (head1 == NULL)
-                head1 = trav1 = head;
+            if (*positive == NULL)
+                *positive = trav1 = *head;
             else
             {
-                trav1->next = head;
+                trav1->next = *head;
                 trav1 = trav1->next;
             }
         }
-        head = head->next;
+        *head = (*head)->next;
     }
-    trav1->next = trav2->next = NULL;
-    *positive = head1;
-    *negative = head2;
+    if (trav1 != NULL)
+        trav1->next = NULL;
+    if (trav2 != NULL)
+        trav2->next = NULL;
 }
 
 void printList(ListNode *head)
@@ -106,7 +106,7 @@ void freeList(ListNode **head)
 int main()
 {
     int opt, n;
-    ListNode *l1 = NULL, *postitive = NULL, *negative = NULL;
+    ListNode *l1 = NULL, *positive = NULL, *negative = NULL;
     do
     {
         printf("Options:\n1. Create List.\n2. Convert to positive and negative lists.\n3. Print positive.\n4. Print negative.\n5. Exit\n");
@@ -115,13 +115,16 @@ int main()
         switch (opt)
         {
         case 1:
+            freeList(&l1);
             l1 = createList();
             break;
         case 2:
-            convert(l1, &postitive, &negative);
+            freeList(&positive);
+            freeList(&negative);
+            convert(&l1, &positive, &negative);
             break;
         case 3:
-            printList(postitive);
+            printList(positive);
             break;
         case 4:
             printList(negative);
@@ -133,7 +136,7 @@ int main()
         }
     } while (opt != 5);
     freeList(&l1);
-    freeList(&postitive);
+    freeList(&positive);
     freeList(&negative);
     return 0;
 }
