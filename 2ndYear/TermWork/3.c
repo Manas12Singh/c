@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// #define insert(head,trav,temp) {if(head==NULL) head=trav=temp; else {trav->next=temp;trav=trav->next;}}
+
 typedef struct ListNode
 {
     int data;
@@ -52,55 +54,39 @@ ListNode *createList()
 
 void partition(ListNode **head, int k)
 {
-    ListNode *p1 = NULL, *p2 = NULL;
-    ListNode *t1 = NULL, *t2 = NULL;
-    while (*head != NULL)
+    if (*head == NULL || (*head)->next == NULL)
+        return;
+    ListNode *trav = *head;
+    ListNode *later = NULL, *ltrav = NULL;
+    while (trav->next != NULL)
     {
-        if ((*head)->data < k)
+        if (trav->next->data >= k)
         {
-            if (p1 == NULL)
-                p1 = t1 = *head;
+            if (later == NULL)
+                later = ltrav = trav->next;
             else
             {
-                t1->next = *head;
-                t1 = t1->next;
+                ltrav->next = trav->next;
+                ltrav = ltrav->next;
             }
+            trav->next = trav->next->next;
         }
         else
-        {
-            if (p2 == NULL)
-                p2 = t2 = *head;
-            else
-            {
-                t2->next = *head;
-                t2 = t2->next;
-            }
-        }
+            trav = trav->next;
+    }
+    if ((*head)->data >= k)
+    {
+        ListNode *temp = *head;
         *head = (*head)->next;
+        temp->next = later;
+        later = temp;
     }
-    t1->next = t2->next = NULL;
-    while (p1 != NULL)
-    {
-        if (*head == NULL)
-            *head = t1 = p1;
-        else
-        {
-            t1->next = p1;
-            t1 = t1->next;
-        }
-        p1 = p1->next;
-    }
-    while (p2 != NULL)
-    {
-        if (*head == NULL)
-            *head = t1 = p2;
-        else
-        {
-            t1->next = p2;
-            t1 = t1->next;
-        }
-        p2 = p2->next;
-    }
+    if (ltrav != NULL)
+        ltrav->next = NULL;
+    if (*head == NULL)
+        *head = later;
+    else
+        trav->next = later;
 }
 
 void printList(ListNode *head)
@@ -127,7 +113,7 @@ int main()
 {
     int opt, n;
     ListNode *l1 = NULL;
-    while (1)
+    do
     {
         printf("Options:\n1. Create List.\n2. Partition.\n3. Print list.\n4. Exit\n");
         printf("Enter your choice (1 to 4): ");
@@ -135,6 +121,8 @@ int main()
         switch (opt)
         {
         case 1:
+            if (l1 != NULL)
+                freeList(&l1);
             l1 = createList();
             break;
         case 2:
@@ -147,11 +135,11 @@ int main()
             printList(l1);
             break;
         case 4:
-            freeList(&l1);
-            return 0;
+            break;
         default:
             printf("Wrong Choice!\n");
         }
-    }
+    } while (opt != 4);
+    freeList(&l1);
     return 0;
 }

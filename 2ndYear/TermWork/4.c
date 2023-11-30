@@ -74,13 +74,12 @@ short compare(ListNode *n1, ListNode *n2)
     return 0;
 }
 
-ListNode *sub(ListNode *n1, ListNode *n2, int *borrow)
+ListNode *sub(ListNode *n1, ListNode *n2, short *borrow)
 {
     if (n1 == NULL || n2 == NULL)
         return NULL;
-    int b = 0;
-    ListNode *temp = createNode(n1->data);
-    temp->data -= n2->data;
+    short b = 0;
+    ListNode *temp = createNode(n1->data - n2->data);
     temp->next = sub(n1->next, n2->next, &b);
     temp->data -= b;
     if (temp->data < 0)
@@ -92,14 +91,20 @@ ListNode *sub(ListNode *n1, ListNode *n2, int *borrow)
     return temp;
 }
 
-ListNode *subtract(ListNode *n1, ListNode *n2)
+ListNode *difference(ListNode *n1, ListNode *n2)
 {
+    if (n1 == NULL || n2 == NULL)
+    {
+        printf("Invalid input!\n");
+        return NULL;
+    }
     int len = lencompare(n1, n2);
-    if (len == 0 && compare(n1, n2) == -1)
+    if (len < 0 || (len == 0 && compare(n1, n2) == -1))
     {
         ListNode *temp = n1;
         n1 = n2;
         n2 = temp;
+        len = -len;
     }
     while (len-- > 0)
     {
@@ -108,6 +113,12 @@ ListNode *subtract(ListNode *n1, ListNode *n2)
         n2 = temp;
     }
     ListNode *diff = sub(n1, n2, NULL);
+    while (diff->data == 0 && diff->next != NULL)
+    {
+        ListNode *temp = diff;
+        diff = diff->next;
+        free(temp);
+    }
     return diff;
 }
 
@@ -135,11 +146,11 @@ int main()
 {
     int opt;
     ListNode *A = NULL, *B = NULL, *S = NULL;
-    while (1)
+    do
     {
-        printf("Options:\n1. Enter in List A.\n2. Enter in List B.\n3. Subtract.\n4. Print lists.\n5. Exit\n");
+        printf("Options:\n1. Enter in List A.\n2. Enter in List B.\n3. Difference.\n4. Print lists.\n5. Exit\n");
         printf("Enter your choice (1 to 5): ");
-        scanf("%d%*c", &opt);
+        scanf("%d", &opt);
         switch (opt)
         {
         case 1:
@@ -155,7 +166,7 @@ int main()
         case 3:
             if (S != NULL)
                 freeList(&S);
-            S = subtract(A, B);
+            S = difference(A, B);
             break;
         case 4:
             printf("List A: ");
@@ -166,13 +177,13 @@ int main()
             printList(S);
             break;
         case 5:
-            freeList(&A);
-            freeList(&B);
-            freeList(&S);
-            return 0;
+            break;
         default:
             printf("Wrong Choice!\n");
         }
-    }
+    } while (opt != 5);
+    freeList(&A);
+    freeList(&B);
+    freeList(&S);
     return 0;
 }

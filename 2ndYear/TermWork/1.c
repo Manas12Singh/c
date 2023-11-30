@@ -94,7 +94,7 @@ int main()
 {
     int opt;
     ProductQueue *q1 = createQueue();
-    while (1)
+    do
     {
         printf("Options:\n1. Enque.\n2. Deque.\n3. Front.\n4. Exit.\n");
         printf("Enter your choice (1 to 4): ");
@@ -111,11 +111,11 @@ int main()
             front(q1);
             break;
         case 4:
-            destroyQueue(&q1);
-            return 0;
+            break;
         default:
             printf("Wrong Choice!\n");
         }
-    }
+    } while (opt != 4);
+    destroyQueue(&q1);
     return 0;
 }

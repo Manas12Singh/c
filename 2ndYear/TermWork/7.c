@@ -39,7 +39,7 @@ TreeNode *createTree(int *data, int n)
     return root;
 }
 
-short search(TreeNode *root, int key)
+short searchNode(TreeNode *root, int key)
 {
     if (root == NULL)
         return 0;
@@ -51,34 +51,56 @@ short search(TreeNode *root, int key)
         return (root->right, key);
 }
 
+void exchange(TreeNode *t1, TreeNode *t2)
+{
+    int temp = t1->val;
+    t1->val = t2->val;
+    t2->val = temp;
+}
+
 TreeNode *deleteNode(TreeNode *root, int val)
 {
     if (root == NULL)
         return NULL;
-    if (root->data > val)
+    if (root->val > val)
         root->left = deleteNode(root->left, val);
-    else if (root->data < val)
+    else if (root->val < val)
         root->right = deleteNode(root->right, val);
     else
     {
         if (root->left == NULL && root->right == NULL)
         {
             free(root);
-            return NULL;
+            root = NULL;
         }
-        if (root->left == NULL)
+        else if (root->left == NULL)
         {
             TreeNode *temp = root;
             root = root->right;
             free(temp);
-            return root;
         }
-        if (root->right == NULL)
+        else if (root->right == NULL)
         {
             TreeNode *temp = root;
             root = root->left;
             free(temp);
-            return root;
+        }
+        else
+        {
+            TreeNode *trav = root->right;
+            if (trav->left == NULL)
+            {
+                exchange(root, trav);
+                root->right = deleteNode(root->right, val);
+            }
+            else
+            {
+                while (trav->left != NULL && trav->left->left != NULL)
+                    trav = trav->left;
+                exchange(trav->left, root);
+                trav->left = deleteNode(trav->left, val);
+            }
         }
     }
+    return root;
 }

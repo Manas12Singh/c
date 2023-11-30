@@ -50,43 +50,33 @@ ListNode *createList()
     return head;
 }
 
-int length(ListNode *n1)
+void reorderList(ListNode *head)
 {
-    int len = 0;
-    while (n1 != NULL)
-        len++, n1 = n1->next;
-    return len;
-}
-
-void rearrange(ListNode **head)
-{
-    int len = length(*head);
-    if (len <= 2)
+    if (head->next == NULL || head->next->next == NULL)
         return;
-    ListNode *temp = NULL, *trav = *head;
-    len /= 2;
-    while (len-- > 0)
-        trav = trav->next;
-    while (trav->next != NULL)
+    ListNode *p1 = head, *p2 = head;
+    while (p2->next != NULL && p2->next->next != NULL)
     {
-        ListNode *t = trav->next;
-        trav->next = trav->next->next;
-        t->next = temp;
-        temp = t;
+        p1 = p1->next;
+        p2 = p2->next->next;
     }
-    ListNode *merge = *head;
-    trav = *head;
-    *head = (*head)->next;
-    while (temp != NULL)
+    p2 = NULL;
+    while (p1->next != NULL)
     {
-        trav->next = temp;
-        temp = temp->next;
-        trav = trav->next;
-        trav->next = *head;
-        (*head) = (*head)->next;
-        trav = trav->next;
+        ListNode *temp = p1->next;
+        p1->next = p1->next->next;
+        temp->next = p2;
+        p2 = temp;
     }
-    *head = merge;
+    p1 = head;
+    while (p2 != NULL)
+    {
+        ListNode *temp = p2;
+        p2 = p2->next;
+        temp->next = p1->next;
+        p1->next = temp;
+        p1 = p1->next->next;
+    }
 }
 
 void printList(ListNode *head)
@@ -124,7 +114,7 @@ int main()
             l1 = createList();
             break;
         case 2:
-            rearrange(&l1);
+            reorderList(l1);
             break;
         case 3:
             printf("List: ");

@@ -57,31 +57,27 @@ ListNode *mergeAlternate(ListNode *head1, ListNode *head2)
     {
         if (head1 != NULL)
         {
-            ListNode *temp = createNode(head1->data);
-            if (temp == NULL)
-                break;
+            ListNode *temp = head1;
+            head1 = head1->next;
             if (head == NULL)
                 head = trav = temp;
             else
             {
                 trav->next = temp;
-                trav = trav->next;
+                trav = temp;
             }
-            head1 = head1->next;
         }
         if (head2 != NULL)
         {
-            ListNode *temp = createNode(head2->data);
-            if (temp == NULL)
-                break;
+            ListNode *temp = head2;
+            head2 = head2->next;
             if (head == NULL)
                 head = trav = temp;
             else
             {
                 trav->next = temp;
-                trav = trav->next;
+                trav = temp;
             }
-            head2 = head2->next;
         }
     }
     return head;
@@ -111,9 +107,9 @@ int main()
 {
     int opt;
     ListNode *A = NULL, *B = NULL, *S = NULL;
-    while (1)
+    do
     {
-        printf("Options:\n1. Enter in List A.\n2. Enter in List B.\n3. Merge.\n4. Print lists.\n5. Exit\n");
+        printf("Options:\n1. Enter in List A.\n2. Enter in List B.\n3. Merge to S.\n4. Print S.\n5. Exit\n");
         printf("Enter your choice (1 to 5): ");
         scanf("%d%*c", &opt);
         switch (opt)
@@ -134,21 +130,17 @@ int main()
             S = mergeAlternate(A, B);
             break;
         case 4:
-            printf("List A: ");
-            printList(A);
-            printf("List B: ");
-            printList(B);
             printf("List S: ");
             printList(S);
             break;
         case 5:
-            freeList(&A);
-            freeList(&B);
-            freeList(&S);
-            return 0;
+            break;
         default:
             printf("Wrong Choice!\n");
         }
-    }
+    } while (opt != 5);
+    freeList(&A);
+    freeList(&B);
+    freeList(&S);
     return 0;
 }
