@@ -58,29 +58,29 @@ void searchDelete(Node **left, Node **right, int val)
 		*right = trav;
 	free(temp);
 }
-void print(Node *left, Node *right)
+void printList(Node *left)
 {
 	if (left == NULL)
 	{
 		printf("Empty list.\n");
 		return;
 	}
-	printf("Left Node: %d\n", left->data);
 	printf("List elements: ");
 	while (left != NULL)
 	{
 		printf("%d ", left->data);
 		left = left->next;
 	}
-	printf("\nRight Node: %d\n", right->data);
+	printf("\n");
 }
 void freeList(Node **head)
 {
-	if (*head == NULL)
-		return;
-	freeList(&((*head)->next));
-	free(*head);
-	*head = NULL;
+	while (*head != NULL)
+	{
+		Node *temp = *head;
+		*head = (*head)->next;
+		free(temp);
+	}
 }
 int main()
 {
@@ -94,11 +94,11 @@ int main()
 		scanf("%d", &k);
 		insert(&left, &right, k);
 	}
-	print(left, right);
+	printList(left);
 	printf("Enter the element to delete: ");
 	scanf("%d", &k);
 	searchDelete(&left, &right, k);
-	print(left, right);
+	printList(left);
 	freeList(&left);
 	right = NULL;
 	return 0;

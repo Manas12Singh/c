@@ -26,7 +26,7 @@ TreeNode *insert(TreeNode *root, int data)
         return createNode(data);
     if (root->data > data)
         root->left = insert(root->left, data);
-    if (root->data > data)
+    if (root->data < data)
         root->right = insert(root->right, data);
     return root;
 }
@@ -118,55 +118,91 @@ int findHeight(TreeNode *root)
     return 1 + max(findHeight(root->left), findHeight(root->right));
 }
 
-int kthLargestElement(TreeNode *root, int k)
+int kthLargest(TreeNode *root, int k, int *c)
 {
-    static int c = 0;
     if (root == NULL)
         return -1;
-    int res = kthLargestElement(root->right, k);
+    int res = kthLargest(root->right, k, c);
     if (res != -1)
         return res;
-    c++;
-    if (c == k)
+    (*c)++;
+    if (*c == k)
         return root->data;
-    return kthLargestElement(root->left, k);
+    return kthLargest(root->left, k, c);
+}
+
+int kthLargestElement(TreeNode *root, int k)
+{
+    int c = 0;
+    return kthLargest(root, k, &c);
+}
+
+void freeTree(TreeNode *root)
+{
+    if (root == NULL)
+        return;
+    freeTree(root->left);
+    freeTree(root->right);
+    free(root);
 }
 
 int main()
 {
-    int n, *data, key;
+    int n, key, *data = NULL;
+    TreeNode *root = NULL;
     int opt;
     do
     {
         printf("1. Create Tree\n2. Search key\n3. Delete Node\n4. Count Leaves\n5. Find Height\n6. Kth Largest Element\n7. Exit\nEnter your choice: ");
-    } while (opt!=7);
-    
-    printf("Enter the number of nodes: ");
-    scanf("%d", &n);
-    data = (int *)malloc(n * sizeof(int));
-    printf("Enter the data: ");
-    for (int i = 0; i < n; i++)
-        scanf("%d", &data[i]);
-    TreeNode *root = createTree(data, n);
-    printf("Enter the key to search: ");
-    scanf("%d", &key);
-    if (searchNode(root, key))
-        printf("Key Found!\n");
-    else
-        printf("Key Not Found!\n");
-    printf("Enter the key to delete: ");
-    scanf("%d", &key);
-    root = deleteNode(root, key);
-    printf("Enter the key to search: ");
-    scanf("%d", &key);
-    if (searchNode(root, key))
-        printf("Key Found!\n");
-    else
-        printf("Key Not Found!\n");
-    printf("Number of leaves: %d\n", countLeaves(root));
-    printf("Height of the tree: %d\n", findHeight(root));
-    printf("Enter the value of k: ");
-    scanf("%d", &key);
-    printf("Kth Largest Element: %d\n", kthLargestElement(root, key));
+        scanf("%d", &opt);
+        switch (opt)
+        {
+        case 1:
+            if (data != NULL)
+                free(data);
+            if(root != NULL)
+            {
+                freeTree(root);
+                root = NULL;
+            }
+            printf("Enter the number of nodes: ");
+            scanf("%d", &n);
+            data = (int *)malloc(n * sizeof(int));
+            printf("Enter the data: ");
+            for (int i = 0; i < n; i++)
+                scanf("%d", &data[i]);
+            TreeNode *root = createTree(data, n);
+            break;
+        case 2:
+            printf("Enter the key to search: ");
+            scanf("%d", &key);
+            if (searchNode(root, key))
+                printf("Key Found!\n");
+            else
+                printf("Key Not Found!\n");
+            break;
+        case 3:
+            printf("Enter the key to delete: ");
+            scanf("%d", &key);
+            root = deleteNode(root, key);
+            break;
+        case 4:
+            printf("Number of leaves: %d\n", countLeaves(root));
+            break;
+        case 5:
+            printf("Height of the tree: %d\n", findHeight(root));
+            break;
+        case 6:
+            printf("Enter the value of k: ");
+            scanf("%d", &key);
+            printf("Kth Largest Element: %d\n", kthLargestElement(root, key));
+            break;
+        case 7:
+            break;
+        default:
+            printf("Invalid Option!\n");
+        }
+    } while (opt != 7);
+    freeTree(root);
     return 0;
 }
