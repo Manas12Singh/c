@@ -69,60 +69,37 @@ void displayList(ListNode *head)
 
 ListNode *addPolynomial(ListNode *head1, ListNode *head2)
 {
-    ListNode *head = NULL, *trav = NULL;
-    while (head1 != NULL && head2 != NULL)
+    ListNode *temp = NULL;
+    if (head1 == NULL && head2 == NULL)
+        return temp;
+    if (head2 == NULL)
     {
-        if (head1->power > head2->power)
-        {
-            ListNode *temp = createNode(head1->data, head1->power);
-            if (temp == NULL)
-                break;
-            if (head == NULL)
-                head = trav = temp;
-            else
-            {
-                trav->next = temp;
-                trav = temp;
-            }
-            head1 = head1->next;
-        }
-        else if (head1->power < head2->power)
-        {
-            ListNode *temp = createNode(head2->data, head2->power);
-            if (temp == NULL)
-                break;
-            if (head == NULL)
-                head = trav = temp;
-            else
-            {
-                trav->next = temp;
-                trav = temp;
-            }
-            head2 = head2->next;
-        }
-        else
-        {
-            if (head1->data + head2->data == 0)
-            {
-                head1 = head1->next;
-                head2 = head2->next;
-                continue;
-            }
-            ListNode *temp = createNode(head1->data + head2->data, head1->power);
-            if (temp == NULL)
-                break;
-            if (head == NULL)
-                head = trav = temp;
-            else
-            {
-                trav->next = temp;
-                trav = temp;
-            }
-            head1 = head1->next;
-            head2 = head2->next;
-        }
+        temp = createNode(head1->data, head1->power);
+        temp->next = addPolynomial(head1->next, head2);
     }
-    return head;
+    else if (head1 == NULL)
+    {
+        temp = createNode(head2->data, head2->power);
+        temp->next = addPolynomial(head1, head2->next);
+    }
+    else if (head1->power > head2->power)
+    {
+        temp = createNode(head1->data, head1->power);
+        temp->next = addPolynomial(head1->next, head2);
+    }
+    else if (head1->power < head2->power)
+    {
+        temp = createNode(head2->data, head2->power);
+        temp->next = addPolynomial(head1, head2->next);
+    }
+    else if (head1->data + head2->data == 0)
+        temp = addPolynomial(head1->next, head2->next);
+    else
+    {
+        temp = createNode(head1->data + head2->data, head1->power);
+        temp->next = addPolynomial(head1->next, head2->next);
+    }
+    return temp;
 }
 
 void freeList(ListNode **head)
