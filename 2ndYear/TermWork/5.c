@@ -1,12 +1,17 @@
+/* 5. Write a C program to craeate a single linked list , like L0 -> L1 -> … -> Ln-1 -> Ln. Write another C fucntion to rearrange the nodes in the list so that the new formed list is : L0 -> Ln -> L1 -> Ln-1 -> L2 -> Ln-2 .You are required to do this in place without altering the nodes’ values.
+Name: Manas Singh
+Section: C1
+Roll No: 38
+Course: B.Tech CSE
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
-
 typedef struct ListNode
 {
     int data;
     struct ListNode *next;
 } ListNode;
-
 ListNode *createNode(int data)
 {
     ListNode *temp = (ListNode *)malloc(sizeof(ListNode));
@@ -19,7 +24,6 @@ ListNode *createNode(int data)
     temp->next = NULL;
     return temp;
 }
-
 ListNode *createList()
 {
     int n;
@@ -49,7 +53,6 @@ ListNode *createList()
     }
     return head;
 }
-
 void reorderList(ListNode *head)
 {
     if (head->next == NULL || head->next->next == NULL)
@@ -78,7 +81,6 @@ void reorderList(ListNode *head)
         p1 = p1->next->next;
     }
 }
-
 void printList(ListNode *head)
 {
     while (head != NULL)
@@ -88,7 +90,6 @@ void printList(ListNode *head)
     }
     printf("\n");
 }
-
 void freeList(ListNode **head)
 {
     while (*head != NULL)
@@ -98,7 +99,6 @@ void freeList(ListNode **head)
         free(temp);
     }
 }
-
 int main()
 {
     int opt, n;
@@ -129,3 +129,34 @@ int main()
     freeList(&l1);
     return 0;
 }
+
+/*
+Output:
+Options:
+1. Create List.
+2. Rearrange.
+3. Print list.
+4. Exit
+Enter your choice (1 to 4): 1
+Enter the number of node(s): 5
+Enter the values: 1 2 3 4 5
+Options:
+1. Create List.
+2. Rearrange.
+3. Print list.
+4. Exit
+Enter your choice (1 to 4): 2
+Options:
+1. Create List.
+2. Rearrange.
+3. Print list.
+4. Exit
+Enter your choice (1 to 4): 3
+List: 1 5 2 4 3
+Options:
+1. Create List.
+2. Rearrange.
+3. Print list.
+4. Exit
+Enter your choice (1 to 4): 4
+*/

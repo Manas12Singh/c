@@ -5,5 +5,5 @@ Q11. Write a C program to store the details of a directed weighted graph (Use ar
 Q12. Write a C program to implement BFS.
 
 ## Extra
-Threading
+ Library
 

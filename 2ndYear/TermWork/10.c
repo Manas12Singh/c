@@ -1,6 +1,13 @@
+/* 10. Using circular linked list allocate time slots of 10ms for given processes in time sharing Environment and then print which process will be completed in how much time.
+
+Name: Manas Singh
+Section: C1
+Roll No: 38
+Course: B.Tech CSE
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
-
 typedef struct Process
 {
     int id;
@@ -9,7 +16,6 @@ typedef struct Process
     int completeTime;
     struct Process *next;
 } Process;
-
 Process *createProcess(int id, int runtime)
 {
     Process *temp = (Process *)malloc(sizeof(Process));
@@ -19,7 +25,6 @@ Process *createProcess(int id, int runtime)
     temp->next = NULL;
     return temp;
 }
-
 void addProcess(Process **head, Process *temp)
 {
     if (*head == NULL)
@@ -36,7 +41,6 @@ void addProcess(Process **head, Process *temp)
         temp->next = *head;
     }
 }
-
 void run(Process *head)
 {
     if (head == NULL)
@@ -91,7 +95,6 @@ void run(Process *head)
         }
     }
 }
-
 void printRuntime(Process *head)
 {
     if (head == NULL)
@@ -104,7 +107,6 @@ void printRuntime(Process *head)
         curr = curr->next;
     }
 }
-
 int main()
 {
     Process *head = NULL;
@@ -136,3 +138,54 @@ int main()
     } while (opt != 4);
     return 0;
 }
+
+/*
+Output:
+1. Add a process
+2. Run
+3. Print complete times.
+4. Exit
+Enter your option: 1
+Enter process ID: 21
+Enter time remaining for the process: 30
+1. Add a process
+2. Run
+3. Print complete times.
+4. Exit
+Enter your option: 1
+Enter process ID: 25
+Enter time remaining for the process: 40
+1. Add a process
+2. Run
+3. Print complete times.
+4. Exit
+Enter your option: 1
+Enter process ID: 18
+Enter time remaining for the process: 20
+1. Add a process
+2. Run
+3. Print complete times.
+4. Exit
+Enter your option: 1
+Enter process ID: 7
+Enter time remaining for the process: 45
+1. Add a process
+2. Run
+3. Print complete times.
+4. Exit
+Enter your option: 2
+1. Add a process
+2. Run
+3. Print complete times.
+4. Exit
+Enter your option: 3
+Process 21 will be completed in 90 ms
+Process 25 will be completed in 120 ms
+Process 18 will be completed in 70 ms
+Process 7 will be completed in 135 ms
+1. Add a process
+2. Run
+3. Print complete times.
+4. Exit
+Enter your option: 4
+*/

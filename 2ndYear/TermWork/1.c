@@ -1,7 +1,14 @@
+/* 1. Write a C program to Insert and Delete elements form a Queue using link list ,each node should have the following inforamaion about a product Product_Id(char) , Product_Name(string) , Total_sale(integer),Product_Grade(Char)
+
+Name: Manas Singh
+Section: C1
+Roll No: 38
+Course: B.Tech CSE
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 typedef struct Product
 {
     char product_Id;
@@ -119,3 +126,59 @@ int main()
     destroyQueue(&q1);
     return 0;
 }
+
+/*
+Output:
+Options:
+1. Enque.
+2. Deque.
+3. Front.
+4. Exit.
+Enter your choice (1 to 4): 1
+Enter Product ID: F
+Enter Product Name: Football
+Enter Total Sale: 34
+Enter Product Grade: A
+Options:
+1. Enque.
+2. Deque.
+3. Front.
+4. Exit.
+Enter your choice (1 to 4): 1
+Enter Product ID: E
+Enter Product Name: Elemental
+Enter Total Sale: 22
+Enter Product Grade: B
+Options:
+1. Enque.
+2. Deque.
+3. Front.
+4. Exit.
+Enter your choice (1 to 4): 3
+Product ID: F
+Product Name: Football
+Total Sale: 34
+Product Grade: A
+Options:
+1. Enque.
+2. Deque.
+3. Front.
+4. Exit.
+Enter your choice (1 to 4): 2
+Options:
+1. Enque.
+2. Deque.
+3. Front.
+4. Exit.
+Enter your choice (1 to 4): 3
+Product ID: E
+Product Name: Elemental
+Total Sale: 22
+Product Grade: B
+Options:
+1. Enque.
+2. Deque.
+3. Front.
+4. Exit.
+Enter your choice (1 to 4): 4
+*/

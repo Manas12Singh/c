@@ -1,14 +1,18 @@
+/* 3. Write a C program to create a single linked list then input a value V, partition it such that all nodes less than V come before nodes greater than or equal to V.
+
+Name: Manas Singh
+Section: C1
+Roll No: 38
+Course: B.Tech CSE
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
-
-// #define insert(head,trav,temp) {if(head==NULL) head=trav=temp; else {trav->next=temp;trav=trav->next;}}
-
 typedef struct ListNode
 {
     int data;
     struct ListNode *next;
 } ListNode;
-
 ListNode *createNode(int data)
 {
     ListNode *temp = (ListNode *)malloc(sizeof(ListNode));
@@ -21,7 +25,6 @@ ListNode *createNode(int data)
     temp->next = NULL;
     return temp;
 }
-
 ListNode *createList()
 {
     int n;
@@ -51,7 +54,6 @@ ListNode *createList()
     }
     return head;
 }
-
 void partition(ListNode **head, int k)
 {
     if (*head == NULL || (*head)->next == NULL)
@@ -88,7 +90,6 @@ void partition(ListNode **head, int k)
     else
         trav->next = later;
 }
-
 void printList(ListNode *head)
 {
     while (head != NULL)
@@ -98,7 +99,6 @@ void printList(ListNode *head)
     }
     printf("\n");
 }
-
 void freeList(ListNode **head)
 {
     while (*head != NULL)
@@ -108,7 +108,6 @@ void freeList(ListNode **head)
         free(temp);
     }
 }
-
 int main()
 {
     int opt, n;
@@ -143,3 +142,35 @@ int main()
     freeList(&l1);
     return 0;
 }
+
+/*
+Output:
+Options:
+1. Create List.
+2. Partition.
+3. Print list.
+4. Exit
+Enter your choice (1 to 4): 1
+Enter the number of node(s): 10
+Enter the values: 9 7 5 2 1 3 8 6 4 0
+Options:
+1. Create List.
+2. Partition.
+3. Print list.
+4. Exit
+Enter your choice (1 to 4): 2
+Enter the value: 4
+Options:
+1. Create List.
+2. Partition.
+3. Print list.
+4. Exit
+Enter your choice (1 to 4): 3
+List: 2 1 3 0 9 7 5 8 6 4
+Options:
+1. Create List.
+2. Partition.
+3. Print list.
+4. Exit
+Enter your choice (1 to 4): 4
+*/

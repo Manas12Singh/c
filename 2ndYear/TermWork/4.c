@@ -1,12 +1,18 @@
+/* 4. Write a C program to create two single linked lists, and then write another function to subtract two numbers represented as linked list.
+
+Name: Manas Singh
+Section: C1
+Roll No: 38
+Course: B.Tech CSE
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
-
 typedef struct ListNode
 {
     short data;
     struct ListNode *next;
 } ListNode;
-
 ListNode *createNode(short data)
 {
     ListNode *temp = (ListNode *)malloc(sizeof(ListNode));
@@ -19,7 +25,6 @@ ListNode *createNode(short data)
     temp->next = NULL;
     return temp;
 }
-
 ListNode *createList()
 {
     int n;
@@ -49,7 +54,6 @@ ListNode *createList()
     }
     return head;
 }
-
 int lencompare(ListNode *n1, ListNode *n2)
 {
     int len1 = 0, len2 = 0;
@@ -59,7 +63,6 @@ int lencompare(ListNode *n1, ListNode *n2)
         len2++, n2 = n2->next;
     return len1 - len2;
 }
-
 short compare(ListNode *n1, ListNode *n2)
 {
     while (n1 != NULL)
@@ -73,7 +76,6 @@ short compare(ListNode *n1, ListNode *n2)
     }
     return 0;
 }
-
 ListNode *sub(ListNode *n1, ListNode *n2, short *borrow)
 {
     if (n1 == NULL || n2 == NULL)
@@ -90,7 +92,6 @@ ListNode *sub(ListNode *n1, ListNode *n2, short *borrow)
     }
     return temp;
 }
-
 ListNode *difference(ListNode *n1, ListNode *n2)
 {
     if (n1 == NULL || n2 == NULL)
@@ -121,7 +122,6 @@ ListNode *difference(ListNode *n1, ListNode *n2)
     }
     return diff;
 }
-
 void printList(ListNode *head)
 {
     while (head != NULL)
@@ -131,7 +131,6 @@ void printList(ListNode *head)
     }
     printf("\n");
 }
-
 void freeList(ListNode **head)
 {
     while (*head != NULL)
@@ -141,7 +140,6 @@ void freeList(ListNode **head)
         free(temp);
     }
 }
-
 int main()
 {
     int opt;
@@ -187,3 +185,49 @@ int main()
     freeList(&S);
     return 0;
 }
+
+/*
+Output:
+Options:
+1. Enter in List A.
+2. Enter in List B.
+3. Difference.
+4. Print lists.
+5. Exit
+Enter your choice (1 to 5): 1
+Enter the number of node(s): 4
+Enter the values: 5 3 4 8
+Options:
+1. Enter in List A.
+2. Enter in List B.
+3. Difference.
+4. Print lists.
+5. Exit
+Enter your choice (1 to 5): 2
+Enter the number of node(s): 4
+Enter the values: 5 5 5 5
+Options:
+1. Enter in List A.
+2. Enter in List B.
+3. Difference.
+4. Print lists.
+5. Exit
+Enter your choice (1 to 5): 3
+Options:
+1. Enter in List A.
+2. Enter in List B.
+3. Difference.
+4. Print lists.
+5. Exit
+Enter your choice (1 to 5): 4
+List A: 5 3 4 8
+List B: 5 5 5 5
+Difference: 2 0 7
+Options:
+1. Enter in List A.
+2. Enter in List B.
+3. Difference.
+4. Print lists.
+5. Exit
+Enter your choice (1 to 5): 5
+*/

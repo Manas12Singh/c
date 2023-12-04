@@ -1,12 +1,23 @@
+/* 7. W.A.P. to create a binary search tree and perform following operations:
+1) Search a particular key.
+2) Delete a node from the tree.
+3) Find total number of leaf nodes
+4) Find height of a binary search tree
+5) Kth largest element without doing any modification in Binary Search Tree.
+
+Name: Manas Singh
+Section: C1
+Roll No: 38
+Course: B.Tech CSE
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
-
 typedef struct TreeNode
 {
     int data;
     struct TreeNode *left, *right;
 } TreeNode;
-
 TreeNode *createNode(int data)
 {
     TreeNode *temp = (TreeNode *)malloc(sizeof(TreeNode));
@@ -19,7 +30,6 @@ TreeNode *createNode(int data)
     }
     return temp;
 }
-
 TreeNode *insert(TreeNode *root, int data)
 {
     if (root == NULL)
@@ -30,7 +40,6 @@ TreeNode *insert(TreeNode *root, int data)
         root->right = insert(root->right, data);
     return root;
 }
-
 TreeNode *createTree(int *data, int n)
 {
     TreeNode *root = NULL;
@@ -38,7 +47,6 @@ TreeNode *createTree(int *data, int n)
         root = insert(root, data[i]);
     return root;
 }
-
 short searchNode(TreeNode *root, int key)
 {
     if (root == NULL)
@@ -50,7 +58,6 @@ short searchNode(TreeNode *root, int key)
     else
         return (root->right, key);
 }
-
 TreeNode *deleteNode(TreeNode *root, int val)
 {
     if (root == NULL)
@@ -96,7 +103,6 @@ TreeNode *deleteNode(TreeNode *root, int val)
     }
     return root;
 }
-
 int countLeaves(TreeNode *root)
 {
     if (root == NULL)
@@ -105,19 +111,16 @@ int countLeaves(TreeNode *root)
         return 1;
     return countLeaves(root->left) + countLeaves(root->right);
 }
-
 int max(int a, int b)
 {
     return (a > b) ? a : b;
 }
-
 int findHeight(TreeNode *root)
 {
     if (root == NULL)
         return 0;
     return 1 + max(findHeight(root->left), findHeight(root->right));
 }
-
 int kthLargest(TreeNode *root, int k, int *c)
 {
     if (root == NULL)
@@ -130,13 +133,11 @@ int kthLargest(TreeNode *root, int k, int *c)
         return root->data;
     return kthLargest(root->left, k, c);
 }
-
 int kthLargestElement(TreeNode *root, int k)
 {
     int c = 0;
     return kthLargest(root, k, &c);
 }
-
 void freeTree(TreeNode *root)
 {
     if (root == NULL)
@@ -145,7 +146,6 @@ void freeTree(TreeNode *root)
     freeTree(root->right);
     free(root);
 }
-
 int main()
 {
     int n, key, *data = NULL;
@@ -153,7 +153,7 @@ int main()
     int opt;
     do
     {
-        printf("1. Create Tree\n2. Search key\n3. Delete Node\n4. Count Leaves\n5. Find Height\n6. Kth Largest Element\n7. Exit\nEnter your choice: ");
+        printf("Options:\n1. Create Tree\n2. Search key\n3. Delete Node\n4. Count Leaves\n5. Find Height\n6. Kth Largest Element\n7. Exit\nEnter your choice: ");
         scanf("%d", &opt);
         switch (opt)
         {
@@ -206,3 +206,79 @@ int main()
     freeTree(root);
     return 0;
 }
+
+/*
+Output:
+Options:
+1. Create Tree
+2. Search key
+3. Delete Node
+4. Count Leaves
+5. Find Height
+6. Kth Largest Element
+7. Exit
+Enter your choice: 1
+Enter the number of nodes: 8
+Enter the data: 4 2 3 1 6 5 7 8
+Options:
+1. Create Tree
+2. Search key
+3. Delete Node
+4. Count Leaves
+5. Find Height
+6. Kth Largest Element
+7. Exit
+Enter your choice: 2
+Enter the key to search: 4
+Key Found!
+Options:
+1. Create Tree
+2. Search key
+3. Delete Node
+4. Count Leaves
+5. Find Height
+6. Kth Largest Element
+7. Exit
+Enter your choice: 3
+Enter the key to delete: 3
+Options:
+1. Create Tree
+2. Search key
+3. Delete Node
+4. Count Leaves
+5. Find Height
+6. Kth Largest Element
+7. Exit
+Enter your choice: 4
+Number of leaves: 3
+Options:
+1. Create Tree
+2. Search key
+3. Delete Node
+4. Count Leaves
+5. Find Height
+6. Kth Largest Element
+7. Exit
+Enter your choice: 5
+Height of the tree: 4
+Options:
+1. Create Tree
+2. Search key
+3. Delete Node
+4. Count Leaves
+5. Find Height
+6. Kth Largest Element
+7. Exit
+Enter your choice: 6
+Enter the value of k: 3
+Kth Largest Element: 6
+Options:
+1. Create Tree
+2. Search key
+3. Delete Node
+4. Count Leaves
+5. Find Height
+6. Kth Largest Element
+7. Exit
+Enter your choice: 7
+*/

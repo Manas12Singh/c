@@ -1,12 +1,18 @@
+/* 2. Let A and B be two structures of type Linked List. Write a ‘C ’ program to create a new Linked List ‘S’ that contains elements alternately from A and B beginning with the first element of A. If you run out of elements in one of the lists, then append the remaining.
+
+Name: Manas Singh
+Section: C1
+Roll No: 38
+Course: B.Tech CSE
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
-
 typedef struct ListNode
 {
     int data;
     struct ListNode *next;
 } ListNode;
-
 ListNode *createNode(int data)
 {
     ListNode *temp = (ListNode *)malloc(sizeof(ListNode));
@@ -19,7 +25,6 @@ ListNode *createNode(int data)
     temp->next = NULL;
     return temp;
 }
-
 ListNode *createList()
 {
     int n;
@@ -49,7 +54,6 @@ ListNode *createList()
     }
     return head;
 }
-
 ListNode *mergeAlternate(ListNode *head1, ListNode *head2)
 {
     ListNode *head = NULL, *trav = NULL;
@@ -82,7 +86,6 @@ ListNode *mergeAlternate(ListNode *head1, ListNode *head2)
     }
     return head;
 }
-
 void printList(ListNode *head)
 {
     while (head != NULL)
@@ -92,7 +95,6 @@ void printList(ListNode *head)
     }
     printf("\n");
 }
-
 void freeList(ListNode **head)
 {
     while (*head != NULL)
@@ -102,7 +104,6 @@ void freeList(ListNode **head)
         free(temp);
     }
 }
-
 int main()
 {
     int opt;
@@ -144,3 +145,47 @@ int main()
     freeList(&S);
     return 0;
 }
+
+/*
+Output:
+Options:
+1. Enter in List A.
+2. Enter in List B.
+3. Merge to S.
+4. Print S.
+5. Exit
+Enter your choice (1 to 5): 1
+Enter the number of node(s): 5
+Enter the values: 9 5 2 8 3
+Options:
+1. Enter in List A.
+2. Enter in List B.
+3. Merge to S.
+4. Print S.
+5. Exit
+Enter your choice (1 to 5): 2
+Enter the number of node(s): 3
+Enter the values: 6 8 2
+Options:
+1. Enter in List A.
+2. Enter in List B.
+3. Merge to S.
+4. Print S.
+5. Exit
+Enter your choice (1 to 5): 3
+Options:
+1. Enter in List A.
+2. Enter in List B.
+3. Merge to S.
+4. Print S.
+5. Exit
+Enter your choice (1 to 5): 4
+List S: 9 6 5 8 2 2 8 3
+Options:
+1. Enter in List A.
+2. Enter in List B.
+3. Merge to S.
+4. Print S.
+5. Exit
+Enter your choice (1 to 5): 5
+*/

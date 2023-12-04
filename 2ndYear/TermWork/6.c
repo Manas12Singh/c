@@ -1,12 +1,18 @@
+/* 6. Write a C program to create two link lists positive and negative from Original linked list, so that positive linked list contains all positive elements and negative linked list contains negative elements. Positive and negative linked lists should use the node of existing original linked list.
+
+Name: Manas Singh
+Section: C1
+Roll No: 38
+Course: B.Tech CSE
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
-
 typedef struct ListNode
 {
     int data;
     struct ListNode *next;
 } ListNode;
-
 ListNode *createNode(int data)
 {
     ListNode *temp = (ListNode *)malloc(sizeof(ListNode));
@@ -19,7 +25,6 @@ ListNode *createNode(int data)
     }
     return temp;
 }
-
 ListNode *createList()
 {
     int n;
@@ -49,7 +54,6 @@ ListNode *createList()
     }
     return head;
 }
-
 void convert(ListNode **head, ListNode **positive, ListNode **negative)
 {
     ListNode *trav1 = NULL, *trav2 = NULL;
@@ -82,7 +86,6 @@ void convert(ListNode **head, ListNode **positive, ListNode **negative)
     if (trav2 != NULL)
         trav2->next = NULL;
 }
-
 void printList(ListNode *head)
 {
     while (head != NULL)
@@ -92,7 +95,6 @@ void printList(ListNode *head)
     }
     printf("\n");
 }
-
 void freeList(ListNode **head)
 {
     while (*head != NULL)
@@ -102,7 +104,6 @@ void freeList(ListNode **head)
         free(temp);
     }
 }
-
 int main()
 {
     int opt, n;
@@ -140,3 +141,46 @@ int main()
     freeList(&negative);
     return 0;
 }
+
+/*
+Output:
+Options:
+1. Create List.
+2. Convert to positive and negative lists.
+3. Print positive.
+4. Print negative.
+5. Exit
+Enter your choice (1 to 5): 1
+Enter the number of node(s): 10
+Enter the values: 1 -1 -2 2 3 4 5 -3 -4 -5
+Options:
+1. Create List.
+2. Convert to positive and negative lists.
+3. Print positive.
+4. Print negative.
+5. Exit
+Enter your choice (1 to 5): 2
+Options:
+1. Create List.
+2. Convert to positive and negative lists.
+3. Print positive.
+4. Print negative.
+5. Exit
+Enter your choice (1 to 5): 3
+1 2 3 4 5
+Options:
+1. Create List.
+2. Convert to positive and negative lists.
+3. Print positive.
+4. Print negative.
+5. Exit
+Enter your choice (1 to 5): 4
+-1 -2 -3 -4 -5
+Options:
+1. Create List.
+2. Convert to positive and negative lists.
+3. Print positive.
+4. Print negative.
+5. Exit
+Enter your choice (1 to 5): 5
+*/

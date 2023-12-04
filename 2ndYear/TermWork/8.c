@@ -1,12 +1,18 @@
+/* 8. Write a program to add of two polynomials of degree n, using linked list.
+
+Name: Manas Singh
+Section: C1
+Roll No: 38
+Course: B.Tech CSE
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
-
 typedef struct ListNode
 {
     int data, power;
     struct ListNode *next;
 } ListNode;
-
 ListNode *createNode(int data, int power)
 {
     ListNode *temp = (ListNode *)malloc(sizeof(ListNode));
@@ -20,7 +26,6 @@ ListNode *createNode(int data, int power)
     temp->next = NULL;
     return temp;
 }
-
 ListNode *createList()
 {
     int n;
@@ -56,7 +61,6 @@ ListNode *createList()
     }
     return head;
 }
-
 void displayList(ListNode *head)
 {
     while (head != NULL)
@@ -66,7 +70,6 @@ void displayList(ListNode *head)
     }
     printf("\n");
 }
-
 ListNode *addPolynomial(ListNode *head1, ListNode *head2)
 {
     ListNode *temp = NULL;
@@ -101,7 +104,6 @@ ListNode *addPolynomial(ListNode *head1, ListNode *head2)
     }
     return temp;
 }
-
 void freeList(ListNode **head)
 {
     while (*head != NULL)
@@ -111,7 +113,6 @@ void freeList(ListNode **head)
         free(temp);
     }
 }
-
 int main()
 {
     ListNode *p1 = NULL, *p2 = NULL, *p3 = NULL;
@@ -155,3 +156,44 @@ int main()
     freeList(&p2);
     freeList(&p3);
 }
+
+/*
+Output:
+1. Create polynomial 1
+2. Create polynomial 2
+3. Add polynomials
+4. Display polynomials
+5. Exit
+Enter your choice: 1
+Enter the degree of the polynomial: 4
+Enter the values(from highest degree): 1 -2 3 0 -4
+1. Create polynomial 1
+2. Create polynomial 2
+3. Add polynomials
+4. Display polynomials
+5. Exit
+Enter your choice: 2
+Enter the degree of the polynomial: 3
+Enter the values(from highest degree): 2 -3 4 0
+1. Create polynomial 1
+2. Create polynomial 2
+3. Add polynomials
+4. Display polynomials
+5. Exit
+Enter your choice: 3
+1. Create polynomial 1
+2. Create polynomial 2
+3. Add polynomials
+4. Display polynomials
+5. Exit
+Enter your choice: 4
+Polynomial 1:  +1x^4 -2x^3 +3x^2 -4x^0
+Polynomial 2:  +2x^3 -3x^2 +4x^1
+Polynomial 3:  +1x^4 +4x^1 -4x^0
+1. Create polynomial 1
+2. Create polynomial 2
+3. Add polynomials
+4. Display polynomials
+5. Exit
+Enter your choice: 5
+*/
