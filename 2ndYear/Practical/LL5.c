@@ -35,31 +35,41 @@ void insert(Node **head, int val)
 	trav->next = temp;
 }
 
-void delete(Node **head, int val)
+void deleteNode(Node **head, int val)
 {
 	if (*head == NULL)
-		return;
-	Node *temp, *trav = *head;
-	if ((*head)->data == val)
+		printf("Empty list.\n");
+	Node *curr = *head;
+	Node *prev = NULL;
+	while (curr->data != val)
 	{
-		temp = *head;
-		if ((*head)->next == *head)
-			*head = NULL;
-		else
+		if (curr->next == *head)
 		{
-			while (trav->next != *head)
-				trav = trav->next;
-			trav->next = (*head)->next;
-			*head = (*head)->next;
+			printf("Node not found.\n");
+			return;
 		}
-		free(temp);
-		return;
+		prev = curr;
+		curr = curr->next;
 	}
-	while (trav->next->data != val && trav->next != *head)
-		trav = trav->next;
-	temp = trav->next;
-	trav->next = trav->next->next;
-	free(temp);
+	if (curr == *head)
+	{
+		if (curr->next == *head)
+		{
+			free(curr);
+			*head = NULL;
+			return;
+		}
+		Node *last = *head;
+		while (last->next != *head)
+			last = last->next;
+		last->next = curr->next;
+		*head = curr->next;
+	}
+	else
+	{
+		prev->next = curr->next;
+		free(curr);
+	}
 }
 
 void display(Node *head)
@@ -69,12 +79,13 @@ void display(Node *head)
 		printf("Empty list.\n");
 		return;
 	}
-	Node *trav = head;
-	do
+	printf("List: %d ", head->data);
+	Node *trav = head->next;
+	while (trav != head)
 	{
 		printf("%d ", trav->data);
 		trav = trav->next;
-	} while (trav != head);
+	}
 	printf("\n");
 }
 
@@ -102,9 +113,9 @@ void freeList(Node **head)
 int main()
 {
 	Node *head = NULL;
-	while (1)
+	int opt, n;
+	do
 	{
-		int opt, n;
 		printf("Options: \n1. Insert. \n2. Delete. \n3. Display. \n4. Exit.\n");
 		printf("Enter your choice (1 to 4): ");
 		scanf("%d", &opt);
@@ -118,16 +129,17 @@ int main()
 		case 2:
 			printf("Enter value to delete: ");
 			scanf("%d", &n);
-			delete (&head, n);
+			deleteNode(&head, n);
 			break;
 		case 3:
 			display(head);
 			break;
 		case 4:
-			freeList(&head);
-			return 0;
+			break;
 		default:
 			printf("Wrong Choice!\n");
 		}
-	}
+	} while (opt != 4);
+	freeList(&head);
+	return 0;
 }

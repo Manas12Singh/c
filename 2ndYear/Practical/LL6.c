@@ -86,9 +86,9 @@ void freeStack(Stack **s)
 int main()
 {
     Stack *s = initialise();
-    while (1)
+    int opt, n;
+    do
     {
-        int opt, n;
         printf("Options: \n1. Push. \n2. Pop. \n3. Peek. \n4. Exit.\n");
         printf("Enter your choice (1 to 4): ");
         scanf("%d", &opt);
@@ -106,10 +106,11 @@ int main()
             peek(s);
             break;
         case 4:
-            freeStack(&s);
-            return 0;
+            break;
         default:
             printf("Wrong Choice!\n");
         }
-    }
+    } while (opt != 4);
+    freeStack(&s);
+    return 0;
 }

@@ -26,9 +26,13 @@ Node *insert(Node *head, int val)
 }
 Node *search(Node *head, int val)
 {
-	if (head == NULL || head->data == val)
-		return head;
-	return search(head->next, val);
+	while (head != NULL)
+	{
+		if (head->data == val)
+			return head;
+		head = head->next;
+	}
+	return NULL;
 }
 void freeList(Node **head)
 {

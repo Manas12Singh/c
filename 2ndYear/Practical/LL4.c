@@ -68,12 +68,6 @@ void display(Node *head)
 		head = head->next;
 	}
 	printf("%d ", head->data);
-	printf("\nReverse: ");
-	while (head != NULL)
-	{
-		printf("%d ", head->data);
-		head = head->prev;
-	}
 	printf("\n");
 }
 
@@ -89,9 +83,9 @@ void freeList(Node **head)
 int main()
 {
 	Node *head = NULL;
-	while (1)
+	int opt, n;
+	do
 	{
-		int opt, n;
 		printf("Options: \n1. Insert. \n2. Delete. \n3. Display. \n4. Exit.\n");
 		printf("Enter your choice (1 to 4): ");
 		scanf("%d", &opt);
@@ -111,10 +105,11 @@ int main()
 			display(head);
 			break;
 		case 4:
-			freeList(&head);
-			return 0;
+			break;
 		default:
 			printf("Wrong Choice!\n");
 		}
-	}
+	} while (opt != 4);
+	freeList(&head);
+	return 0;
 }

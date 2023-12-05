@@ -34,7 +34,7 @@ Node *createNode(Node *next, int val)
     return temp;
 }
 
-void push(Queue *s, int val)
+void enqueue(Queue *s, int val)
 {
     Node *temp = createNode(NULL, val);
     if (temp == NULL)
@@ -51,7 +51,7 @@ void push(Queue *s, int val)
     trav->next = temp;
 }
 
-void pop(Queue *s)
+void dequeue(Queue *s)
 {
     if (s->size == 0)
     {
@@ -64,7 +64,7 @@ void pop(Queue *s)
     s->size--;
 }
 
-void peek(Queue *s)
+void front(Queue *s)
 {
     if (s->size == 0)
         printf("Queue is empty.\n");
@@ -82,7 +82,7 @@ void freeNode(Node **n)
     }
 }
 
-void freeStack(Queue **s)
+void freeQueue(Queue **s)
 {
     if (*s == NULL)
         return;
@@ -94,10 +94,10 @@ void freeStack(Queue **s)
 int main()
 {
     Queue *s = initialise();
-    while (1)
+    int opt, n;
+    do
     {
-        int opt, n;
-        printf("Options: \n1. Push. \n2. Pop. \n3. Peek. \n4. Exit.\n");
+        printf("Options: \n1. Enqueue. \n2. Dequeue. \n3. Front. \n4. Exit.\n");
         printf("Enter your choice (1 to 4): ");
         scanf("%d", &opt);
         switch (opt)
@@ -105,19 +105,20 @@ int main()
         case 1:
             printf("Enter the value: ");
             scanf("%d", &n);
-            push(s, n);
+            enqueue(s, n);
             break;
         case 2:
-            pop(s);
+            dequeue(s);
             break;
         case 3:
-            peek(s);
+            front(s);
             break;
         case 4:
-            freeStack(&s);
-            return 0;
+            break;
         default:
             printf("Wrong Choice!\n");
         }
-    }
+    } while (opt != 4);
+    freeQueue(&s);
+    return 0;
 }
