@@ -1,12 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 typedef struct node
 {
 	int data;
 	struct node *next, *prev;
 } Node;
-
 Node *createNode(Node *prev, Node *next, int val)
 {
 	Node *temp = (Node *)malloc(sizeof(Node));
@@ -20,7 +18,6 @@ Node *createNode(Node *prev, Node *next, int val)
 	temp->next = next;
 	return temp;
 }
-
 Node *insert(Node *head, int val)
 {
 	if (head == NULL)
@@ -37,7 +34,6 @@ Node *insert(Node *head, int val)
 		head->next = insert(head->next, val);
 	return head;
 }
-
 Node *delete(Node *head, int val)
 {
 	if (head == NULL)
@@ -54,7 +50,6 @@ Node *delete(Node *head, int val)
 		head->next = delete (head->next, val);
 	return head;
 }
-
 void display(Node *head)
 {
 	if (head == NULL)
@@ -70,7 +65,6 @@ void display(Node *head)
 	printf("%d ", head->data);
 	printf("\n");
 }
-
 void freeList(Node **head)
 {
 	if (*head == NULL)
@@ -79,7 +73,6 @@ void freeList(Node **head)
 	free(*head);
 	*head = NULL;
 }
-
 int main()
 {
 	Node *head = NULL;

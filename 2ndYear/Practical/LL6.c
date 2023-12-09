@@ -1,18 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 typedef struct node
 {
     int data;
     struct node *next;
 } Node;
-
 typedef struct
 {
     Node *top;
     int size;
 } Stack;
-
 Stack *initialise()
 {
     Stack *s = (Stack *)malloc(sizeof(Stack));
@@ -20,7 +17,6 @@ Stack *initialise()
     s->top = NULL;
     return s;
 }
-
 Node *createNode(Node *next, int val)
 {
     Node *temp = (Node *)malloc(sizeof(Node));
@@ -33,7 +29,6 @@ Node *createNode(Node *next, int val)
     temp->next = next;
     return temp;
 }
-
 void push(Stack *s, int val)
 {
     Node *temp = createNode(s->top, val);
@@ -42,7 +37,6 @@ void push(Stack *s, int val)
     s->top = temp;
     s->size++;
 }
-
 void pop(Stack *s)
 {
     if (s->size == 0)
@@ -55,7 +49,6 @@ void pop(Stack *s)
     free(temp);
     s->size--;
 }
-
 void peek(Stack *s)
 {
     if (s->size == 0)
@@ -63,7 +56,6 @@ void peek(Stack *s)
     else
         printf("%d\n", s->top->data);
 }
-
 void freeNode(Node **n)
 {
     while (*n != NULL)
@@ -73,7 +65,6 @@ void freeNode(Node **n)
         free(temp);
     }
 }
-
 void freeStack(Stack **s)
 {
     if (*s == NULL)
@@ -82,7 +73,6 @@ void freeStack(Stack **s)
     free(*s);
     *s = NULL;
 }
-
 int main()
 {
     Stack *s = initialise();

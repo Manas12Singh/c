@@ -1,5 +1,4 @@
 #include <stdio.h>
-
 int binarySearch(int *arr, int n, int k)
 {
     int l = 0, r = n - 1;
@@ -15,7 +14,6 @@ int binarySearch(int *arr, int n, int k)
     }
     return -1;
 }
-
 int main()
 {
     int n, k;

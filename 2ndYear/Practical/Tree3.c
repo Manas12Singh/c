@@ -1,13 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 typedef struct TreeNode
 {
     int data;
     struct TreeNode *left;
     struct TreeNode *right;
 } TreeNode;
-
 TreeNode *createNode(int data)
 {
     TreeNode *newNode = (TreeNode *)malloc(sizeof(TreeNode));
@@ -16,7 +14,6 @@ TreeNode *createNode(int data)
     newNode->right = NULL;
     return newNode;
 }
-
 TreeNode *insert(TreeNode *root, int val)
 {
     if (root == NULL)
@@ -27,7 +24,6 @@ TreeNode *insert(TreeNode *root, int val)
         root->right = insert(root->right, val);
     return root;
 }
-
 void BFS(TreeNode *root)
 {
     if (root == NULL)
@@ -45,7 +41,6 @@ void BFS(TreeNode *root)
             queue[++rear] = temp->right;
     }
 }
-
 int main()
 {
     TreeNode *root = NULL;

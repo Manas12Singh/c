@@ -1,19 +1,16 @@
 #include <stdio.h>
-
 void swap(int *a, int *b)
 {
     int temp = *a;
     *a = *b;
     *b = temp;
 }
-
 void insertionSort(int *arr, int n)
 {
-    for (int i = 1; i < n - 1; i++)
+    for (int i = 1; i < n; i++)
         for (int j = i; j > 0 && arr[j - 1] > arr[j]; j--)
             swap(&arr[j], &arr[j - 1]);
 }
-
 int main()
 {
     int n;

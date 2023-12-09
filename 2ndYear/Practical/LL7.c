@@ -1,24 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 typedef struct node
 {
     int data;
     struct node *next;
 } Node;
-
 typedef struct
 {
     Node *front, *back;
 } Queue;
-
 Queue *initialise()
 {
     Queue *s = (Queue *)malloc(sizeof(Queue));
     s->front = s->back = NULL;
     return s;
 }
-
 Node *createNode(Node *next, int val)
 {
     Node *temp = (Node *)malloc(sizeof(Node));
@@ -31,7 +27,6 @@ Node *createNode(Node *next, int val)
     temp->next = next;
     return temp;
 }
-
 void enqueue(Queue *s, int val)
 {
     Node *temp = createNode(NULL, val);
@@ -42,7 +37,6 @@ void enqueue(Queue *s, int val)
     else
         s->back->next = temp, s->back = temp;
 }
-
 void dequeue(Queue *s)
 {
     if (s->front == NULL)
@@ -56,7 +50,6 @@ void dequeue(Queue *s)
     s->front = s->front->next;
     free(temp);
 }
-
 void front(Queue *s)
 {
     if (s->front == NULL)
@@ -64,7 +57,6 @@ void front(Queue *s)
     else
         printf("%d\n", s->front->data);
 }
-
 void freeNode(Node **n)
 {
     while (*n != NULL)
@@ -74,7 +66,6 @@ void freeNode(Node **n)
         free(temp);
     }
 }
-
 void freeQueue(Queue **s)
 {
     if (*s == NULL)
@@ -83,7 +74,6 @@ void freeQueue(Queue **s)
     free(*s);
     *s = NULL;
 }
-
 int main()
 {
     Queue *s = initialise();

@@ -1,12 +1,10 @@
 #include <stdio.h>
-
 void swap(int *a, int *b)
 {
     int temp = *a;
     *a = *b;
     *b = temp;
 }
-
 void selectionSort(int *arr, int n)
 {
     int min;
@@ -20,7 +18,6 @@ void selectionSort(int *arr, int n)
             swap(&arr[min], &arr[i]);
     }
 }
-
 int main()
 {
     int n;

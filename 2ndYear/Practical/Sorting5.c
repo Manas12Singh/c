@@ -1,12 +1,10 @@
 #include <stdio.h>
-
 void swap(int *a, int *b)
 {
     int temp = *a;
     *a = *b;
     *b = temp;
 }
-
 int partition(int *arr, int left, int right)
 {
     int i = left - 1;
@@ -16,7 +14,6 @@ int partition(int *arr, int left, int right)
     swap(&arr[++i], &arr[right]);
     return i;
 }
-
 void quickSort(int *arr, int left, int right)
 {
     if (left < right)
@@ -26,7 +23,6 @@ void quickSort(int *arr, int left, int right)
         quickSort(arr, p + 1, right);
     }
 }
-
 int main()
 {
     int n;
@@ -36,7 +32,7 @@ int main()
     printf("Enter the elements: ");
     for (int i = 0; i < n; i++)
         scanf("%d", &arr[i]);
-    quickSort(arr, 0,   n);
+    quickSort(arr, 0, n - 1);
     printf("Sorted array: ");
     for (int i = 0; i < n; i++)
         printf("%d ", arr[i]);
