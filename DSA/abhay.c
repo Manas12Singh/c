@@ -40,7 +40,7 @@ struct node *reverse(int k)
         if (temp2->data == k)
         {
             break;
-        }
+        }   
         temp2 = temp2->next;
     }
 

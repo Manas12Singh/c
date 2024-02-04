@@ -243,43 +243,25 @@ BigInteger *multiplyBigIntger(BigInteger *b1, BigInteger *b2)
     product->sign = (b1->sign == b2->sign) ? 1 : -1;
     product->head = NULL;
     struct Node *t2 = b2->head;
-    struct Node *head = NULL, *t = NULL;
-    int n = 0;
+    struct Node **t = &(product->head);
+    short carry = 0;
+    struct Node *t1 = b1->head;
     while (t2)
     {
-        struct Node *t1 = b1->head, *trav = product->head;
-        short carry = 0;
-        int i = n;
-        while (trav || t1 || carry)
+        if (t2->digit == 0)
         {
-            struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
-            temp->digit = carry;
-            temp->next = NULL;
-            if (trav)
+            if (*t == NULL)
             {
-                temp->digit += trav->digit;
-                trav = trav->next;
+                *t = (struct Node *)malloc(sizeof(struct Node));
+                (*t)->digit == 0;
+                (*t)->next = NULL;
             }
-            if (i-- <= 0 && t1)
-            {
-                temp->digit += t1->digit * t2->digit;
-                t1 = t1->next;
-            }
-            carry = temp->digit / 10;
-            temp->digit %= 10;
-            if (head)
-            {
-                t->next = temp;
-                t = t->next;
-            }
-            else
-                head = t = temp;
+            t = &((*t)->next);
+            t2 = t2->next;
+            continue;
         }
-        freeNode(&(product->head));
-        product->head = head;
-        head = t = NULL;
-        t2 = t2->next;
-        n++;
+        struct Node **trav = t;
+        while(t1!=NULL)
     }
     return product;
 }

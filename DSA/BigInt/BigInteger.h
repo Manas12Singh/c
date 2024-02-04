@@ -15,19 +15,19 @@
 
 struct Node
 {
-    int digit;
+    short digit;
     struct Node *next;
 };
 
 typedef struct
 {
-    int sign;
+    short sign;
     struct Node *head;
 } BigInteger;
 
 BigInteger *toBigInteger(char *string);
 void printBigInteger(BigInteger *bigInt);
-int compareBigInteger(BigInteger *bigInt1, BigInteger *bigInt2);
+short compareBigInteger(BigInteger *bigInt1, BigInteger *bigInt2);
 BigInteger *addBigInteger(BigInteger *bigInt1, BigInteger *bigInt2);
 BigInteger *subtractBigInteger(BigInteger *bigInt1, BigInteger *bigInt2);
 BigInteger *multiplyBigIntger(BigInteger *bigInt1, BigInteger *bigInt2);
