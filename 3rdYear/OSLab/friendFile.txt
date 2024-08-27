@@ -1,4 +1,4 @@
-Name: M
-Age: 23
+Name: Dhruv
+Age: 21
 Roll No: 22
-Gender:A
+Gender:M
