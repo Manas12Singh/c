@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <unistd.h>
-#include <sys/dir.h>
 #include <fcntl.h>
 #include <string.h>
 #include <sys/stat.h>
