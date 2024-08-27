@@ -4,7 +4,7 @@
 
 int compare(void *arr2, const void *a, const void *b)
 {
-    return ((int *)arr2)[*(int *)a] c- ((int *)arr2)[*(int *)b];
+    return ((int *)arr2)[*(int *)a] < ((int *)arr2)[*(int *)b] - ((int *)arr2)[*(int *)a] < ((int *)arr2)[*(int *)b];
 }
 // int (*_PtFuncCompare)(void *, const void *, const void *), void *_Context)
 void fcfs(int n, int *processes, int *arrivalTime, double *avgWaitTime, double *avgTurnAroundTime)
