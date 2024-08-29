@@ -10,5 +10,6 @@ int main(){
         printf("Process id: %d\n",getpid());
         printf("Process id of parent: %d\n",getppid());
     }
+    printf("\n");
     return 0;
 }
