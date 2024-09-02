@@ -1,23 +1,34 @@
 #include <stdio.h>
 #include <unistd.h>
-#include <sys/dir.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <stdlib.h>
-#include <wait.h>
 
-int main(){
-    int p=fork();
-    if(p>0){
+int main()
+{
+    int p1 = fork();
+
+    if (p1 > 0)
+    {
         wait(NULL);
-        printf("Parent terminating...\n");
+        printf("Parent process terminating...\n");
+        int p2 = fork();
+        if (p2 > 0)
+        {
+            printf("Parent process exiting before second child completes...\n");
+            exit(0);
+        }
+        else if (p2 == 0)
+        {
+            sleep(5);
+            printf("Second child process terminating...\n");
+        }
     }
-    else if(p==0){
-        printf("Enter the directory: ");
-        char dir[100];
-        scanf("%s",dir);
-        chdir(dir);
-        char k[]="ls";
-        system(k);
-        printf("Child terminating...\n");
+    else if (p1 == 0)
+    {
+        execlp("ls", "ls", NULL);
+        printf("First child process terminating...\n");
     }
+
     return 0;
 }

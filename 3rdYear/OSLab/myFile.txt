@@ -1,5 +1,5 @@
-Name: 
-Age: 23
-Roll No: 23
-Gender:M
-Section: B1
+Name: Manas Singh
+Age: 20
+Gender: M
+Section: C1
+Roll No: 38

@@ -6,18 +6,19 @@
 
 void func(char fname[])
 {
-    char name[20], section[2], gender;
+    char name[20], section[3], gender;
     int age, rollNo;
     printf("Name: ");
     fgets(name, sizeof(name), stdin);
+    name[strcspn(name, "\n")] = '\0';
     printf("Age: ");
     scanf("%d", &age);
-    printf("Roll No.: ");
-    scanf("%d", &rollNo);
     printf("Gender: ");
     scanf(" %c", &gender);
     printf("Section: ");
     scanf("%s", section);
+    printf("Roll No.: ");
+    scanf(" %d%*c", &rollNo);
     int f1 = open(fname, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP);
     if (f1 < 0)
     {
@@ -25,11 +26,10 @@ void func(char fname[])
         return;
     }
     char s[100];
-    puts(name);
-    printf("Name: %s\nAge: %d\nRoll No: %d\nGender:%c\nSection: %s\n", name, age, rollNo, gender, section);
-    sprintf(s, "Name: %s\nAge: %d\nRoll No: %d\nGender:%c\nSection: %s", name, age, rollNo, gender, section);
+    sprintf(s, "Name: %s\nAge: %d\nGender: %c\nSection: %s\nRoll No: %d", name, age, gender, section, rollNo);
     write(f1, s, strlen(s));
     close(f1);
+    printf("Details written to %s\n", fname);
 }
 
 int main()

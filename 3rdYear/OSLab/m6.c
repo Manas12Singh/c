@@ -2,37 +2,65 @@
 #include <stdlib.h>
 #include <math.h>
 
-int compare(void *arr2, const void *a, const void *b)
+typedef struct {
+    int id;
+    int arrivalTime;
+    int burstTime;
+} Process;
+
+int compare(const void *a, const void *b)
 {
-    return ((int *)arr2)[*(int *)a] < ((int *)arr2)[*(int *)b] - ((int *)arr2)[*(int *)a] < ((int *)arr2)[*(int *)b];
+    Process *processA = (Process *)a;
+    Process *processB = (Process *)b;
+    return processA->arrivalTime - processB->arrivalTime;
 }
-// int (*_PtFuncCompare)(void *, const void *, const void *), void *_Context)
-void fcfs(int n, int *processes, int *arrivalTime, double *avgWaitTime, double *avgTurnAroundTime)
+
+void fcfs(int n, Process *processes, double *avgWaitTime, double *avgTurnAroundTime)
 {
-    int index[n];
-    for (int i = 0; i < n; i++)
-        index[i] = i;
-    qsort_s(index, n, sizeof(int), &compare, arrivalTime);
-    for (int i = 0; i < n; i++)
-        printf("%d ", index[i]);
+    qsort(processes, n, sizeof(Process), compare);
+    
     *avgWaitTime = 0;
     *avgTurnAroundTime = 0;
-    int pSum = 0;
+    int currentTime = 0;
+    
     for (int i = 0; i < n; i++)
     {
-        *avgWaitTime += fmax(0, pSum - arrivalTime[index[i]]);
-        pSum += processes[index[i]];
-        *avgTurnAroundTime += fmax(0, pSum - arrivalTime[index[i]]);
+        currentTime = fmax(currentTime, processes[i].arrivalTime);
+        *avgWaitTime += currentTime - processes[i].arrivalTime;
+        *avgTurnAroundTime += currentTime - processes[i].arrivalTime + processes[i].burstTime;
+        currentTime += processes[i].burstTime;
     }
+    
     *avgWaitTime /= n;
     *avgTurnAroundTime /= n;
 }
 
 int main()
 {
-    int processes[] = {5, 3, 8, 6};
-    int arrivalTime[] = {0, 1, 2, 3};
+    int n;
+    printf("Enter number of processes: ");
+    scanf("%d", &n);
+
+    Process *processes = (Process *)malloc(n * sizeof(Process));
+
+    printf("Enter burst times: ");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &processes[i].burstTime);
+        processes[i].id = i;
+    }
+
+    printf("Enter arrival times: ");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &processes[i].arrivalTime);
+    }
+
     double avgWaitTime, avgTurnAroundTime;
-    fcfs(4, processes, arrivalTime, &avgWaitTime, &avgTurnAroundTime);
-    printf("%lf %lf", avgWaitTime, avgTurnAroundTime);
+    fcfs(n, processes, &avgWaitTime, &avgTurnAroundTime);
+
+    printf("Average Waiting Time: %.2lf\n", avgWaitTime);
+    printf("Average Turnaround Time: %.2lf\n", avgTurnAroundTime);
+
+    free(processes);
+
+    return 0;
 }
