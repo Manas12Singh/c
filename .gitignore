@@ -3,4 +3,4 @@
 *.o
 *cmake*
 .idea
-*
+*.out
