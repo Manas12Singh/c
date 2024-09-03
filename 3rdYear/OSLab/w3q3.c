@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "structure.h"
+
 typedef struct
 {
     int id;
@@ -17,15 +17,6 @@ int compareArrival(const void *a, const void *b)
     return processA->arrivalTime - processB->arrivalTime;
 }
 
-int compareRemaining(const void *a, const void *b)
-{
-    Process *processA = (Process *)a;
-    Process *processB = (Process *)b;
-    if (processA->remainingTime == processB->remainingTime)
-        return processA->arrivalTime - processB->arrivalTime;
-    return processA->remainingTime - processB->remainingTime;
-}
-
 void srt(int n, Process *processes, double *avgWaitTime, double *avgTurnAroundTime)
 {
     qsort(processes, n, sizeof(Process), compareArrival);
@@ -33,23 +24,23 @@ void srt(int n, Process *processes, double *avgWaitTime, double *avgTurnAroundTi
     *avgTurnAroundTime = 0;
     int currentTime = processes[0].arrivalTime;
     int nextTime = 0;
-    int j = 0;
-    Priority_Queue *pq = createPriorityQueue(n, sizeof(Process), compareRemaining);
+    int i = 0, j = 1;
     printf("Gantt Chart: ");
-    do
+    while (i < n)
     {
-        while (j < n && processes[j].arrivalTime <= currentTime)
-            push(pq, &processes[j++]);
-        Process *p = (Process *)top(pq);
-        pop(pq);
+        int m=i;
+        while(j<n && processes[j].arrivalTime<=currentTime)
+            j++;
+        for(int k=i;k<j;k++)
+        {
+        }
         printf("P%d ", p->id);
         currentTime = fmax(currentTime, p->arrivalTime);
         *avgWaitTime += currentTime - p->arrivalTime;
         *avgTurnAroundTime += currentTime - p->arrivalTime + p->burstTime;
         currentTime += p->burstTime;
-    } while (pq->currentSize > 0);
+    }
     printf("\n");
-    freePriorityQueue(pq);
     *avgWaitTime /= n;
     *avgTurnAroundTime /= n;
 }

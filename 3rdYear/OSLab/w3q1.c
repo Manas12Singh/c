@@ -22,16 +22,17 @@ void fcfs(int n, Process *processes, double *avgWaitTime, double *avgTurnAroundT
     *avgWaitTime = 0;
     *avgTurnAroundTime = 0;
     int currentTime = 0;
-    
+    printf("Gantt Chart: ");
     for (int i = 0; i < n; i++)
     {
+        printf("P%d ", processes[i].id);
         currentTime = fmax(currentTime, processes[i].arrivalTime);
         int waitTime = currentTime - processes[i].arrivalTime;
         *avgWaitTime += waitTime;
         *avgTurnAroundTime += waitTime + processes[i].burstTime;
         currentTime += processes[i].burstTime;
     }
-    
+    printf("\n");
     *avgWaitTime /= n;
     *avgTurnAroundTime /= n;
 }
