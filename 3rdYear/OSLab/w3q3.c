@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <math.h>
 
+#define min(a, b) ((a) < (b) ? (a) : (b))
+
 typedef struct
 {
     int id;
@@ -23,22 +25,38 @@ void srt(int n, Process *processes, double *avgWaitTime, double *avgTurnAroundTi
     *avgWaitTime = 0;
     *avgTurnAroundTime = 0;
     int currentTime = processes[0].arrivalTime;
-    int nextTime = 0;
-    int i = 0, j = 1;
+    int i = 0, j = 0, prev = -1;
     printf("Gantt Chart: ");
     while (i < n)
     {
-        int m=i;
-        while(j<n && processes[j].arrivalTime<=currentTime)
+        while (j < n && processes[j].arrivalTime <= currentTime)
             j++;
-        for(int k=i;k<j;k++)
+        int minIndex = i;
+        for (int k = i + 1; k < j; k++)
+            if (processes[k].remainingTime < processes[minIndex].remainingTime)
+                minIndex = k;
+        if (minIndex != i)
         {
+            Process temp = processes[i];
+            processes[i] = processes[minIndex];
+            processes[minIndex] = temp;
         }
-        printf("P%d ", p->id);
-        currentTime = fmax(currentTime, p->arrivalTime);
-        *avgWaitTime += currentTime - p->arrivalTime;
-        *avgTurnAroundTime += currentTime - p->arrivalTime + p->burstTime;
-        currentTime += p->burstTime;
+        if (prev != processes[i].id)
+        {
+            printf("P%d ", processes[i].id);
+            prev = processes[i].id;
+        }
+        int runTime = processes[i].remainingTime;
+        if (j < n)
+            runTime = min(processes[minIndex].remainingTime, processes[j].arrivalTime - currentTime);
+        processes[i].remainingTime -= runTime;
+        currentTime += runTime;
+        if (processes[i].remainingTime == 0)
+        {
+            *avgWaitTime += currentTime - processes[i].arrivalTime - processes[i].burstTime;
+            *avgTurnAroundTime += currentTime - processes[i].arrivalTime;
+            i++;
+        }
     }
     printf("\n");
     *avgWaitTime /= n;
@@ -66,7 +84,7 @@ int main()
         scanf("%d", &processes[i].arrivalTime);
 
     double avgWaitTime, avgTurnAroundTime;
-    sjf(n, processes, &avgWaitTime, &avgTurnAroundTime);
+    srt(n, processes, &avgWaitTime, &avgTurnAroundTime);
 
     printf("Average Waiting Time: %.2lf\n", avgWaitTime);
     printf("Average Turnaround Time: %.2lf\n", avgTurnAroundTime);
@@ -75,5 +93,3 @@ int main()
 
     return 0;
 }
-
-// sum(bursttimes)n2logn

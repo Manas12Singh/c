@@ -3,11 +3,9 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <stdlib.h>
-
 int main()
 {
     int p1 = fork();
-
     if (p1 > 0)
     {
         wait(NULL);
