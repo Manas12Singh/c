@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
-typedef struct {
+#define max(a, b) ((a) > (b) ? (a) : (b))
+
+typedef struct
+{
     int id;
     int arrivalTime;
     int burstTime;
@@ -18,7 +20,7 @@ int compare(const void *a, const void *b)
 void fcfs(int n, Process *processes, double *avgWaitTime, double *avgTurnAroundTime)
 {
     qsort(processes, n, sizeof(Process), compare);
-    
+
     *avgWaitTime = 0;
     *avgTurnAroundTime = 0;
     int currentTime = 0;
@@ -26,7 +28,7 @@ void fcfs(int n, Process *processes, double *avgWaitTime, double *avgTurnAroundT
     for (int i = 0; i < n; i++)
     {
         printf("P%d ", processes[i].id);
-        currentTime = fmax(currentTime, processes[i].arrivalTime);
+        currentTime = max(currentTime, processes[i].arrivalTime);
         int waitTime = currentTime - processes[i].arrivalTime;
         *avgWaitTime += waitTime;
         *avgTurnAroundTime += waitTime + processes[i].burstTime;
@@ -46,13 +48,15 @@ int main()
     Process *processes = (Process *)malloc(n * sizeof(Process));
 
     printf("Enter burst times: ");
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
+    {
         scanf("%d", &processes[i].burstTime);
         processes[i].id = i;
     }
 
     printf("Enter arrival times: ");
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
+    {
         scanf("%d", &processes[i].arrivalTime);
     }
 

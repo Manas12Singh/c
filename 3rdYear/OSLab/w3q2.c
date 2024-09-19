@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+
+#define max(a, b) ((a) > (b) ? (a) : (b))
 
 typedef struct
 {
@@ -44,7 +45,7 @@ void sjf(int n, Process *processes, double *avgWaitTime, double *avgTurnAroundTi
             processes[m] = temp;
         }
         printf("P%d ", processes[i].id);
-        currentTime = fmax(currentTime, processes[i].arrivalTime);
+        currentTime = max(currentTime, processes[i].arrivalTime);
         *avgWaitTime += currentTime - processes[i].arrivalTime;
         *avgTurnAroundTime += currentTime - processes[i].arrivalTime + processes[i].burstTime;
         currentTime += processes[i].burstTime;
