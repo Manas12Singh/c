@@ -1,25 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-typedef struct
-{
-    void *queue;
-    size_t maxSize;
-    size_t elementSize;
-    size_t currentSize;
-    int (*compare)(const void *, const void *);
-} Priority_Queue;
+#include "priority_queue.h"
 
 int defaultCompare(const void *a, const void *b)
 {
     return (*(int *)a - *(int *)b);
 }
 
-/*
-Creates a Priority Queue with maxSize elements of elementSize bytes each.
-compare function to compare elements (default is integer comparison).
-*/
 Priority_Queue *createPriorityQueue(size_t maxSize, size_t elementSize, int (*compare)(const void *, const void *))
 {
     Priority_Queue *pq = (Priority_Queue *)malloc(sizeof(Priority_Queue));
