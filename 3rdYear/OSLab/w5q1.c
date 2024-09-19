@@ -45,9 +45,6 @@ int main()
     }
     for (int i = 0; i < p; i++)
     {
-        for (int i = 0; i < r; i++)
-            printf("%d ", available[i]);
-        printf("\n");
         int canFinish = i;
         while (canFinish < p)
         {
@@ -77,11 +74,11 @@ int main()
     printf("Safe sequence: ");
     for (int i = 0; i < p; i++)
         printf("P%d ", processes[i].id);
+    printf("\n");
     for (int i = 0; i < p; i++)
     {
         free(processes[i].maxReq);
         free(processes[i].allocated);
     }
-    printf("\n");
     return 0;
 }

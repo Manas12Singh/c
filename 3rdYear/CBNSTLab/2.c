@@ -3,27 +3,17 @@
 
 double fn1(double x)
 {
-    return pow(x, 3) - 20;
+    return x - exp(-x);
 }
 
 double fn2(double x)
 {
-    return pow(x, 3) - 4 * x - 9;
+    return 3 * x - cos(x) - 1;
 }
 
 double fn3(double x)
 {
     return x * x - 30;
-}
-
-double fn4(double x)
-{
-    return x - cos(x);
-}
-
-double fn5(double x)
-{
-    return exp(x) - 10;
 }
 
 int main()
@@ -35,8 +25,8 @@ up:
     scanf("%lf %lf", &x0, &x1);
     printf("Enter the error: ");
     scanf("%lf", &e);
-    f0 = fn4(x0);
-    f1 = fn4(x1);
+    f0 = fn3(x0);
+    f1 = fn3(x1);
     if (f0 * f1 > 0)
     {
         printf("The initial guesses are invalid.\n");
@@ -44,8 +34,8 @@ up:
     }
     do
     {
-        x2 = (x1 + x0) / 2;
-        f2 = fn4(x2);
+        x2 = x0 - (x1 - x0) * f0 / (f1 - f0);
+        f2 = fn3(x2);
         if (f2 * f0 < 0)
         {
             x1 = x2;
