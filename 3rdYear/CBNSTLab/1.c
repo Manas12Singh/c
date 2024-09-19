@@ -1,30 +1,11 @@
 #include <stdio.h>
 #include <math.h>
 
-double fn1(double x)
-{
-    return pow(x, 3) - 20;
-}
-
-double fn2(double x)
-{
-    return pow(x, 3) - 4 * x - 9;
-}
-
-double fn3(double x)
-{
-    return x * x - 30;
-}
-
-double fn4(double x)
-{
-    return x - cos(x);
-}
-
-double fn5(double x)
-{
-    return exp(x) - 10;
-}
+#define fn1(x) pow(x, 3) - 20
+#define fn2(x) (pow(x, 3) - 4 * (x) - 9)
+#define fn3(x) ((x) * (x) - 30)
+#define fn4(x) ((x) - cos(x))
+#define fn5(x) (exp(x) - 10)
 
 int main()
 {
