@@ -35,8 +35,8 @@ up:
     scanf("%lf %lf", &x0, &x1);
     printf("Enter the error: ");
     scanf("%lf", &e);
-    f0 = fn4(x0);
-    f1 = fn4(x1);
+    f0 = fn1(x0);
+    f1 = fn1(x1);
     if (f0 * f1 > 0)
     {
         printf("The initial guesses are invalid.\n");
@@ -45,7 +45,7 @@ up:
     do
     {
         x2 = (x1 + x0) / 2;
-        f2 = fn4(x2);
+        f2 = fn1(x2);
         if (f2 * f0 < 0)
         {
             x1 = x2;
