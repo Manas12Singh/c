@@ -1,20 +1,9 @@
 #include <stdio.h>
 #include <math.h>
 
-double fn1(double x)
-{
-    return x - exp(-x);
-}
-
-double fn2(double x)
-{
-    return 3 * x - cos(x) - 1;
-}
-
-double fn3(double x)
-{
-    return x * x - 30;
-}
+#define Fn1(x) ((x) - exp(-(x)))
+#define Fn2(x) (3 * (x) - cos(x) - 1)
+#define Fn3(x) ((x) * (x) - 30)
 
 int main()
 {
