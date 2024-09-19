@@ -4,8 +4,8 @@
 typedef struct
 {
     int id;
-    int* maxReq;
-    int* allocated;
+    int *maxReq;
+    int *allocated;
 } Process;
 
 int main()
@@ -15,78 +15,73 @@ int main()
     scanf("%d", &p);
     printf("Enter number of resources: ");
     scanf("%d", &r);
-    int *available = (int *)malloc(r * sizeof(int));
-    int *max = (int *)malloc(p * r * sizeof(int));
-    int *allocation = (int *)malloc(p * r * sizeof(int));
-    int *need = (int *)malloc(p * r * sizeof(int));
-    printf("Enter available resources: ");
+    int resource[r];
+    int available[r];
     for (int i = 0; i < r; i++)
-        scanf("%d", &available[i]);
-    printf("Enter max resources: ");
+        available[i] = 0;
+    Process processes[p];
     for (int i = 0; i < p; i++)
-        for (int j = 0; j < r; j++)
-            scanf("%d", &max[i * r + j]);
-    printf("Enter allocated resources: ");
-    for (int i = 0; i < p; i++)
-        for (int j = 0; j < r; j++)
-            scanf("%d", &allocation[i * r + j]);
-    for (int i = 0; i < p; i++)
-
-        for (int j = 0; j < r; j++)
-            need[i * r + j] = max[i * r + j] - allocation[i * r + j];
-    int *finish = (int *)malloc(p * sizeof(int));
-    for (int i = 0; i < p; i++)
-        finish[i] = 0;
-    int *safeSeq = (int *)malloc(p * sizeof(int));
-    int *work = (int *)malloc(r * sizeof(int));
-    for (int i = 0; i < r; i++)
-        work[i] = available[i];
-    int count = 0;
-    while (count < p)
     {
-        int found = 0;
-        for (int i = 0; i < p; i++)
+        processes[i].maxReq = (int *)malloc(r * sizeof(int));
+        processes[i].allocated = (int *)malloc(r * sizeof(int));
+        processes[i].id = i;
+    }
+    printf("Enter maximum requirement: ");
+    for (int i = 0; i < p; i++)
+        for (int j = 0; j < r; j++)
+            scanf("%d", &processes[i].maxReq[j]);
+    printf("Enter allocated matrix: ");
+    for (int i = 0; i < p; i++)
+        for (int j = 0; j < r; j++)
         {
-            if (finish[i] == 0)
-            {
-                int j;
-                for (j = 0; j < r; j++)
-                    if (need[i * r + j] > work[j])
-                        break;
-                if (j == r)
-                {
-                    for (j = 0; j < r; j++)
-                        work[j] += allocation[i * r + j];
-                    safeSeq[count++] = i;
-                    finish[i] = 1;
-                    found = 1;
-                }
-            }
+            scanf("%d", &processes[i].allocated[j]);
+            available[j] -= processes[i].allocated[j];
         }
-        if (found == 0)
+    printf("Enter resource vector: ");
+    for (int i = 0; i < r; i++)
+    {
+        scanf("%d", &resource[i]);
+        available[i] = resource[i] + available[i];
+    }
+    for (int i = 0; i < p; i++)
+    {
+        for (int i = 0; i < r; i++)
+            printf("%d ", available[i]);
+        printf("\n");
+        int canFinish = i;
+        while (canFinish < p)
         {
-            printf("System is not in safe state\n");
-            free(available);
-            free(max);
-            free(allocation);
-            free(need);
-            free(finish);
-            free(safeSeq);
-            free(work);
+            int j = 0;
+            while (j < r)
+            {
+                if (processes[canFinish].maxReq[j] - processes[canFinish].allocated[j] > available[j])
+                    break;
+                j++;
+            }
+            if (j == r)
+                break;
+            canFinish++;
+        }
+        if (canFinish == p)
+        {
+            printf("Request cannot be fulfilled\n");
             return 0;
         }
+        Process temp = processes[i];
+        processes[i] = processes[canFinish];
+        processes[canFinish] = temp;
+        for (int j = 0; j < r; j++)
+            available[j] += processes[i].allocated[j];
     }
-    printf("System is in safe state\n");
+    printf("Request can be fulfilled\n");
     printf("Safe sequence: ");
     for (int i = 0; i < p; i++)
-        printf("%d ", safeSeq[i]);
+        printf("P%d ", processes[i].id);
+    for (int i = 0; i < p; i++)
+    {
+        free(processes[i].maxReq);
+        free(processes[i].allocated);
+    }
     printf("\n");
-    free(available);
-    free(max);
-    free(allocation);
-    free(need);
-    free(finish);
-    free(safeSeq);
-    free(work);
     return 0;
 }
