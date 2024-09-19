@@ -38,7 +38,7 @@ up:
             f0 = f2;
         }
         step++;
-        printf("%d: %lf\n", step, x2);
+        printf("Iteration no. %d: %lf\n", step, x2);
     } while (fabs(f2) > e);
     printf("The root is: %lf\n", x2);
     printf("Number of steps: %d\n", step);

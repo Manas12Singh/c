@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <math.h>
 
-#define Fn1(x) ((x) - exp(-(x)))
-#define Fn2(x) (3 * (x) - cos(x) - 1)
-#define Fn3(x) ((x) * (x) - 30)
+#define fn1(x) ((x) - exp(-(x)))
+#define fn2(x) (3 * (x) - cos(x) - 1)
+#define fn3(x) ((x) * (x) - 30)
 
 int main()
 {
@@ -14,8 +14,8 @@ up:
     scanf("%lf %lf", &x0, &x1);
     printf("Enter the error: ");
     scanf("%lf", &e);
-    f0 = fn3(x0);
-    f1 = fn3(x1);
+    f0 = fn1(x0);
+    f1 = fn1(x1);
     if (f0 * f1 > 0)
     {
         printf("The initial guesses are invalid.\n");
@@ -24,7 +24,7 @@ up:
     do
     {
         x2 = x0 - (x1 - x0) * f0 / (f1 - f0);
-        f2 = fn3(x2);
+        f2 = fn1(x2);
         if (f2 * f0 < 0)
         {
             x1 = x2;
