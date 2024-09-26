@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <math.h>
 
-#define fn1(x) (x - exp(-x))
-#define fn2(x) (3 * x - cos(x) - 1)
-#define fn3(x) (x * x - 30)
+/* #define f(x) (x - exp(-x))
+#define g(x) (1 + exp(-x)) */
 
-#define gn1(x) (1 + exp(-x))
-#define gn2(x) (3 + sin(x))
-#define gn3(x) (2 * x)
+/* #define f(x) (3 * x - cos(x) - 1)
+#define g(x) (3 + sin(x)) */
+
+#define f(x) (pow(x, 2) - 30)
+#define g(x) (2 * x)
 
 int main()
 {
@@ -20,9 +21,10 @@ int main()
     do
     {
         x0 = x1;
-        x1 = x0 - fn3(x0) / gn3(x0);
-        printf("Iteration %d: %lf\n", ++step, x1);
+        x1 = x0 - f(x0) / g(x0);
+        step++;
     } while (fabs(x0 - x1) > e);
     printf("The root is: %lf\n", x1);
     printf("Number of steps: %d\n", step);
+    return 0;
 }
