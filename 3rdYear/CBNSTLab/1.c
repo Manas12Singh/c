@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include <math.h>
+
+#define abs(x) ((x) > 0 ? (x) : -(x))
 
 // #define f(x) pow(x, 3) - 20
 // #define f(x) (pow(x, 3) - 4 * (x) - 9)
@@ -38,7 +39,7 @@ up:
             f0 = f2;
         }
         step++;
-    } while (fabs(f2) > e);
+    } while (abs(f2) > e);
     printf("The root is: %lf\n", x2);
     printf("Number of steps: %d\n", step);
     return 0;

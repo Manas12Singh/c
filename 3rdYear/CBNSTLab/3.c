@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include <math.h>
+
+#define fabs(x) ((x) > 0 ? (x) : -(x))
 
 /* #define f(x) (x - exp(-x))
 #define g(x) (1 + exp(-x)) */
@@ -23,7 +24,7 @@ int main()
         x0 = x1;
         x1 = x0 - f(x0) / g(x0);
         step++;
-    } while (fabs(x0 - x1) > e);
+    } while (abs(x0 - x1) > e);
     printf("The root is: %lf\n", x1);
     printf("Number of steps: %d\n", step);
     return 0;
