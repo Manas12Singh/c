@@ -15,14 +15,14 @@ int main()
     float x;
     printf("Enter the value of x: ");
     scanf("%f", &x);
-    float y = yarr[n - 1], u = (x - xarr[n - 1]) / (xarr[1] - xarr[0]), mf = 1;
+    float y = yarr[0], u = (x - xarr[0]) / (xarr[1] - xarr[0]), mf = 1;
     for (int i = 1; i < n; i++)
     {
-        for (int j = n - 1; j >= i; j--)
-            yarr[j] = yarr[j] - yarr[j - 1];
+        for (int j = 0; j < n - i; j++)
+            yarr[j] = yarr[j + 1] - yarr[j];
         mf *= u / i;
-        u = u + 1;
-        y += mf * yarr[n - 1];
+        u = u - 1;
+        y += mf * yarr[0];
     }
     printf("The value of y at x = %f is %f\n", x, y);
     return 0;
