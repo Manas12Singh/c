@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
-#define f(x) (x * x * x + 2 * x + 1)
+#define f(x) (sqrt(x))
 
 int main()
 {
@@ -10,12 +11,10 @@ int main()
     printf("Enter the number of x values: ");
     scanf("%d", &n);
     xarr = (double *)malloc(n * sizeof(double));
-    yarr = (double *)calloc(n * (n + 1), sizeof(double));
+    yarr = (double *)calloc(n * n, sizeof(double));
     printf("Enter the x values:\n");
     for (int i = 0; i < n; i++)
-    {
         scanf("%lf", &xarr[i]);
-    }
     double x;
     printf("Enter the value of x: ");
     scanf("%lf", &x);
