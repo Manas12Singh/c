@@ -4,21 +4,24 @@
 
 void swapRows(float **mat, int row1, int row2, int n)
 {
-    float* temp = mat[row1];
+    float *temp = mat[row1];
     mat[row1] = mat[row2];
     mat[row2] = temp;
 }
 
-void gaussElimination(float **mat, int n)
+int gaussElimination(float **mat, int n)
 {
     for (int i = 0; i < n; i++)
     {
+        // fix diagonal element
         int maxRow = i;
         for (int k = i + 1; k < n; k++)
             if (abs(mat[k][i]) > abs(mat[maxRow][i]))
                 maxRow = k;
         if (maxRow != i)
             swapRows(mat, i, maxRow, n);
+        if (mat[i][i] == 0)
+            return 0;
         for (int k = i + 1; k < n; k++)
         {
             float factor = mat[k][i] / mat[i][i];
@@ -26,6 +29,7 @@ void gaussElimination(float **mat, int n)
                 mat[k][j] -= factor * mat[i][j];
         }
     }
+    return 1;
 }
 
 void backSubstitution(float **mat, float *x, int n)
@@ -57,7 +61,11 @@ int main()
         for (int j = 0; j <= n; j++)
             scanf("%f", &mat[i][j]);
 
-    gaussElimination(mat, n);
+    if (gaussElimination(mat, n) == 0)
+    {
+        printf("No or infintely many solutions.\n");
+        return 0;
+    }
 
     backSubstitution(mat, x, n);
 

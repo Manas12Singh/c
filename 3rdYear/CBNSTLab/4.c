@@ -1,14 +1,17 @@
 #include <stdio.h>
-
-#define fabs(x) ((x) > 0 ? (x) : -(x))
+#include <math.h>
 
 /* #define f(x) (cos(x) - 3 * x + 1)
 #define g(x) ((cos(x) + 1) / 3)
 #define dg(x) (-sin(x) / 3) */
 
-#define f(x) (2 * x - log10(x) - 7)
+/* #define f(x) (2 * x - log10(x) - 7)
 #define g(x) ((7 + log10(x)) / 2)
-#define dg(x) (1 / (2 * x))
+#define dg(x) (1 / (2 * x)) */
+
+#define f(x) (x * x * x + x - 1.0)
+#define g(x) pow(1.0 - x, 0.33)
+#define dg(x) -0.33 * pow(1 - x, -0.67)
 
 int main()
 {
@@ -32,11 +35,11 @@ up:
         step++;
         if (step > maxStep)
         {
-            printf("Not Convergent\n", maxStep);
+            printf("Not Convergent\n");
             return 0;
         }
         x0 = x1;
-    } while (abs(f(x1)) > e);
+    } while (fabs(f(x1)) > e);
     printf("The root is: %lf\n", x1);
     printf("Number of steps: %d\n", step);
     return 0;
