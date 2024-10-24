@@ -1,61 +1,74 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct{
+typedef struct
+{
     int id;
     int arrivalTime;
     int priority;
     int burstTime;
     int remainingTime;
+    int isCompleted;
 } Process;
-int compareArrival(const void *a, const void *b){
+int compareArrival(const void *a, const void *b)
+{
     Process *processA = (Process *)a;
     Process *processB = (Process *)b;
     return processA->arrivalTime - processB->arrivalTime;
 }
 #define min(a, b) ((a) < (b) ? (a) : (b))
-void priority(int n, Process *processes, double *avgWaitTime, double *avgTurnAroundTime, int timeQuantum){
-    for(int i = 0; i < n; i++)
+void priority(int n, Process *processes, double *avgWaitTime, double *avgTurnAroundTime)
+{
+    for (int i = 0; i < n; i++)
+    {
         processes[i].remainingTime = processes[i].burstTime;
+        processes[i].isCompleted = 0;
+    }
     qsort(processes, n, sizeof(Process), compareArrival);
     *avgWaitTime = 0;
     *avgTurnAroundTime = 0;
     int currentTime = processes[0].arrivalTime;
-    int i = 0;
+    int completed = 0;
     int prev = -1;
+    int j = 0;
     printf("Priority Scheduling Gantt Chart: ");
-    while (i < n)
+    while (completed < n)
     {
-        int m = i;
-        for (int j = i + 1; j < n && processes[j].arrivalTime <= currentTime; j++)
-            if (processes[j].priority < processes[m].priority)
+        while (j < n && processes[j].arrivalTime <= currentTime)
+            j++;
+        int m = -1;
+        for (int k = 0; k < j; k++)
+            if (processes[j].isCompleted == 0 && (m == -1 || processes[j].priority < processes[m].priority))
                 m = j;
-        if (m != i)
+        if (m == -1)
         {
-            Process temp = processes[i];
-            processes[i] = processes[m];
-            processes[m] = temp;
+            currentTime = processes[j].arrivalTime;
+            continue;
         }
-        if (prev != processes[i].id)
+        if (prev != processes[completed].id)
         {
-            printf("P%d ", processes[i].id);
-            prev = processes[i].id;
+            printf("P%d ", processes[completed].id);
+            prev = processes[completed].id;
         }
-        int runTime = min(processes[i].remainingTime, timeQuantum);
-        processes[i].remainingTime -= runTime;
+        int runTime = processes[completed].remainingTime;
+        if (j < n)
+            runTime = min(runTime, processes[j].arrivalTime - currentTime);
+        processes[completed].remainingTime -= runTime;
         currentTime += runTime;
-        if (processes[i].remainingTime == 0)
+        if (processes[completed].remainingTime == 0)
         {
-            *avgWaitTime += currentTime - processes[i].arrivalTime - processes[i].burstTime;
-            *avgTurnAroundTime += currentTime - processes[i].arrivalTime;
-            i++;
+            processes[m].isCompleted = 1;
+            *avgWaitTime += currentTime - processes[completed].arrivalTime - processes[completed].burstTime;
+            *avgTurnAroundTime += currentTime - processes[completed].arrivalTime;
+            completed++;
         }
     }
     printf("\n");
     *avgWaitTime /= n;
     *avgTurnAroundTime /= n;
 }
-int main(){
+int main()
+{
     int n, timeQuantum;
     printf("Enter number of processes: ");
     scanf("%d", &n);
@@ -72,10 +85,8 @@ int main(){
     printf("Enter priorities: ");
     for (int i = 0; i < n; i++)
         scanf("%d", &processes[i].priority);
-    printf("Enter time quantum: ");
-    scanf("%d", &timeQuantum);
     double avgWaitTime, avgTurnAroundTime;
-    priority(n, processes, &avgWaitTime, &avgTurnAroundTime, timeQuantum);
+    priority(n, processes, &avgWaitTime, &avgTurnAroundTime);
     printf("Average Waiting Time: %.2lf\n", avgWaitTime);
     printf("Average Turnaround Time: %.2lf\n", avgTurnAroundTime);
     free(processes);

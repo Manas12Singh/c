@@ -1,5 +1,12 @@
-//
-// Created by Deepanshu Dhami on 20-11-2023.
-//
-
 #include "myThread.h"
+
+int printHello(int n)
+{
+    printf("Hello World %d\n", n);
+    return 0;
+}
+
+void checkThread()
+{
+    
+}

@@ -8,6 +8,7 @@ typedef struct
     int id;
     int arrivalTime;
     int burstTime;
+    int isCompleted;
 } Process;
 
 int compare(const void *a, const void *b)
@@ -27,7 +28,7 @@ void sjf(int n, Process *processes, double *avgWaitTime, double *avgTurnAroundTi
     printf("Gantt Chart: ");
     for (int i = 0; i < n; i++)
     {
-        int m = i;
+        int m = -1;
         for (int j = i + 1; j < n; j++)
         {
             if (processes[j].arrivalTime <= currentTime)
@@ -68,6 +69,7 @@ int main()
     {
         scanf("%d", &processes[i].burstTime);
         processes[i].id = i;
+        processes[i].isCompleted = 0;
     }
 
     printf("Enter arrival times: ");
