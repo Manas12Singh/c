@@ -38,28 +38,28 @@ void priority(int n, Process *processes, double *avgWaitTime, double *avgTurnAro
             j++;
         int m = -1;
         for (int k = 0; k < j; k++)
-            if (processes[j].isCompleted == 0 && (m == -1 || processes[j].priority < processes[m].priority))
-                m = j;
+            if (processes[k].isCompleted == 0 && (m == -1 || processes[k].priority < processes[m].priority))
+                m = k;
         if (m == -1)
         {
             currentTime = processes[j].arrivalTime;
             continue;
         }
-        if (prev != processes[completed].id)
+        if (prev != processes[m].id)
         {
-            printf("P%d ", processes[completed].id);
-            prev = processes[completed].id;
+            printf("P%d ", processes[m].id);
+            prev = processes[m].id;
         }
-        int runTime = processes[completed].remainingTime;
+        int runTime = processes[m].remainingTime;
         if (j < n)
             runTime = min(runTime, processes[j].arrivalTime - currentTime);
-        processes[completed].remainingTime -= runTime;
+        processes[m].remainingTime -= runTime;
         currentTime += runTime;
-        if (processes[completed].remainingTime == 0)
+        if (processes[m].remainingTime == 0)
         {
             processes[m].isCompleted = 1;
-            *avgWaitTime += currentTime - processes[completed].arrivalTime - processes[completed].burstTime;
-            *avgTurnAroundTime += currentTime - processes[completed].arrivalTime;
+            *avgWaitTime += currentTime - processes[m].arrivalTime - processes[m].burstTime;
+            *avgTurnAroundTime += currentTime - processes[m].arrivalTime;
             completed++;
         }
     }
