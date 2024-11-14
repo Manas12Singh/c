@@ -9,10 +9,6 @@
 #define g(x) ((7 + log10(x)) / 2)
 #define dg(x) (1 / (2 * x)) */
 
-#define f(x) (x * x * x + x - 1.0)
-#define g(x) pow(1.0 - x, 0.33)
-#define dg(x) -0.33 * pow(1 - x, -0.67)
-
 int main()
 {
     double x0, x1, e;

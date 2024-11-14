@@ -1,8 +1,5 @@
 #include <stdio.h>
-#include <unistd.h>
-#include <fcntl.h>
 #include <string.h>
-#include <sys/stat.h>
 
 void func(char fname[])
 {
@@ -19,16 +16,16 @@ void func(char fname[])
     scanf("%s", section);
     printf("Roll No.: ");
     scanf(" %d%*c", &rollNo);
-    int f1 = open(fname, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP);
-    if (f1 < 0)
+    FILE *f1 = fopen(fname, "w");
+    if (f1 == NULL)
     {
         perror("Error opening file");
         return;
     }
     char s[100];
     sprintf(s, "Name: %s\nAge: %d\nGender: %c\nSection: %s\nRoll No: %d", name, age, gender, section, rollNo);
-    write(f1, s, strlen(s));
-    close(f1);
+    fprintf(f1, s);
+    fclose(f1);
     printf("Details written to %s\n", fname);
 }
 
