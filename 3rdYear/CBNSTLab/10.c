@@ -6,7 +6,7 @@
 
 #define f(x) (1 / (1 + x * x))
 
-double simpson3_8(double x[], double y[], int n)
+double simpson1_3(double x[], double y[], int n)
 {
     y[0] = f(x[0]);
     y[n] = f(x[n]);
@@ -34,7 +34,7 @@ int main()
     scanf("%lf", &x[0]);
     printf("Enter the upper limit of x:\n");
     scanf("%lf", &x[n]);
-    double yp = simpson3_8(x, y, n);
+    double yp = simpson1_3(x, y, n);
     printf("Area = %lf\n", yp);
     return 0;
 }
