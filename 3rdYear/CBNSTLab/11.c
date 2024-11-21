@@ -27,8 +27,13 @@ double simpson3_8(double x[], double y[], int n)
 int main()
 {
     int n;
-    printf("Enter the number of sub interals: ");
-    scanf("%d", &n);
+    do
+    {
+        printf("Enter the number of sub interals: ");
+        scanf("%d", &n);
+        if (n % 3 != 0)
+            printf("Please enter a multiple of 3\n");
+    } while(n % 3 != 0);
     double x[n + 1], y[n + 1];
     printf("Enter the lower limit of x:\n");
     scanf("%lf", &x[0]);

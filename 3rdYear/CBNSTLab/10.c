@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-//#define f(x) (exp(x * x))
+// #define f(x) (exp(x * x))
 
 #define f(x) (1 / (1 + x * x))
 
@@ -27,8 +27,13 @@ double simpson1_3(double x[], double y[], int n)
 int main()
 {
     int n;
-    printf("Enter the number of sub interals: ");
-    scanf("%d", &n);
+    do
+    {
+        printf("Enter the number of sub interals: ");
+        scanf("%d", &n);
+        if (n % 2 != 0)
+            printf("Please enter an even number\n");
+    } while (n % 2 != 0);
     double x[n + 1], y[n + 1];
     printf("Enter the lower limit of x:\n");
     scanf("%lf", &x[0]);
