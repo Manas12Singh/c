@@ -29,9 +29,9 @@ int main()
     printf("Enter the number of sub interals: ");
     scanf("%d", &n);
     double x[n + 1], y[n + 1];
-    printf("Enter the lower limit of x:\n");
+    printf("Enter the lower limit of x: ");
     scanf("%lf", &x[0]);
-    printf("Enter the upper limit of x:\n");
+    printf("Enter the upper limit of x: ");
     scanf("%lf", &x[n]);
     double yp = trapezoidalRule(x, y, n);
     printf("Area = %lf\n", yp);

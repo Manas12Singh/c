@@ -37,9 +37,9 @@ int main()
             printf("Please enter an even number\n");
     } while (n % 2 != 0);
     double x[n + 1], y[n + 1];
-    printf("Enter the lower limit of x:\n");
+    printf("Enter the lower limit of x: ");
     scanf("%lf", &x[0]);
-    printf("Enter the upper limit of x:\n");
+    printf("Enter the upper limit of x: ");
     scanf("%lf", &x[n]);
     double yp = simpson1_3(x, y, n);
     printf("Area = %lf\n", yp);
