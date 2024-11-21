@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define MAX_BLOCKS 100
+
 typedef struct
 {
     char name;
@@ -14,6 +16,8 @@ int main()
     printf("Enter the number of files: ");
     scanf("%d%*c", &n);
     File files[n];
+    int blockMap[MAX_BLOCKS] = {0};
+
     for (int i = 0; i < n; i++)
     {
         printf("Enter the name of file %d: ", i + 1);
@@ -22,7 +26,29 @@ int main()
         scanf("%d", &files[i].start);
         printf("Enter the number of blocks of file %d: ", i + 1);
         scanf("%d%*c", &files[i].noOfBlocks);
+
+        int valid = 1;
+        for (int j = 0; j < files[i].noOfBlocks; j++)
+        {
+            if (files[i].start + j >= MAX_BLOCKS || blockMap[files[i].start + j] == 1)
+            {
+                valid = 0;
+                break;
+            }
+        }
+
+        if (!valid)
+        {
+            printf("Invalid block allocation for file %c. Please re-enter the details.\n", files[i].name);
+            i--;
+        }
+        else
+        {
+            for (int j = 0; j < files[i].noOfBlocks; j++)
+                blockMap[files[i].start + j] = 1;
+        }
     }
+
     char search;
     printf("Enter the file to be searched: ");
     scanf("%c", &search);
