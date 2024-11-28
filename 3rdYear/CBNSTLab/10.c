@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <math.h>
 
-// #define f(x) (x + 4)
+/* #define f(x) (x + 4) */
 
-// #define f(x) (1 / (1 + x * x))
+/* #define f(x) (1 / (1 + x * x)) */
 
-// #define f(x) (exp(x * x))
+#define f(x) (exp(x * x))
 
 double simpson1_3(double x[], double y[], int n)
 {

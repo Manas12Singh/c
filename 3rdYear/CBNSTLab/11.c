@@ -2,12 +2,11 @@
 #include <stdlib.h>
 #include <math.h>
 
-// #define f(x) (x + 4)
+/* #define f(x) (x + 4) */
 
-#define f(x) (1 / (1 + x * x))
+/* #define f(x) (1 / (1 + x * x)) */
 
-// #define f(x) (exp(x * x))
-
+#define f(x) (exp(x * x))
 double simpson3_8(double x[], double y[], int n)
 {
     y[0] = f(x[0]);
@@ -35,7 +34,7 @@ int main()
         scanf("%d", &n);
         if (n % 3 != 0)
             printf("Please enter a multiple of 3\n");
-    } while(n % 3 != 0);
+    } while (n % 3 != 0);
     double x[n + 1], y[n + 1];
     printf("Enter the lower limit of x: ");
     scanf("%lf", &x[0]);
