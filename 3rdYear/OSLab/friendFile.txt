@@ -1,5 +1,0 @@
-Name: Dhruv
-Age: 20
-Gender: M
-Section: C1
-Roll No: 22

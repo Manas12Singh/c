@@ -6,7 +6,6 @@
 int cscan(int n, int *requests, int currHead)
 {
     int totalSeek = 0;
-    int restart = 0;
     int reqCompleted[n];
     int completed = 0;
     for (int i = 0; i < n; i++)
@@ -17,19 +16,14 @@ int cscan(int n, int *requests, int currHead)
         int nextReq = -1;
         for (int j = 0; j < n; j++)
         {
-            if (reqCompleted[j] == 0 && requests[j] > currHead)
+            if (reqCompleted[j] == 0 && requests[j] >= currHead)
             {
-                if (nextReq == -1 || requests[j] < requests[nextReq])
+                if (nextReq == -1 || requests[j] <= requests[nextReq])
                     nextReq = j;
             }
         }
         if (nextReq != -1)
         {
-            if (restart)
-            {
-                totalSeek += MAXTRACKS - 1;
-                restart = 0;
-            }
             totalSeek += requests[nextReq] - currHead;
             currHead = requests[nextReq];
             reqCompleted[nextReq] = 1;
@@ -38,8 +32,7 @@ int cscan(int n, int *requests, int currHead)
         }
         else
         {
-            restart = 1;
-            totalSeek += MAXTRACKS - 1 - currHead;
+            totalSeek += 2 * (MAXTRACKS - 1) - currHead;
             currHead = 0;
         }
     }

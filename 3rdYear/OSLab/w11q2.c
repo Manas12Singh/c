@@ -17,9 +17,9 @@ int scan(int n, int *requests, int currHead)
         int nextReq = -1;
         for (int j = 0; j < n; j++)
         {
-            if (reqCompleted[j] == 0 && direction * requests[j] > direction * currHead)
+            if (reqCompleted[j] == 0 && direction * requests[j] >= direction * currHead)
             {
-                if (nextReq == -1 || direction * requests[j] < direction * requests[nextReq])
+                if (nextReq == -1 || direction * requests[j] <= direction * requests[nextReq])
                     nextReq = j;
             }
         }
