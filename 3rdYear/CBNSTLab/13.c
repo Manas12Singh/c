@@ -1,6 +1,9 @@
 #include <stdio.h>
 
-#define f(x, y) (x + y * y)
+double f(double x, double y)
+{
+    return x + y * y;
+}
 
 double rk4Method(double x0, double y0, double target, double h)
 {
@@ -8,8 +11,8 @@ double rk4Method(double x0, double y0, double target, double h)
     for (int i = 1; i <= n; i++)
     {
         double k1 = h * f(x0, y0);
-        double k2 = h * f(x0 + h / 2, y0 + k1 / 2);
-        double k3 = h * f(x0 + h / 2, y0 + k2 / 2);
+        double k2 = h * f(x0 + h * 0.5, y0 + k1 * 0.5);
+        double k3 = h * f(x0 + h * 0.5, y0 + k2 * 0.5);
         double k4 = h * f(x0 + h, y0 + k3);
         double k = (k1 + 2 * (k2 + k3) + k4) / 6;
         y0 = y0 + k;
