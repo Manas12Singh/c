@@ -32,7 +32,7 @@ void srt(int n, Process *processes, double *avgWaitTime, double *avgTurnAroundTi
         while (j < n && processes[j].arrivalTime <= currentTime)
             j++;
         int minIndex = -1;
-        for (int k = 1; k < j; k++)
+        for (int k = 0; k < j; k++)
             if (processes[k].isCompleted == 0 && (minIndex == -1 || processes[k].remainingTime < processes[minIndex].remainingTime))
                 minIndex = k;
         if (minIndex == -1)

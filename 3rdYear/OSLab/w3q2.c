@@ -24,32 +24,27 @@ void sjf(int n, Process *processes, double *avgWaitTime, double *avgTurnAroundTi
     *avgWaitTime = 0;
     *avgTurnAroundTime = 0;
     int currentTime = processes[0].arrivalTime;
-    int j = 0;
     printf("Gantt Chart: ");
     for (int i = 0; i < n; i++)
     {
-        int m = -1;
-        for (int j = i + 1; j < n; j++)
+        int m = -1, j;
+        for (j = 0; j < n && processes[j].arrivalTime <= currentTime; j++)
         {
-            if (processes[j].arrivalTime <= currentTime)
-            {
-                if (processes[j].burstTime < processes[m].burstTime)
-                    m = j;
-            }
-            else
-                break;
+            if (processes[j].isCompleted == 0 && (m == -1 || processes[j].burstTime < processes[m].burstTime))
+                m = j;
         }
-        if (m != i)
+        if (m == -1)
         {
-            Process temp = processes[i];
-            processes[i] = processes[m];
-            processes[m] = temp;
+            currentTime = processes[j].arrivalTime;
+            i--;
+            continue;
         }
         printf("P%d ", processes[i].id);
         currentTime = max(currentTime, processes[i].arrivalTime);
         *avgWaitTime += currentTime - processes[i].arrivalTime;
         *avgTurnAroundTime += currentTime - processes[i].arrivalTime + processes[i].burstTime;
         currentTime += processes[i].burstTime;
+        processes[i].isCompleted = 1;
     }
     printf("\n");
     *avgWaitTime /= n;

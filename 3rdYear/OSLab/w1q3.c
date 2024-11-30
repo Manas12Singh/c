@@ -24,8 +24,7 @@ int main()
     else if (p1 == 0)
     {
         execlp("ls", "ls", NULL);
-        printf("First child process terminating...\n");
+        printf("\nFirst child process terminating...\n");
     }
-
     return 0;
 }

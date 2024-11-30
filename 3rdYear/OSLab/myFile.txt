@@ -1,0 +1,5 @@
+Name: Manas Singh
+Age: 20
+Gender: M
+Section: B2
+Roll No: 36
