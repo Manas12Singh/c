@@ -28,11 +28,11 @@ int main()
         processes[i].id = i;
         processes[i].finish = 0;
     }
-    printf("Enter maximum requirement: ");
+    printf("Enter maximum requirement:\n");
     for (int i = 0; i < p; i++)
         for (int j = 0; j < r; j++)
             scanf("%d", &processes[i].maxReq[j]);
-    printf("Enter allocated matrix: ");
+    printf("Enter allocated matrix:\n");
     for (int i = 0; i < p; i++)
         for (int j = 0; j < r; j++)
         {
@@ -43,15 +43,37 @@ int main()
     for (int i = 0; i < r; i++)
     {
         scanf("%d", &resource[i]);
-        available[i] = resource[i] + available[i];
+        available[i] += resource[i];
     }
     for (int i = 0; i < p; i++)
     {
-        int j=0;
-        while(j<p)
+        int canFinish = -1;
+        for (int j = 0; j < p; j++)
         {
-            
+            if (processes[j].finish == 0)
+            {
+                int k;
+                for (k = 0; k < r; k++)
+                {
+                    if (processes[j].maxReq[k] - processes[j].allocated[k] > available[k])
+                        break;
+                }
+                if (k == r)
+                {
+                    canFinish = j;
+                    break;
+                }
+            }
         }
+        if (canFinish == -1)
+        {
+            printf("Deadlock detected\n");
+            return 0;
+        }
+        for (int j = 0; j < r; j++)
+            available[j] += processes[canFinish].allocated[j];
+        processes[canFinish].finish = 1;
     }
+    printf("No deadlock detected\n");
     return 0;
 }

@@ -26,11 +26,11 @@ int main()
         processes[i].allocated = (int *)malloc(r * sizeof(int));
         processes[i].id = i;
     }
-    printf("Enter maximum requirement: ");
+    printf("Enter maximum requirement:\n");
     for (int i = 0; i < p; i++)
         for (int j = 0; j < r; j++)
             scanf("%d", &processes[i].maxReq[j]);
-    printf("Enter allocated matrix: ");
+    printf("Enter allocated matrix:\n");
     for (int i = 0; i < p; i++)
         for (int j = 0; j < r; j++)
         {
@@ -64,9 +64,13 @@ int main()
             printf("Request cannot be fulfilled\n");
             return 0;
         }
-        Process temp = processes[i];
-        processes[i] = processes[canFinish];
-        processes[canFinish] = temp;
+        while (canFinish > i)
+        {
+            Process temp = processes[canFinish];
+            processes[canFinish] = processes[canFinish - 1];
+            processes[canFinish - 1] = temp;
+            canFinish--;
+        }
         for (int j = 0; j < r; j++)
             available[j] += processes[i].allocated[j];
     }
