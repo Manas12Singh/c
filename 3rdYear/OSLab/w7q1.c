@@ -17,7 +17,7 @@ void initialize(Queue *q, int cap)
 
 void enque(Queue *q, int val)
 {
-    if (((q->rear + 1) % (q->capacity)) == q->front)
+    if (q->size == q->capacity)
         return;
     q->rear = (q->rear + 1) % (q->capacity);
     if (q->front == -1)
@@ -28,7 +28,7 @@ void enque(Queue *q, int val)
 
 void deque(Queue *q)
 {
-    if (q->front == -1)
+    if (q->size == 0)
         return;
     if (q->front == q->rear)
         q->front = q->rear = -1;
@@ -52,17 +52,17 @@ void freeQueue(Queue *q)
 
 void fifo(int n, int *pages, int memorySize)
 {
-    Queue *memory = (Queue *)malloc(sizeof(Queue));
-    initialize(memory, memorySize);
+    Queue memory;
+    initialize(&memory, memorySize);
     int pageFaults = 0;
     printf("Page Faults: ");
     for (int i = 0; i < n; i++)
     {
         int page = pages[i];
         int flag = 1;
-        for (int j = memory->front; j != (memory->rear + 1) % (memory->capacity); j = (j + 1) % (memory->capacity))
+        for (int j = 0; j < memory.size; j++)
         {
-            if (memory->arr[j] == page)
+            if (memory.arr[(memory.front + j) % memory.capacity] == page)
             {
                 flag = 0;
                 break;
@@ -71,15 +71,13 @@ void fifo(int n, int *pages, int memorySize)
         if (flag)
         {
             pageFaults++;
-            if (memory->size == memory->capacity)
-            {
-                printf("%d ", front(memory));
-                deque(memory);
-            }
-            enque(memory, page);
+            if (memory.size == memory.capacity)
+                deque(&memory);
+            enque(&memory, page);
+            printf("%d ", page);
         }
     }
-    freeQueue(memory);
+    freeQueue(&memory);
     printf("\nNo of Page Faults: %d\n", pageFaults);
 }
 
