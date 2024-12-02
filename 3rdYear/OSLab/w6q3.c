@@ -3,7 +3,7 @@
 #include <pthread.h>
 #include <unistd.h>
 
-#define N 5
+#define N 4
 #define THINKING 2
 #define HUNGRY 1
 #define EATING 0
@@ -35,9 +35,7 @@ void take_fork(struct monitor *m, int phnum)
     m->state[phnum] = HUNGRY;
     test(m, phnum);
     if (m->state[phnum] != EATING)
-    {
         pthread_cond_wait(&m->phcond[phnum], &m->condLock);
-    }
     pthread_mutex_unlock(&m->condLock);
 }
 
@@ -53,22 +51,18 @@ void put_fork(struct monitor *m, int phnum)
 void init_monitor(struct monitor *m)
 {
     for (int i = 0; i < N; i++)
-    {
         m->state[i] = THINKING;
-    }
     for (int i = 0; i < N; i++)
-    {
         pthread_cond_init(&m->phcond[i], NULL);
-    }
     pthread_mutex_init(&m->condLock, NULL);
 }
 
 void destroy_monitor(struct monitor *m)
 {
     for (int i = 0; i < N; i++)
-    {
+
         pthread_cond_destroy(&m->phcond[i]);
-    }
+
     pthread_mutex_destroy(&m->condLock);
 }
 
@@ -81,11 +75,11 @@ void *philosopher(void *arg)
     {
         int i = *(int *)arg;
         printf("Philosopher %d is thinking...\n", i + 1);
-        sleep(rand() % 10);
+        sleep(3);
         printf("Philosopher %d is waiting...\n", i + 1);
         take_fork(&phil_object, i);
         printf("Philosopher %d is eating...\n", i + 1);
-        sleep(rand() % 10);
+        sleep(2);
         put_fork(&phil_object, i);
         printf("Philosopher %d eated...\n", i + 1);
         c++;
@@ -103,21 +97,18 @@ int main()
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
     for (int i = 0; i < N; i++)
-    {
+
         phil[i] = i;
-    }
 
     init_monitor(&phil_object);
 
     for (int i = 0; i < N; i++)
-    {
+
         pthread_create(&thread_id[i], &attr, philosopher, &phil[i]);
-    }
 
     for (int i = 0; i < N; i++)
-    {
+
         pthread_join(thread_id[i], NULL);
-    }
 
     destroy_monitor(&phil_object);
 

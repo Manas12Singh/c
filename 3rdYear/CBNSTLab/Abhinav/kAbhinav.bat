@@ -1,4 +1,5 @@
 @echo off
+setlocal enabledelayedexpansion
 set filename=%1
 
 if not exist "%filename%" (

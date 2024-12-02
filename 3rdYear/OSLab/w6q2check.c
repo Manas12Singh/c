@@ -1,10 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <semaphore.h>
 #include <unistd.h>
 #include <time.h>
 #include <pthread.h>
-// producer consumer problem
 #define BUFFER_SIZE 5
 
 int buffer[BUFFER_SIZE];
@@ -13,9 +11,15 @@ int empty = BUFFER_SIZE;
 int full = 0;
 int mutex = 1;
 
-void wait(int *semaphore)
+void wait(int *semaphore, char *k)
 {
-    while (*semaphore <= 0);
+    int count = 0;
+    while (*semaphore <= 0)
+    {
+        if (count == 0)
+            printf("%s", k);
+        count = 1;
+    }
     --(*semaphore);
 }
 
@@ -26,10 +30,11 @@ void signal(int *semaphore)
 
 void *producer()
 {
+    char *waitMsg = "Producer waiting for empty slot...\n";
     while (1)
     {
-        wait(&empty);
-        wait(&mutex);
+        wait(&empty, waitMsg);
+        wait(&mutex, "");
 
         int item = rand() % 100;
         buffer[count] = item;
@@ -38,23 +43,24 @@ void *producer()
 
         signal(&mutex);
         signal(&full);
-        sleep(2);
+        sleep(rand() % 4);
     }
 }
 
 void *consumer()
 {
+    char *waitMsg = "Consumer waiting for filled slot...\n";
     while (1)
     {
-        wait(&full);
-        wait(&mutex);
+        wait(&full, waitMsg);
+        wait(&mutex, "");
 
         int item = buffer[--count];
         printf("Consumer consumes item: %d\n", item);
 
         signal(&mutex);
         signal(&empty);
-        sleep(2);
+        sleep(rand() % 4);
     }
 }
 
