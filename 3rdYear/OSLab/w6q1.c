@@ -12,11 +12,44 @@ struct msg_buffer
     char msg_text[100];
 } message;
 
+void pipe_communication(int fd[2])
+{
+    pid_t pid_pipe = fork();
+    if (pid_pipe == 0)
+    {
+        close(fd[0]);
+        char pipe_msg[] = "Hello from pipe child";
+        write(fd[1], pipe_msg, strlen(pipe_msg) + 1);
+        close(fd[1]);
+        _exit(0);
+    }
+}
+
+void message_queue_communication(int msgid)
+{
+    pid_t pid_msg = fork();
+    if (pid_msg == 0)
+    {
+        message.msg_type = 1;
+        strcpy(message.msg_text, "Hello from message queue child");
+        msgsnd(msgid, &message, sizeof(message), 0);
+        _exit(0);
+    }
+}
+
+void shared_memory_communication(char *shared_mem)
+{
+    pid_t pid_shm = fork();
+    if (pid_shm == 0)
+    {
+        strcpy(shared_mem, "Hello from shared memory child");
+        _exit(0);
+    }
+}
+
 int main()
 {
     int fd[2];
-    pid_t pid_pipe, pid_msg, pid_shm;
-
     if (pipe(fd) == -1)
     {
         perror("Pipe failed");
@@ -30,31 +63,9 @@ int main()
     int shmid = shmget(key_shm, 1024, 0666 | IPC_CREAT);
     char *shared_mem = (char *)shmat(shmid, (void *)0, 0);
 
-    pid_pipe = fork();
-    if (pid_pipe == 0)
-    {
-        close(fd[0]);
-        char pipe_msg[] = "Hello from pipe child";
-        write(fd[1], pipe_msg, strlen(pipe_msg) + 1);
-        close(fd[1]);
-        return 0;
-    }
-
-    pid_msg = fork();
-    if (pid_msg == 0)
-    {
-        message.msg_type = 1;
-        strcpy(message.msg_text, "Hello from message queue child");
-        msgsnd(msgid, &message, sizeof(message), 0);
-        return 0;
-    }
-
-    pid_shm = fork();
-    if (pid_shm == 0)
-    {
-        strcpy(shared_mem, "Hello from shared memory child");
-        return 0;
-    }
+    pipe_communication(fd);
+    message_queue_communication(msgid);
+    shared_memory_communication(shared_mem);
 
     wait(NULL);
     wait(NULL);
