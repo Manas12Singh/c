@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_BLOCKS 100
+#define MAX_BLOCKS 200
 
 typedef struct
 {
@@ -47,6 +47,7 @@ int main()
             for (int j = 0; j < files[i].noOfBlocks; j++)
                 blockMap[files[i].start + j] = 1;
         }
+        printf("\n");
     }
 
     char search;
